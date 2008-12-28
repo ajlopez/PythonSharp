@@ -1,0 +1,9 @@
+
+2008-12-28	
+	Initial Project in ajcodekatas
+	Parser and tests
+	String, integer (no real yet)
+	Expression
+	Binary expression (only integers)
+	Compiler and tests
+

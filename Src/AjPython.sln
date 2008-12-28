@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjPython", "AjPython\AjPython.csproj", "{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjPython.Tests", "AjPython.Tests\AjPython.Tests.csproj", "{6B4FBCE4-5177-4427-AF05-ACAC47255778}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36876C35-EA7A-40F9-AF2E-E06367C85695}"
+	ProjectSection(SolutionItems) = preProject
+		AjPython.vsmdi = AjPython.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AjPython.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B4FBCE4-5177-4427-AF05-ACAC47255778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B4FBCE4-5177-4427-AF05-ACAC47255778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B4FBCE4-5177-4427-AF05-ACAC47255778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B4FBCE4-5177-4427-AF05-ACAC47255778}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
