@@ -8,8 +8,9 @@
     public enum Operator
     {
         Add,
-        Substract,
+        Subtract,
         Multiply,
-        Divide
+        Divide,
+        Power
     }
 }

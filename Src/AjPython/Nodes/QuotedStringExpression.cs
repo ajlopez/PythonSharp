@@ -4,26 +4,26 @@
     using System.Linq;
     using System.Text;
 
-    public class NameExpression : Expression
+    public class QuotedStringExpression : Expression
     {
-        private string name;
+        private string value;
 
-        public NameExpression(string name)
+        public QuotedStringExpression(string value)
         {
-            this.name = name;
+            this.value = value;
         }
 
-        public string Name
+        public string Value
         {
             get
             {
-                return this.name;
+                return this.value;
             }
         }
 
         public override object Evaluate(Environment environment)
         {
-            return environment.GetValue(this.name);
+            return this.value;
         }
     }
 }

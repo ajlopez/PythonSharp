@@ -7,3 +7,10 @@
 	Binary expression (only integers)
 	Compiler and tests
 
+2009-01-01
+	- Real number support (parse, compile, evaluate, without operators yet)
+	- Boolean support (parse, compile, evaluate)
+	- List (parse, compile, evaluate)
+	- Dictionary (parse, compile, evaluate)
+	- Power operator ** (only integer parameters)
+	- Arithmetic operator precedence

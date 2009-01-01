@@ -9,7 +9,7 @@
         private Expression left;
         private Expression right;
 
-        public BinaryExpression(Expression left, Expression right)
+        protected BinaryExpression(Expression left, Expression right)
         {
             if (left == null)
             {

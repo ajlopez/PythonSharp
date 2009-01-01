@@ -6,12 +6,14 @@
     using System.Linq;
     using System.Text;
 
-    public class Parser
+    public class Parser : IDisposable
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
         private const string Operators = "+-/*";
-        private const string Separators = "()";
+        private const string Separators = "()[]{},:";
+
+        private static string[] otherOperators = new string[] { "**" };
 
         private TextReader reader;
         private Token lastToken;
@@ -92,6 +94,20 @@
             }
         }
 
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose(bool dispose)
+        {
+            if (dispose && this.reader != null)
+            {
+                this.reader.Dispose();
+            }
+        }
+
         internal void PushToken(Token token)
         {
             if (this.lastToken != null)
@@ -104,6 +120,31 @@
 
         private Token NextOperator(char ch)
         {
+            char ch2;
+
+            try
+            {
+                ch2 = this.NextChar();
+
+                string op = ch.ToString() + ch2.ToString();
+
+                if (otherOperators.Contains(op))
+                {
+                    return new Token()
+                    {
+                        TokenType = TokenType.Operator,
+                        Value = op
+                    };
+                }
+                else
+                {
+                    this.PushChar(ch2);
+                }
+            }
+            catch (EndOfInputException ex)
+            {
+            }
+
             return new Token() 
             { 
                 TokenType = TokenType.Operator, 
@@ -186,6 +227,11 @@
                     ch = this.NextChar();
                 }
 
+                if (ch == '.') 
+                {
+                    return this.NextReal(integer);
+                }
+
                 this.PushChar(ch);
             }
             catch (EndOfInputException)
@@ -195,6 +241,34 @@
             Token token = new Token();
             token.Value = integer;
             token.TokenType = TokenType.Integer;
+
+            return token;
+        }
+
+        private Token NextReal(string integerPart)
+        {
+            string real = integerPart + ".";
+            char ch;
+
+            try
+            {
+                ch = this.NextChar();
+
+                while (char.IsDigit(ch))
+                {
+                    real += ch;
+                    ch = this.NextChar();
+                }
+
+                this.PushChar(ch);
+            }
+            catch (EndOfInputException)
+            {
+            }
+
+            Token token = new Token();
+            token.Value = real;
+            token.TokenType = TokenType.Real;
 
             return token;
         }
@@ -222,6 +296,11 @@
             Token token = new Token();
             token.Value = name;
             token.TokenType = TokenType.Name;
+
+            if (name == "true" || name == "false")
+            {
+                token.TokenType = TokenType.Boolean;
+            }
 
             return token;
         }

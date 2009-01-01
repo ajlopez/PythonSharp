@@ -9,6 +9,8 @@
     {
         Name,
         Integer,
+        Real,
+        Boolean,
         String,
         QuotedString,
         Operator,

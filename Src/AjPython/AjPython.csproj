@@ -50,8 +50,14 @@
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\Token.cs" />
     <Compile Include="Environment.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Nodes\BinaryExpression.cs" />
     <Compile Include="Nodes\BinaryOperatorExpression.cs" />
+    <Compile Include="Nodes\BooleanExpression.cs" />
+    <Compile Include="Nodes\DictionaryExpression.cs" />
+    <Compile Include="Nodes\RealExpression.cs" />
+    <Compile Include="Nodes\QuotedStringExpression.cs" />
+    <Compile Include="Nodes\ListExpression.cs" />
     <Compile Include="Nodes\Expression.cs" />
     <Compile Include="Nodes\IntegerExpression.cs" />
     <Compile Include="Nodes\NameExpression.cs" />

@@ -1,0 +1,20 @@
+
++ Real number
++ Parse Real number
++ Compile real number
+- Real operators
++ Boolean
+- List Comprehesion
++ Parse true, false
++ Compile true, false
+- Big number
+- Escape characters
++ */ greater precedence +-
+- + to concatenate
++ ** operator
++ Compile list
+- print command
++ Dictionary
+
+- thousand more...
+

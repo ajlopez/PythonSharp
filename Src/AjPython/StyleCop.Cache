@@ -1,23 +1,5 @@
 <stylecopresultscache>
   <version>10</version>
-  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>12/28/2008 16:59:18</timestamp>
-    <milliseconds>78</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="EndOfInputException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>12/28/2008 17:52:35</timestamp>
-    <milliseconds>781</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="Token.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/28/2008 17:21:25</timestamp>
@@ -72,15 +54,6 @@
     <milliseconds>453</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>12/28/2008 20:20:24</timestamp>
-    <milliseconds>957</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="Operator.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/28/2008 17:21:25</timestamp>
@@ -88,18 +61,6 @@
     </settings>
     <timestamp>12/28/2008 20:21:18</timestamp>
     <milliseconds>890</milliseconds>
-    <violations />
-  </sourcecode>
-  <project key="2085377443">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
-  <sourcecode name="Compiler.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>12/28/2008 20:22:05</timestamp>
-    <milliseconds>666</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="Environment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
@@ -127,6 +88,54 @@
     </settings>
     <timestamp>12/28/2008 20:21:50</timestamp>
     <milliseconds>730</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Compiler.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/28/2008 17:21:25</timestamp>
+      <milliseconds>546</milliseconds>
+    </settings>
+    <timestamp>01/01/2009 16:55:21</timestamp>
+    <milliseconds>687</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/28/2008 17:21:25</timestamp>
+      <milliseconds>546</milliseconds>
+    </settings>
+    <timestamp>01/01/2009 16:56:40</timestamp>
+    <milliseconds>125</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="2085377443">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="EndOfInputException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/28/2008 17:21:25</timestamp>
+      <milliseconds>546</milliseconds>
+    </settings>
+    <timestamp>01/01/2009 17:00:02</timestamp>
+    <milliseconds>31</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/28/2008 17:21:25</timestamp>
+      <milliseconds>546</milliseconds>
+    </settings>
+    <timestamp>01/01/2009 17:01:35</timestamp>
+    <milliseconds>375</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GlobalSuppressions.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/28/2008 17:21:25</timestamp>
+      <milliseconds>546</milliseconds>
+    </settings>
+    <timestamp>01/01/2009 17:01:27</timestamp>
+    <milliseconds>281</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

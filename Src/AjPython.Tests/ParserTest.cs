@@ -45,7 +45,7 @@
         }
 
         [TestMethod]
-        public void ParseOperators()
+        public void ParseOneCharOperators()
         {
             string operators = "+-*/";
             Parser parser = new Parser(operators);
@@ -67,9 +67,33 @@
         }
 
         [TestMethod]
+        public void ParseMultiCharOperators()
+        {
+            string operators = "**";
+            string[] otherOperators = new string[] { "**" };
+
+            Parser parser = new Parser(operators);
+
+            Token token;
+
+            foreach (string op in otherOperators)
+            {
+                token = parser.NextToken();
+
+                Assert.IsNotNull(token);
+                Assert.AreEqual(TokenType.Operator, token.TokenType);
+                Assert.AreEqual(op, token.Value);
+            }
+
+            token = parser.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
         public void ParseSeparators()
         {
-            string separators = "()";
+            string separators = "()[]{},:";
             Parser parser = new Parser(separators);
 
             Token token;
@@ -154,6 +178,48 @@
             Assert.IsNotNull(token);
             Assert.AreEqual(TokenType.Integer, token.TokenType);
             Assert.AreEqual("123", token.Value);
+
+            token = parser.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
+        public void ParseReal()
+        {
+            Parser parser = new Parser("12.34");
+
+            Token token;
+
+            token = parser.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Real, token.TokenType);
+            Assert.AreEqual("12.34", token.Value);
+
+            token = parser.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
+        public void ParseBoolean()
+        {
+            Parser parser = new Parser("true false");
+
+            Token token;
+
+            token = parser.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Boolean, token.TokenType);
+            Assert.AreEqual("true", token.Value);
+
+            token = parser.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Boolean, token.TokenType);
+            Assert.AreEqual("false", token.Value);
 
             token = parser.NextToken();
 

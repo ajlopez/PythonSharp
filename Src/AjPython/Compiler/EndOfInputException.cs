@@ -5,10 +5,21 @@
     using System.Linq;
     using System.Text;
 
+    [Serializable]
     public class EndOfInputException : Exception
     {
         public EndOfInputException()
-            : base("End of Input")
+            : this("End of Input")
+        {
+        }
+
+        public EndOfInputException(string msg)
+            : base(msg)
+        {
+        }
+
+        public EndOfInputException(string msg, Exception exception)
+            : base(msg, exception)
         {
         }
     }

@@ -1,6 +1,7 @@
 ﻿namespace AjPython.Tests
 {
     using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -21,11 +22,35 @@
         }
 
         [TestMethod]
+        public void EvaluateQuotedStringExpression()
+        {
+            QuotedStringExpression expression = new QuotedStringExpression("foo");
+
+            Assert.AreEqual("foo", expression.Evaluate(new Environment()));
+        }
+
+        [TestMethod]
         public void EvaluateIntegerExpression() 
         {
             IntegerExpression expression = new IntegerExpression(123);
 
             Assert.AreEqual(123, expression.Evaluate(new Environment()));
+        }
+
+        [TestMethod]
+        public void EvaluateRealExpression()
+        {
+            RealExpression expression = new RealExpression(12.3);
+
+            Assert.AreEqual(12.3, expression.Evaluate(new Environment()));
+        }
+
+        [TestMethod]
+        public void EvaluateBooleanExpression()
+        {
+            BooleanExpression expression = new BooleanExpression(true);
+
+            Assert.AreEqual(true, expression.Evaluate(new Environment()));
         }
 
         [TestMethod]
@@ -53,9 +78,9 @@
         }
 
         [TestMethod]
-        public void EvaluateSubstractExpression()
+        public void EvaluateSubtractExpression()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(new IntegerExpression(1), new IntegerExpression(2), Operator.Substract);
+            BinaryExpression expression = new BinaryOperatorExpression(new IntegerExpression(1), new IntegerExpression(2), Operator.Subtract);
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Left);
@@ -86,6 +111,39 @@
             Assert.IsNotNull(expression.Right);
 
             Assert.AreEqual(2, expression.Evaluate(new Environment()));
+        }
+
+        [TestMethod]
+        public void CreateListExpression()
+        {
+            ListExpression expression = new ListExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsNotNull(expression.Expressions);
+            Assert.AreEqual(0, expression.Expressions.Count);
+        }
+
+        [TestMethod]
+        public void EvaluateListExpression()
+        {
+            ListExpression expression = new ListExpression();
+
+            expression.Add(new IntegerExpression(1));
+            expression.Add(new StringExpression("foo"));
+
+            Assert.IsNotNull(expression.Expressions);
+            Assert.AreEqual(2, expression.Expressions.Count);
+
+            object result = expression.Evaluate(new Environment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList list = (IList)result;
+
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual("foo", list[1]);
         }
 
         [TestMethod]

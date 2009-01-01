@@ -4,16 +4,16 @@
     using System.Linq;
     using System.Text;
 
-    public class StringExpression : Expression
+    public class RealExpression : Expression
     {
-        private string value;
+        private double value;
 
-        public StringExpression(string value)
+        public RealExpression(double value)
         {
             this.value = value;
         }
 
-        public string Value
+        public double Value
         {
             get
             {
@@ -21,7 +21,7 @@
             }
         }
 
-        public override object Evaluate(Environment environment)
+        public override object Evaluate(Environment env)
         {
             return this.value;
         }
