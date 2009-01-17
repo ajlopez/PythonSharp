@@ -38,9 +38,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandTest.cs" />
     <Compile Include="CompilerTest.cs" />
     <Compile Include="EnvironmentTest.cs" />
     <Compile Include="ExpressionTest.cs" />
+    <Compile Include="MachineTest.cs" />
     <Compile Include="ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

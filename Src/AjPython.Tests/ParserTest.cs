@@ -1,15 +1,15 @@
 ﻿namespace AjPython.Tests
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
 
     using AjPython;
     using AjPython.Compiler;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.IO;
 
     [TestClass]
     public class ParserTest
@@ -47,7 +47,7 @@
         [TestMethod]
         public void ParseOneCharOperators()
         {
-            string operators = "+-*/";
+            string operators = "+-*/=";
             Parser parser = new Parser(operators);
 
             Token token;
@@ -254,7 +254,7 @@
             token = parser.NextToken();
 
             Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.QuotedString, token.TokenType);
+            Assert.AreEqual(TokenType.String, token.TokenType);
             Assert.AreEqual("bar", token.Value);
 
             token = parser.NextToken();

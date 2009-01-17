@@ -45,18 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\PrintCommand.cs" />
+    <Compile Include="Commands\SimpleAssignmentCommand.cs" />
     <Compile Include="Compiler\Compiler.cs" />
+    <Compile Include="Compiler\CompilerException.cs" />
+    <Compile Include="Compiler\UnexpectedEndOfInputException.cs" />
     <Compile Include="Compiler\EndOfInputException.cs" />
+    <Compile Include="Compiler\ExpectedTokenException.cs" />
+    <Compile Include="Compiler\NameExpectedException.cs" />
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\Token.cs" />
+    <Compile Include="Compiler\UnexpectedTokenException.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Machine.cs" />
     <Compile Include="Nodes\BinaryExpression.cs" />
     <Compile Include="Nodes\BinaryOperatorExpression.cs" />
     <Compile Include="Nodes\BooleanExpression.cs" />
     <Compile Include="Nodes\DictionaryExpression.cs" />
     <Compile Include="Nodes\RealExpression.cs" />
-    <Compile Include="Nodes\QuotedStringExpression.cs" />
     <Compile Include="Nodes\ListExpression.cs" />
     <Compile Include="Nodes\Expression.cs" />
     <Compile Include="Nodes\IntegerExpression.cs" />

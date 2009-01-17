@@ -12,7 +12,6 @@
         Real,
         Boolean,
         String,
-        QuotedString,
         Operator,
         Separator
     }

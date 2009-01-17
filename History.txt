@@ -1,16 +1,24 @@
 
 2008-12-28	
-	Initial Project in ajcodekatas
-	Parser and tests
-	String, integer (no real yet)
-	Expression
-	Binary expression (only integers)
-	Compiler and tests
+Initial Project in ajcodekatas
+Parser and tests
+String, integer (no real yet)
+Expression
+Binary expression (only integers)
+Compiler and tests
 
 2009-01-01
-	Real number support (parse, compile, evaluate, without operators yet)
-	Boolean support (parse, compile, evaluate)
-	List (parse, compile, evaluate)
-	Dictionary (parse, compile, evaluate)
-	Power operator ** (only integer parameters)
-	Arithmetic operator precedence
+Real number support (parse, compile, evaluate, without operators yet)
+Boolean support (parse, compile, evaluate)
+List (parse, compile, evaluate)
+Dictionary (parse, compile, evaluate)
+Power operator ** (only integer parameters)
+Arithmetic operator precedence
+
+2009-01-17
+Quoted String as String
+Command
+Simple Assignment Command
+CompileCommand in Compiler
+Machine with Environment, Input and Output
+Print Command

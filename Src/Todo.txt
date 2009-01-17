@@ -12,9 +12,23 @@
 + */ greater precedence +-
 - + to concatenate
 + ** operator
+- // operator
 + Compile list
 - print command
 + Dictionary
+- Hexadecimal and octals
++ Simple Assignment command
+- Complex Assignment command
+- backstick as repr
+- input
+- raw_input
+- long strings
+- strings with \
+- strings multiline with \ before the new line
+- raw string r' r"
+- unicode strings
+- multiline expressions with \ before the new line, 
+- complex numbers with j
 
 - thousand more...
 

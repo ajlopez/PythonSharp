@@ -42,10 +42,10 @@
 
             int n = 0;
 
-            foreach (Expression keyExpression in keyExpressions)
+            foreach (Expression keyExpression in this.keyExpressions)
             {
                 object key = keyExpression.Evaluate(environment);
-                object value = valueExpressions[n].Evaluate(environment);
+                object value = this.valueExpressions[n].Evaluate(environment);
                 dictionary[key] = value;
                 n++;
             }

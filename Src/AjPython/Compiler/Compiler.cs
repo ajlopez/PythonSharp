@@ -1,10 +1,11 @@
 ﻿namespace AjPython.Compiler
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
+
+    using AjPython.Commands;
     using AjPython.Nodes;
 
     public class Compiler
@@ -19,7 +20,7 @@
         {
             if (parser == null)
             {
-                throw new ArgumentNullException("parser");
+                throw new System.ArgumentNullException("parser");
             }
 
             this.parser = parser;
@@ -65,11 +66,13 @@
                 Expression expression = this.CompileExpression();
                 listExpression.Add(expression);
 
-                token = parser.NextToken();
+                token = this.parser.NextToken();
             }
 
             if (token != null)
+            {
                 this.parser.PushToken(token);
+            }
 
             return listExpression;
         }
@@ -99,13 +102,41 @@
                 Expression valueExpression = this.CompileExpression();
                 dictionaryExpression.Add(keyExpression, valueExpression);
 
-                token = parser.NextToken();
+                token = this.parser.NextToken();
             }
 
             if (token != null)
+            {
                 this.parser.PushToken(token);
+            }
 
             return dictionaryExpression;
+        }
+
+        public Command CompileCommand()
+        {
+            Token token = this.CompileName();
+
+            if (token.Value == "print")
+            {
+                Expression expression = this.CompileExpression();
+                return new PrintCommand(expression);
+            }
+
+            Token token2 = this.parser.NextToken();
+
+            if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
+            {
+                Expression expression = this.CompileExpression();
+                return new SimpleAssignmentCommand(token.Value, expression);
+            }
+
+            if (token2 == null)
+            {
+                throw new UnexpectedEndOfInputException();
+            }
+
+            throw new UnexpectedTokenException(token2);
         }
 
         private static Operator CompileOperator(string oper)
@@ -244,14 +275,12 @@
             {
                 case TokenType.String:
                     return new StringExpression(token.Value);
-                case TokenType.QuotedString:
-                    return new QuotedStringExpression(token.Value);
                 case TokenType.Integer:
-                    return new IntegerExpression(Convert.ToInt32(token.Value));
+                    return new IntegerExpression(System.Convert.ToInt32(token.Value));
                 case TokenType.Real:
-                    return new RealExpression(Convert.ToDouble(token.Value));
+                    return new RealExpression(System.Convert.ToDouble(token.Value));
                 case TokenType.Boolean:
-                    return new BooleanExpression(Convert.ToBoolean(token.Value));
+                    return new BooleanExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
                     return new NameExpression(token.Value);
                 case TokenType.Separator:
@@ -261,12 +290,14 @@
                         this.CompileExpectedToken(")");
                         return expression;
                     }
+
                     if (token.Value == "[")
                     {
                         Expression expression = this.CompileList();
                         this.CompileExpectedToken("]");
                         return expression;
                     }
+
                     if (token.Value == "{")
                     {
                         Expression expression = this.CompileDictionary();
@@ -288,6 +319,18 @@
             {
                 throw new InvalidDataException(string.Format("{0} expected", value));
             }
+        }
+
+        private Token CompileName()
+        {
+            Token token = this.parser.NextToken();
+
+            if (token == null || token.TokenType != TokenType.Name)
+            {
+                throw new NameExpectedException();
+            }
+
+            return token;
         }
     }
 }

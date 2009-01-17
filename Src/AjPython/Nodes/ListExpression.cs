@@ -30,7 +30,7 @@
         {
             IList list = new ArrayList();
 
-            foreach (Expression expression in expressions)
+            foreach (Expression expression in this.expressions)
             {
                 list.Add(expression.Evaluate(environment));
             }

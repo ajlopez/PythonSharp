@@ -1,0 +1,69 @@
+<stylecopresultscache>
+  <version>10</version>
+  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>12/28/2008 17:03:32</timestamp>
+    <milliseconds>343</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="EnvironmentTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>01/17/2009 11:24:00</timestamp>
+    <milliseconds>281</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="CommandTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>01/17/2009 11:24:28</timestamp>
+    <milliseconds>390</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ExpressionTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>01/17/2009 11:24:37</timestamp>
+    <milliseconds>359</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="CompilerTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>01/17/2009 11:24:51</timestamp>
+    <milliseconds>968</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MachineTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>01/17/2009 11:25:03</timestamp>
+    <milliseconds>531</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="739132678">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="ParserTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>01/17/2009 11:23:11</timestamp>
+      <milliseconds>203</milliseconds>
+    </settings>
+    <timestamp>01/17/2009 11:25:17</timestamp>
+    <milliseconds>375</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>

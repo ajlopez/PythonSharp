@@ -1,9 +1,9 @@
 ﻿namespace AjPython.Tests
 {
-    using System.Text;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     using AjPython;
     using AjPython.Nodes;
@@ -17,14 +17,6 @@
         public void EvaluateStringExpression() 
         {
             StringExpression expression = new StringExpression("foo");
-
-            Assert.AreEqual("foo", expression.Evaluate(new Environment()));
-        }
-
-        [TestMethod]
-        public void EvaluateQuotedStringExpression()
-        {
-            QuotedStringExpression expression = new QuotedStringExpression("foo");
 
             Assert.AreEqual("foo", expression.Evaluate(new Environment()));
         }

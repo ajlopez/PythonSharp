@@ -1,12 +1,13 @@
 ﻿namespace AjPython.Tests
 {
-    using System.IO;
-    using System.Text;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
 
     using AjPython;
+    using AjPython.Commands;
     using AjPython.Compiler;
     using AjPython.Nodes;
 
@@ -404,6 +405,55 @@
             Assert.AreEqual(3, expression.Evaluate(new Environment()));
 
             Assert.IsNull(compiler.CompileExpression());
+        }
+
+        [TestMethod]
+        public void CompileSimpleAssignmentCommand()
+        {
+            Compiler compiler = new Compiler("foo = \"bar\"");
+
+            Command command = compiler.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SimpleAssignmentCommand));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NameExpectedException))]
+        public void RaiseIsCommandDoesNotBeginWithName()
+        {
+            Compiler compiler = new Compiler("123 = 12");
+
+            Command command = compiler.CompileCommand();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedEndOfInputException))]
+        public void RaiseIsCommandIsNotComplete()
+        {
+            Compiler compiler = new Compiler("foo");
+
+            Command command = compiler.CompileCommand();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedTokenException))]
+        public void RaiseIsCommandIsUnknown()
+        {
+            Compiler compiler = new Compiler("foo bar");
+
+            Command command = compiler.CompileCommand();
+        }
+
+        [TestMethod]
+        public void CompilePrintCommand()
+        {
+            Compiler compiler = new Compiler("print 'foo'");
+
+            Command command = compiler.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(PrintCommand));
         }
     }
 }

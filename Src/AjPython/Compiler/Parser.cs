@@ -10,7 +10,7 @@
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
-        private const string Operators = "+-/*";
+        private const string Operators = "+-/*=";
         private const string Separators = "()[]{},:";
 
         private static string[] otherOperators = new string[] { "**" };
@@ -141,7 +141,7 @@
                     this.PushChar(ch2);
                 }
             }
-            catch (EndOfInputException ex)
+            catch (EndOfInputException)
             {
             }
 
@@ -208,7 +208,7 @@
 
             Token token = new Token();
             token.Value = sb.ToString();
-            token.TokenType = TokenType.QuotedString;
+            token.TokenType = TokenType.String;
 
             return token;
         }
