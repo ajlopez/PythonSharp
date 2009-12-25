@@ -550,7 +550,7 @@
         }
 
         [TestMethod]
-        public void CompileIfCommandWithSingleThenCommand()
+        public void CompileIfCommandWithSingleThenCommandSameLine()
         {
             Parser parser = new Parser("if a: print a");
 
@@ -558,6 +558,114 @@
 
             Assert.IsNotNull(cmd);
             Assert.IsInstanceOfType(cmd, typeof(IfCommand));
+
+            IfCommand ifcmd = (IfCommand)cmd;
+
+            Assert.IsNotNull(ifcmd.Condition);
+            Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(ifcmd.ThenCommand);
+            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(PrintCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileIfCommandWithCompositeThenCommandSameLine()
+        {
+            Parser parser = new Parser("if a: print a; print b");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(IfCommand));
+
+            IfCommand ifcmd = (IfCommand)cmd;
+
+            Assert.IsNotNull(ifcmd.Condition);
+            Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(ifcmd.ThenCommand);
+            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(CompositeCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileIfCommandWithSingleThenCommand()
+        {
+            Parser parser = new Parser("if a:\r\n  print a");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(IfCommand));
+
+            IfCommand ifcmd = (IfCommand)cmd;
+
+            Assert.IsNotNull(ifcmd.Condition);
+            Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(ifcmd.ThenCommand);
+            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(PrintCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+
+        [TestMethod]
+        public void CompileIfCommandWithCompositeThenCommand()
+        {
+            Parser parser = new Parser("if a:\r\n  print a\r\n  print b");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(IfCommand));
+
+            IfCommand ifcmd = (IfCommand)cmd;
+
+            Assert.IsNotNull(ifcmd.Condition);
+            Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(ifcmd.ThenCommand);
+            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(CompositeCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileAndExecuteIfCommandWithCompositeThenCommand()
+        {
+            Parser parser = new Parser("if 1:\r\n  one=1\r\n  two=2");
+            Machine machine = new Machine();
+            ICommand cmd = parser.CompileCommand();
+
+            cmd.Execute(machine, machine.Environment);
+
+            Assert.AreEqual(1, machine.Environment.GetValue("one"));
+            Assert.AreEqual(2, machine.Environment.GetValue("two"));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileAndExecuteIfCommandWithCompositeThenCommandWithAnotherCommand()
+        {
+            Parser parser = new Parser("if 0:\r\n  one=1\r\n  two=2\r\nthree=3");
+            Machine machine = new Machine();
+            ICommand cmd = parser.CompileCommand();
+
+            cmd.Execute(machine, machine.Environment);
+
+            Assert.IsNull(machine.Environment.GetValue("one"));
+            Assert.IsNull(machine.Environment.GetValue("two"));
+
+            cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+
+            cmd.Execute(machine, machine.Environment);
+
+            Assert.AreEqual(3, machine.Environment.GetValue("three"));
+
+            Assert.IsNull(parser.CompileCommand());
         }
     }
 }

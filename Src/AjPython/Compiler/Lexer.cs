@@ -19,6 +19,7 @@
         private Token lastToken;
         private char lastChar;
         private bool hasChar;
+        private int lastIndent;
 
         public Lexer(string text)
         {
@@ -36,9 +37,21 @@
             this.reader = reader;
         }
 
+        public void PushIndent(int indent)
+        {
+            this.lastIndent = indent;
+        }
+
         public int NextIndent()
         {
             int indent = 0;
+
+            if (this.lastIndent > 0)
+            {
+                indent = this.lastIndent;
+                this.lastIndent = 0;
+                return indent;
+            }
 
             try
             {

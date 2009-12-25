@@ -19,6 +19,8 @@
 
         public IExpression Condition { get { return this.condition; } }
 
+        public ICommand ThenCommand { get { return this.thencmd; } }
+
         public void Execute(Machine machine, BindingEnvironment environment)
         {
             bool isfalse = Predicates.IsFalse(this.condition.Evaluate(environment));

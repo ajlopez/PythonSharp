@@ -13,8 +13,10 @@
         private static string[] opslevel1 = new string[] { "+", "-" };
         private static string[] opslevel2 = new string[] { "*", "/" };
         private static string[] opslevel3 = new string[] { "**" };
+        private static Token EndOfLineToken = new Token() { TokenType = TokenType.EndOfLine, Value = "\r\n" };
 
         private bool lastSemi;
+        private int indent;
 
         private Lexer lexer;
 
@@ -104,7 +106,23 @@
         public ICommand CompileCommand()
         {
             if (!this.lastSemi)
-                this.SkipEmptyLines();
+            {
+                if (this.indent == 0)
+                    this.SkipEmptyLines();
+                else
+                {
+                    int newindent = this.lexer.NextIndent();
+
+                    if (newindent < this.indent)
+                    {
+                        this.lexer.PushIndent(newindent);
+                        return null;
+                    }
+
+                    if (newindent > this.indent)
+                        throw new UnexpectedTokenException("<indent>");
+                }
+            }
 
             ICommand command = this.CompileSimpleCommand();
 
@@ -130,6 +148,37 @@
                 return commands[0];
 
             return new CompositeCommand(commands);
+        }
+
+        public ICommand CompileNestedCommandList(int newindent)
+        {
+            int oldindent = this.indent;
+
+            try
+            {
+                this.indent = newindent;
+
+                List<ICommand> commands = new List<ICommand>();
+
+                this.lexer.PushIndent(newindent);
+
+                for (ICommand command = this.CompileCommand(); command != null; command = this.CompileCommand())
+                    commands.Add(command);
+
+                this.lexer.PushToken(EndOfLineToken);
+
+                if (commands.Count == 0)
+                    return null;
+
+                if (commands.Count == 1)
+                    return commands[0];
+
+                return new CompositeCommand(commands);
+            }
+            finally
+            {
+                this.indent = oldindent;
+            }
         }
 
         private void CompileEndOfCommand()
@@ -218,25 +267,53 @@
         private ICommand CompileIfCommand()
         {
             IExpression condition = this.CompileExpression();
+            ICommand thencommand;
+
             this.CompileToken(TokenType.Separator, ":");
-            this.lastSemi = true;
-            ICommand command = this.CompileCommand();
-            return new IfCommand(condition, command);
+
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                throw new UnexpectedEndOfInputException();
+
+            if (token.TokenType != TokenType.EndOfLine)
+            {
+                this.lexer.PushToken(token);
+                this.lastSemi = true;
+                thencommand = this.CompileCommandList();
+            }
+            else
+            {
+                int newindent = this.lexer.NextIndent();
+                thencommand = this.CompileNestedCommandList(newindent);
+            }
+
+            return new IfCommand(condition, thencommand);
         }
 
         private void SkipEmptyLines()
         {
             Token token;
+            int newindent;
 
-            if (this.lexer.NextIndent() != 0)
-                throw new SyntaxErrorException("invalid syntax");
+            while (true)
+            {
+                newindent = this.lexer.NextIndent();
 
-            for (token = this.lexer.NextToken(); token != null && token.TokenType == TokenType.EndOfLine; token = this.lexer.NextToken())
-                if (this.lexer.NextIndent() != 0)
+                if (newindent != 0)
                     throw new SyntaxErrorException("invalid syntax");
 
-            if (token != null)
-                this.lexer.PushToken(token);
+                token = this.lexer.NextToken();
+
+                if (token == null)
+                    return;
+
+                if (token.TokenType != TokenType.EndOfLine)
+                {
+                    this.lexer.PushToken(token);
+                    return;
+                }
+            }
         }
 
         private static Operator CompileOperator(string oper)

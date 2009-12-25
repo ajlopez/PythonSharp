@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
 
-    public class UnexpectedEndOfInputException : ParserException
+    public class UnexpectedEndOfInputException : SyntaxErrorException
     {
         public UnexpectedEndOfInputException()
             : base("Unexpected End of Input")
