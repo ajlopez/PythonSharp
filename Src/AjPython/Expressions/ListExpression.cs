@@ -31,9 +31,7 @@
             IList list = new ArrayList();
 
             foreach (IExpression expression in this.expressions)
-            {
                 list.Add(expression.Evaluate(environment));
-            }
 
             return list;
         }

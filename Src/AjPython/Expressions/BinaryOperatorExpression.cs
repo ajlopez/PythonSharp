@@ -25,13 +25,13 @@
             switch (this.@operator)
             {
                 case Operator.Add:
-                    return (int)leftvalue + (int)rightvalue;
+                    return Numbers.Add(leftvalue, rightvalue);
                 case Operator.Subtract:
-                    return (int)leftvalue - (int)rightvalue;
+                    return Numbers.Subtract(leftvalue, rightvalue);
                 case Operator.Multiply:
-                    return (int)leftvalue * (int)rightvalue;
+                    return Numbers.Multiply(leftvalue, rightvalue);
                 case Operator.Divide:
-                    return (int)leftvalue / (int)rightvalue;
+                    return Numbers.Divide(leftvalue, rightvalue);
                 case Operator.Power:
                     return System.Convert.ToInt32(System.Math.Pow((int)leftvalue, (int)rightvalue));
             }

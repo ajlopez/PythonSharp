@@ -28,3 +28,8 @@ Expression refactored to IExpression
 Command refactored to ICommand
 AjPython.Nodes refactored to AjPython.Expressions
 Environment refactored to BindingEnvironment
+TokenType.EndOfLine in Lexer, with tests
+Parser.CompileSimpleCommand
+Numbers and NumbersTests
+Binary Operators on Numbers
+AjPython.Console

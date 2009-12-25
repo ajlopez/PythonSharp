@@ -28,6 +28,16 @@
         }
 
         [TestMethod]
+        public void HasValue()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("foo", "bar");
+            Assert.IsTrue(environment.HasValue("foo"));
+            Assert.IsFalse(environment.HasValue("undefined"));
+        }
+
+        [TestMethod]
         public void GetNullIfUnknownName()
         {
             BindingEnvironment environment = new BindingEnvironment();

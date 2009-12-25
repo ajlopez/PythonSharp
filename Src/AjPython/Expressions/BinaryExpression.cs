@@ -12,34 +12,18 @@
         protected BinaryExpression(IExpression left, IExpression right)
         {
             if (left == null)
-            {
                 throw new System.ArgumentNullException("left");
-            }
 
             if (right == null)
-            {
                 throw new System.ArgumentNullException("right");
-            }
                 
             this.left = left;
             this.right = right;
         }
 
-        public IExpression Left
-        {
-            get
-            {
-                return this.left;
-            }
-        }
+        public IExpression Left { get { return this.left; } }
 
-        public IExpression Right
-        {
-            get
-            {
-                return this.right;
-            }
-        }
+        public IExpression Right { get { return this.right; } }
 
         public abstract object Evaluate(BindingEnvironment environment);
     }

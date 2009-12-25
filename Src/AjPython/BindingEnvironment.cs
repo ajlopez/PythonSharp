@@ -12,9 +12,7 @@
         public object GetValue(string name)
         {
             if (!this.values.ContainsKey(name))
-            {
                 return null;
-            }
 
             return this.values[name];
         }
@@ -22,6 +20,11 @@
         public void SetValue(string name, object value)
         {
             this.values[name] = value;
+        }
+
+        public bool HasValue(string name)
+        {
+            return this.values.ContainsKey(name);
         }
     }
 }

@@ -1,14 +1,5 @@
 <stylecopresultscache>
   <version>10</version>
-  <sourcecode name="Token.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>12/28/2008 17:52:42</timestamp>
-    <milliseconds>468</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="Expression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/28/2008 17:21:25</timestamp>
@@ -16,15 +7,6 @@
     </settings>
     <timestamp>12/28/2008 19:04:50</timestamp>
     <milliseconds>656</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="IntegerExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>12/28/2008 19:05:27</timestamp>
-    <milliseconds>453</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="Environment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
@@ -36,78 +18,6 @@
     <milliseconds>700</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 16:56:40</timestamp>
-    <milliseconds>125</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="EndOfInputException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:00:02</timestamp>
-    <milliseconds>31</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="GlobalSuppressions.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:04:47</timestamp>
-    <milliseconds>359</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="BinaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:04:46</timestamp>
-    <milliseconds>546</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="BinaryOperatorExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:40:49</timestamp>
-    <milliseconds>281</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="BooleanExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 18:35:24</timestamp>
-    <milliseconds>843</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="NameExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:02:11</timestamp>
-    <milliseconds>15</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Operator.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:39:05</timestamp>
-    <milliseconds>828</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="QuotedStringExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/28/2008 17:21:25</timestamp>
@@ -115,42 +25,6 @@
     </settings>
     <timestamp>01/01/2009 18:21:04</timestamp>
     <milliseconds>640</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="RealExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 18:33:35</timestamp>
-    <milliseconds>31</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="StringExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/01/2009 17:04:24</timestamp>
-    <milliseconds>765</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="DictionaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:24:00</timestamp>
-    <milliseconds>203</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="ListExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:24:05</timestamp>
-    <milliseconds>671</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="Command.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
@@ -171,63 +45,9 @@
     <milliseconds>843</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="ExpectedTokenException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:46:41</timestamp>
-    <milliseconds>93</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="NameExpectedException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:47:04</timestamp>
-    <milliseconds>703</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="UnexpectedEndOfInputException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:50:44</timestamp>
-    <milliseconds>859</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="UnexpectedTokenException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:47:02</timestamp>
-    <milliseconds>109</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Machine.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:34:20</timestamp>
-    <milliseconds>906</milliseconds>
-    <violations />
-  </sourcecode>
   <project key="2085377443">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <sourcecode name="SimpleAssignmentCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
-    </settings>
-    <timestamp>01/17/2009 10:53:17</timestamp>
-    <milliseconds>109</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="Compiler.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/28/2008 17:21:25</timestamp>
@@ -237,22 +57,330 @@
     <milliseconds>140</milliseconds>
     <violations />
   </sourcecode>
+  <sourcecode name="ICommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:16:06</timestamp>
+    <milliseconds>368</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:16:27</timestamp>
+    <milliseconds>527</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="PrintCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>436</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="SimpleAssignmentCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>869</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ExpectedTokenException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:15:10</timestamp>
+    <milliseconds>21</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="EndOfInputException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>06/07/2009 18:45:22</timestamp>
+    <milliseconds>138</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="NameExpectedException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:15:10</timestamp>
+    <milliseconds>83</milliseconds>
+    <violations />
+  </sourcecode>
   <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
     </settings>
-    <timestamp>01/17/2009 11:11:06</timestamp>
-    <milliseconds>453</milliseconds>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>388</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ParserException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:15:10</timestamp>
+    <milliseconds>546</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Token.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>06/07/2009 18:45:22</timestamp>
+    <milliseconds>92</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="UnexpectedEndOfInputException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:15:10</timestamp>
+    <milliseconds>198</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="UnexpectedTokenException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:15:10</timestamp>
+    <milliseconds>138</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BinaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:46</timestamp>
+    <milliseconds>99</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="TokenType.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
-      <timestamp>12/28/2008 17:21:25</timestamp>
-      <milliseconds>546</milliseconds>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
     </settings>
-    <timestamp>01/17/2009 11:11:01</timestamp>
-    <milliseconds>78</milliseconds>
+    <timestamp>06/07/2009 18:45:22</timestamp>
+    <milliseconds>131</milliseconds>
     <violations />
+  </sourcecode>
+  <sourcecode name="BooleanExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:46</timestamp>
+    <milliseconds>221</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BinaryOperatorExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:44</timestamp>
+    <milliseconds>738</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:46</timestamp>
+    <milliseconds>393</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DictionaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>611</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IntegerExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>666</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="NameExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>723</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ListExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>984</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Operator.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>538</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="RealExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:45</timestamp>
+    <milliseconds>799</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="StringExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:20:46</timestamp>
+    <milliseconds>519</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Machine.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:16:27</timestamp>
+    <milliseconds>107</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>06/07/2009 18:45:22</timestamp>
+    <milliseconds>228</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GlobalSuppressions.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>06/07/2009 18:45:22</timestamp>
+    <milliseconds>285</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="1263207321">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Lexer.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/07/2009 18:45:22</timestamp>
+      <milliseconds>283</milliseconds>
+    </settings>
+    <timestamp>12/25/2009 11:42:53</timestamp>
+    <milliseconds>675</milliseconds>
+    <violations>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>26</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>34</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>56</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>59</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>62</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>65</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>68</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>71</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>90</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>96</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the else statement must be wrapped in opening and closing curly brackets.</context>
+        <line>120</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>209</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the if statement must be wrapped in opening and closing curly brackets.</context>
+        <line>277</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CurlyBracketsMustNotBeOmitted" ruleCheckId="SA1503">
+        <context>The body of the while statement must be wrapped in opening and closing curly brackets.</context>
+        <line>289</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
 </stylecopresultscache>

@@ -14,14 +14,10 @@
         public SimpleAssignmentCommand(string name, IExpression expression)
         {
             if (name == null)
-            {
                 throw new System.ArgumentNullException("name");
-            }
 
             if (expression == null)
-            {
                 throw new System.ArgumentNullException("expression");
-            }
 
             this.name = name;
             this.expression = expression;
@@ -35,13 +31,7 @@
             }
         }
 
-        public IExpression Expression
-        {
-            get
-            {
-                return this.expression;
-            }
-        }
+        public IExpression Expression { get { return this.expression; } }
 
         public void Execute(Machine machine)
         {

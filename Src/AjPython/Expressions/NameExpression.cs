@@ -1,5 +1,6 @@
 ﻿namespace AjPython.Expressions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -13,17 +14,19 @@
             this.name = name;
         }
 
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
+        public string Name { get { return this.name; } }
 
         public object Evaluate(BindingEnvironment environment)
         {
-            return environment.GetValue(this.name);
+            object value = environment.GetValue(this.name);
+
+            if (value != null)
+                return value;
+
+            if (environment.HasValue(this.name))
+                return value;
+
+            throw new InvalidOperationException(string.Format("NameError: name '{0}' not defined", this.name));
         }
     }
 }

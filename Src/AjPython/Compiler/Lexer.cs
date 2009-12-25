@@ -23,9 +23,7 @@
         public Lexer(string text)
         {
             if (text == null)
-            {
                 throw new ArgumentNullException("text");
-            }
 
             this.reader = new StringReader(text);
         }
@@ -33,9 +31,7 @@
         public Lexer(TextReader reader)
         {
             if (reader == null)
-            {
                 throw new ArgumentNullException("reader");
-            }
 
             this.reader = reader;
         }
@@ -56,35 +52,26 @@
             {
                 ch = this.NextCharSkipBlanks();
 
+                if (ch == '\n' || ch == '\r')
+                    return this.NextEndOfLine(ch);
+
                 if (char.IsDigit(ch))
-                {
                     return this.NextInteger(ch);
-                }
 
                 if (char.IsLetter(ch))
-                {
                     return this.NextName(ch);
-                }
 
                 if (ch == StringChar)
-                {
                     return this.NextString();
-                }
 
                 if (ch == QuotedStringChar)
-                {
                     return this.NextQuotedString();
-                }
 
                 if (Separators.Contains(ch))
-                {
                     return this.NextSeparator(ch);
-                }
 
                 if (Operators.Contains(ch))
-                {
                     return this.NextOperator(ch);
-                }
 
                 throw new InvalidDataException("Unknown input");
             }
@@ -103,19 +90,38 @@
         public void Dispose(bool dispose)
         {
             if (dispose && this.reader != null)
-            {
                 this.reader.Dispose();
-            }
         }
 
         internal void PushToken(Token token)
         {
             if (this.lastToken != null)
-            {
                 throw new InvalidOperationException();
-            }
 
             this.lastToken = token;
+        }
+
+        private Token NextEndOfLine(char ch)
+        {
+            string value = ch.ToString();
+
+            if (ch == '\r')
+            {
+                try
+                {
+                    char ch2 = this.NextChar();
+
+                    if (ch2 != '\n')
+                        this.PushChar(ch2);
+                    else
+                        value += ch2;
+                }
+                catch
+                {
+                }
+            }
+
+            return new Token() { TokenType = TokenType.EndOfLine, Value = value };
         }
 
         private Token NextOperator(char ch)
@@ -137,9 +143,7 @@
                     };
                 }
                 else
-                {
                     this.PushChar(ch2);
-                }
             }
             catch (EndOfInputException)
             {
@@ -228,9 +232,7 @@
                 }
 
                 if (ch == '.') 
-                {
                     return this.NextReal(integer);
-                }
 
                 this.PushChar(ch);
             }
@@ -298,9 +300,7 @@
             token.TokenType = TokenType.Name;
 
             if (name == "true" || name == "false")
-            {
                 token.TokenType = TokenType.Boolean;
-            }
 
             return token;
         }
@@ -311,10 +311,8 @@
 
             ch = this.NextChar();
 
-            while (char.IsWhiteSpace(ch))
-            {
+            while (char.IsWhiteSpace(ch) && ch != '\n' && ch != '\r')
                 ch = this.NextChar();
-            }
 
             return ch;
         }
@@ -337,16 +335,14 @@
 
             if (this.reader.Equals(System.Console.In) && this.reader.Peek() < 0)
             {
-                Console.Out.Write("> ");
+                Console.Out.Write(">>> ");
                 Console.Out.Flush();
             }
 
             ch = this.reader.Read();
 
             if (ch < 0)
-            {
                 throw new EndOfInputException();
-            }
 
             return Convert.ToChar(ch);
         }

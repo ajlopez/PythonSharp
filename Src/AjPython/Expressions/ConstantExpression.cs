@@ -4,22 +4,16 @@
     using System.Linq;
     using System.Text;
 
-    public class RealExpression : IExpression
+    public class ConstantExpression : IExpression
     {
-        private double value;
+        private object value;
 
-        public RealExpression(double value)
+        public ConstantExpression(object value)
         {
             this.value = value;
         }
 
-        public double Value
-        {
-            get
-            {
-                return this.value;
-            }
-        }
+        public object Value { get { return this.value; } }
 
         public object Evaluate(BindingEnvironment env)
         {

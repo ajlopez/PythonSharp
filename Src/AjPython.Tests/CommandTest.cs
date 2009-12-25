@@ -17,7 +17,7 @@
         [TestMethod]
         public void CreateSimpleAssignmentCommand()
         {
-            IExpression expression = new StringExpression("bar");
+            IExpression expression = new ConstantExpression("bar");
             SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", expression);
 
             Assert.IsNotNull(command);
@@ -32,7 +32,7 @@
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void RaiseIfNameIsNullForSimpleAssignmentCommand() 
         {
-            IExpression expression = new StringExpression("bar");
+            IExpression expression = new ConstantExpression("bar");
             SimpleAssignmentCommand command = new SimpleAssignmentCommand(null, expression);
         }
 
@@ -46,7 +46,7 @@
         [TestMethod]
         public void ExecuteSimpleAssignmentCommand()
         {
-            SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", new StringExpression("bar"));
+            SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", new ConstantExpression("bar"));
             Machine machine = new Machine();
 
             command.Execute(machine);
@@ -57,7 +57,7 @@
         [TestMethod]
         public void CreatePrintCommand()
         {
-            IExpression expression = new StringExpression("foo");
+            IExpression expression = new ConstantExpression("foo");
             PrintCommand command = new PrintCommand(expression);
 
             Assert.IsNotNull(command);
@@ -75,7 +75,7 @@
         [TestMethod]
         public void ExecutePrintCommand()
         {
-            PrintCommand command = new PrintCommand(new StringExpression("bar"));
+            PrintCommand command = new PrintCommand(new ConstantExpression("bar"));
             Machine machine = new Machine();
             StringWriter writer = new StringWriter();
             machine.Output = writer;

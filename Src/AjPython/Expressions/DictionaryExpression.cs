@@ -14,21 +14,9 @@
         {
         }
 
-        public List<IExpression> KeyExpressions
-        {
-            get
-            {
-                return this.keyExpressions;
-            }
-        }
+        public List<IExpression> KeyExpressions { get { return this.keyExpressions; } }
 
-        public List<IExpression> ValueExpressions
-        {
-            get
-            {
-                return this.valueExpressions;
-            }
-        }
+        public List<IExpression> ValueExpressions { get { return this.valueExpressions; } }
 
         public void Add(IExpression keyExpression, IExpression valueExpression)
         {

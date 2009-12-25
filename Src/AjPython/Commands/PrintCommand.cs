@@ -13,20 +13,12 @@
         public PrintCommand(IExpression expression)
         {
             if (expression == null)
-            {
                 throw new System.ArgumentNullException("expression");
-            }
 
             this.expression = expression;
         }
 
-        public IExpression Expression
-        {
-            get
-            {
-                return this.expression;
-            }
-        }
+        public IExpression Expression { get { return this.expression; } }
 
         public void Execute(Machine machine)
         {

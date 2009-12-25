@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandTest.cs" />
+    <Compile Include="NumbersTests.cs" />
     <Compile Include="ParserTest.cs" />
     <Compile Include="BindingEnvironmentTest.cs" />
     <Compile Include="ExpressionTest.cs" />

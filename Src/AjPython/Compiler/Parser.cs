@@ -14,16 +14,14 @@
         private static string[] opslevel2 = new string[] { "*", "/" };
         private static string[] opslevel3 = new string[] { "**" };
 
-        private Lexer parser;
+        private Lexer lexer;
 
-        public Parser(Lexer parser)
+        public Parser(Lexer lexer)
         {
-            if (parser == null)
-            {
-                throw new System.ArgumentNullException("parser");
-            }
+            if (lexer == null)
+                throw new System.ArgumentNullException("lexer");
 
-            this.parser = parser;
+            this.lexer = lexer;
         }
 
         public Parser(string text)
@@ -47,32 +45,26 @@
         {
             ListExpression listExpression = new ListExpression();
 
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (token != null && token.Value != "]")
             {
                 if (listExpression.Expressions.Count != 0)
                 {
                     if (token.Value != ",")
-                    {
                         throw new InvalidDataException(string.Format("Unexpected '{0}'", token.Value));
-                    }
                 }
                 else
-                {
-                    this.parser.PushToken(token);
-                }
+                    this.lexer.PushToken(token);
 
                 IExpression expression = this.CompileExpression();
                 listExpression.Add(expression);
 
-                token = this.parser.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null)
-            {
-                this.parser.PushToken(token);
-            }
+                this.lexer.PushToken(token);
 
             return listExpression;
         }
@@ -81,41 +73,65 @@
         {
             DictionaryExpression dictionaryExpression = new DictionaryExpression();
 
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (token != null && token.Value != "}")
             {
                 if (dictionaryExpression.KeyExpressions.Count != 0)
                 {
                     if (token.Value != ",")
-                    {
                         throw new InvalidDataException(string.Format("Unexpected '{0}'", token.Value));
-                    }
                 }
                 else
-                {
-                    this.parser.PushToken(token);
-                }
+                    this.lexer.PushToken(token);
 
                 IExpression keyExpression = this.CompileExpression();
                 this.CompileExpectedToken(":");
                 IExpression valueExpression = this.CompileExpression();
                 dictionaryExpression.Add(keyExpression, valueExpression);
 
-                token = this.parser.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null)
-            {
-                this.parser.PushToken(token);
-            }
+                this.lexer.PushToken(token);
 
             return dictionaryExpression;
         }
 
         public ICommand CompileCommand()
         {
+            ICommand command = this.CompileSimpleCommand();
+
+            if (command == null)
+                return null;
+
+            this.CompileEndOfCommand();
+
+            return command;
+        }
+
+        private void CompileEndOfCommand()
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return;
+
+            if (token.TokenType == TokenType.EndOfLine)
+                return;
+
+            this.lexer.PushToken(token);
+
+            throw new UnexpectedTokenException(token);
+        }
+
+        private ICommand CompileSimpleCommand()
+        {
             Token token = this.CompileName();
+
+            if (token == null)
+                return null;
 
             if (token.Value == "print")
             {
@@ -123,7 +139,7 @@
                 return new PrintCommand(expression);
             }
 
-            Token token2 = this.parser.NextToken();
+            Token token2 = this.lexer.NextToken();
 
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
             {
@@ -132,9 +148,7 @@
             }
 
             if (token2 == null)
-            {
                 throw new UnexpectedEndOfInputException();
-            }
 
             throw new UnexpectedTokenException(token2);
         }
@@ -142,29 +156,19 @@
         private static Operator CompileOperator(string oper)
         {
             if (oper == "+")
-            {
                 return Operator.Add;
-            }
 
             if (oper == "-")
-            {
                 return Operator.Subtract;
-            }
 
             if (oper == "*")
-            {
                 return Operator.Multiply;
-            }
 
             if (oper == "/")
-            {
                 return Operator.Divide;
-            }
 
             if (oper == "**")
-            {
                 return Operator.Power;
-            }
 
             throw new System.InvalidOperationException(string.Format("Unexpected {0}", oper));
         }
@@ -189,23 +193,19 @@
             IExpression expression = this.CompileTerm();
 
             if (expression == null)
-            {
                 return null;
-            }
 
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (IsLevel3Operator(token))
             {
                 IExpression expression2 = this.CompileTerm();
                 expression = new BinaryOperatorExpression(expression, expression2, CompileOperator(token.Value));
-                token = this.parser.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null)
-            {
-                this.parser.PushToken(token);
-            }
+                this.lexer.PushToken(token);
 
             return expression;
         }
@@ -215,23 +215,19 @@
             IExpression expression = this.CompileBinaryLevel3Expression();
 
             if (expression == null)
-            {
                 return null;
-            }
 
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (IsLevel2Operator(token))
             {
                 IExpression expression2 = this.CompileBinaryLevel3Expression();
                 expression = new BinaryOperatorExpression(expression, expression2, CompileOperator(token.Value));
-                token = this.parser.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null)
-            {
-                this.parser.PushToken(token);
-            }
+                this.lexer.PushToken(token);
 
             return expression;
         }
@@ -241,46 +237,40 @@
             IExpression expression = this.CompileBinaryLevel2Expression();
 
             if (expression == null)
-            {
                 return null;
-            }
 
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (IsLevel1Operator(token))
             {
                 IExpression expression2 = this.CompileBinaryLevel2Expression();
                 expression = new BinaryOperatorExpression(expression, expression2, CompileOperator(token.Value));
-                token = this.parser.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null)
-            {
-                this.parser.PushToken(token);
-            }
+                this.lexer.PushToken(token);
 
             return expression;
         }
 
         private IExpression CompileTerm()
         {
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             if (token == null)
-            {
                 return null;
-            }
 
             switch (token.TokenType)
             {
                 case TokenType.String:
-                    return new StringExpression(token.Value);
+                    return new ConstantExpression(token.Value);
                 case TokenType.Integer:
-                    return new IntegerExpression(System.Convert.ToInt32(token.Value));
+                    return new ConstantExpression(System.Convert.ToInt32(token.Value));
                 case TokenType.Real:
-                    return new RealExpression(System.Convert.ToDouble(token.Value));
+                    return new ConstantExpression(System.Convert.ToDouble(token.Value));
                 case TokenType.Boolean:
-                    return new BooleanExpression(System.Convert.ToBoolean(token.Value));
+                    return new ConstantExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
                     return new NameExpression(token.Value);
                 case TokenType.Separator:
@@ -313,22 +303,18 @@
 
         private void CompileExpectedToken(string value)
         {
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             if (token == null || token.Value != value)
-            {
                 throw new InvalidDataException(string.Format("{0} expected", value));
-            }
         }
 
         private Token CompileName()
         {
-            Token token = this.parser.NextToken();
+            Token token = this.lexer.NextToken();
 
             if (token == null || token.TokenType != TokenType.Name)
-            {
                 throw new NameExpectedException();
-            }
 
             return token;
         }

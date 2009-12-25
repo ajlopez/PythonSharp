@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{BB3BAA79-362D-4E01-86EA-F1E9A60CC741}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AjPython</RootNamespace>
-    <AssemblyName>AjPython</AssemblyName>
+    <RootNamespace>AjPython.Console</RootNamespace>
+    <AssemblyName>AjPython.Console</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -46,35 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\PrintCommand.cs" />
-    <Compile Include="Commands\SimpleAssignmentCommand.cs" />
-    <Compile Include="Compiler\Parser.cs" />
-    <Compile Include="Compiler\ParserException.cs" />
-    <Compile Include="Compiler\UnexpectedEndOfInputException.cs" />
-    <Compile Include="Compiler\EndOfInputException.cs" />
-    <Compile Include="Compiler\ExpectedTokenException.cs" />
-    <Compile Include="Compiler\NameExpectedException.cs" />
-    <Compile Include="Compiler\Lexer.cs" />
-    <Compile Include="Compiler\Token.cs" />
-    <Compile Include="Compiler\UnexpectedTokenException.cs" />
-    <Compile Include="BindingEnvironment.cs" />
-    <Compile Include="Expressions\ConstantExpression.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Machine.cs" />
-    <Compile Include="Expressions\BinaryExpression.cs" />
-    <Compile Include="Expressions\BinaryOperatorExpression.cs" />
-    <Compile Include="Expressions\DictionaryExpression.cs" />
-    <Compile Include="Expressions\ListExpression.cs" />
-    <Compile Include="Expressions\IExpression.cs" />
-    <Compile Include="Expressions\NameExpression.cs" />
-    <Compile Include="Expressions\Operator.cs" />
-    <Compile Include="Numbers.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Compiler\TokenType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Language\" />
+    <ProjectReference Include="..\AjPython\AjPython.csproj">
+      <Project>{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}</Project>
+      <Name>AjPython</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
