@@ -3,7 +3,22 @@
 	- Argument as files
 	- print of expressions
 	
-- import
++ import
+
+- Multiple assignment: a, b, c = 'good', 'bad', 'ugly'
+- Calls: log.write("spam, ham\n")
+- Escaped charactes in strings "\n\r"
+- multiple args in print: print 'The Killer', joke
+- if "python" in text:
+	print text
+- for x in mylist:
+	print x	
+- while X > Y:
+	print 'hello'
+- while True:
+	pass
+- while True:
+	if not line: break	
 
 + Real number
 + Parse Real number

@@ -2,6 +2,6 @@
 {
     public interface ICommand
     {
-        void Execute(Machine machine);
+        void Execute(Machine machine, BindingEnvironment environment);
     }
 }

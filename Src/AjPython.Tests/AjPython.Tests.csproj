@@ -39,12 +39,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandTest.cs" />
+    <Compile Include="ExamplesTests.cs" />
     <Compile Include="NumbersTests.cs" />
     <Compile Include="ParserTest.cs" />
     <Compile Include="BindingEnvironmentTest.cs" />
     <Compile Include="ExpressionTest.cs" />
     <Compile Include="MachineTest.cs" />
     <Compile Include="LexerTest.cs" />
+    <Compile Include="PredicatesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +54,20 @@
       <Project>{D2AFD9DB-5C8C-417B-8B65-23583D4B7033}</Project>
       <Name>AjPython</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\importfrom.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\import.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\setvars.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\setvar.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

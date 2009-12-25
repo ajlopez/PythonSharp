@@ -10,8 +10,8 @@
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
-        private const string Operators = "+-/*=";
-        private const string Separators = "()[]{},:";
+        private const string Operators = "+-/*=.";
+        private const string Separators = "()[]{},:;";
 
         private static string[] otherOperators = new string[] { "**" };
 
@@ -34,6 +34,26 @@
                 throw new ArgumentNullException("reader");
 
             this.reader = reader;
+        }
+
+        public int NextIndent()
+        {
+            int indent = 0;
+
+            try
+            {
+                char ch;
+
+                for (ch = this.NextChar(); IsSpace(ch); ch = this.NextChar())
+                    indent++;
+
+                this.PushChar(ch);
+            }
+            catch
+            {
+            }
+
+            return indent;
         }
 
         public Token NextToken()
@@ -345,6 +365,11 @@
                 throw new EndOfInputException();
 
             return Convert.ToChar(ch);
+        }
+
+        private static bool IsSpace(char ch)
+        {
+            return char.IsWhiteSpace(ch) && ch != '\r' && ch != '\n';
         }
     }
 }

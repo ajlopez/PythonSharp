@@ -49,7 +49,7 @@
             SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", new ConstantExpression("bar"));
             Machine machine = new Machine();
 
-            command.Execute(machine);
+            command.Execute(machine, machine.Environment);
 
             Assert.AreEqual("bar", machine.Environment.GetValue("foo"));
         }
@@ -80,9 +80,86 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            command.Execute(machine);
+            command.Execute(machine, machine.Environment);
 
             Assert.AreEqual("bar\r\n", writer.ToString());
+        }
+
+        [TestMethod]
+        public void ExecuteCompositeCommand()
+        {
+            SimpleAssignmentCommand command1 = new SimpleAssignmentCommand("foo", new ConstantExpression("bar"));
+            SimpleAssignmentCommand command2 = new SimpleAssignmentCommand("one", new ConstantExpression(1));
+
+            CompositeCommand command = new CompositeCommand();
+            command.AddCommand(command1);
+            command.AddCommand(command2);
+
+            Machine machine = new Machine();
+
+            command.Execute(machine, machine.Environment);
+
+            Assert.AreEqual("bar", machine.Environment.GetValue("foo"));
+            Assert.AreEqual(1, machine.Environment.GetValue("one"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/setvar.py")]
+        public void ExecuteImportCommand()
+        {
+            ImportCommand importcmd = new ImportCommand("setvar");
+
+            Machine machine = new Machine();
+
+            importcmd.Execute(machine, machine.Environment);
+
+            object setvar = machine.Environment.GetValue("setvar");
+
+            Assert.IsNotNull(setvar);
+            Assert.IsInstanceOfType(setvar, typeof(BindingEnvironment));
+
+            BindingEnvironment setvarenv = (BindingEnvironment)setvar;
+
+            object var = setvarenv.GetValue("a");
+
+            Assert.IsNotNull(var);
+            Assert.AreEqual(1, var);
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/setvars.py")]
+        public void ExecuteImportFromCommand()
+        {
+            ImportFromCommand importcmd = new ImportFromCommand("setvars", new string[] { "one", "two" });
+
+            Machine machine = new Machine();
+
+            importcmd.Execute(machine, machine.Environment);
+
+            Assert.AreEqual(1, machine.Environment.GetValue("one"));
+            Assert.AreEqual(2, machine.Environment.GetValue("two"));
+        }
+
+        [TestMethod]
+        public void ExecuteIfCommandWithTrueCondition()
+        {
+            IfCommand ifcmd = new IfCommand(new ConstantExpression(true), new SimpleAssignmentCommand("one", new ConstantExpression(1)));
+            Machine machine = new Machine();
+
+            ifcmd.Execute(machine, machine.Environment);
+
+            Assert.AreEqual(1, machine.Environment.GetValue("one"));
+        }
+
+        [TestMethod]
+        public void ExecuteIfCommandWithFalseCondition()
+        {
+            IfCommand ifcmd = new IfCommand(new ConstantExpression(false), new SimpleAssignmentCommand("one", new ConstantExpression(1)));
+            Machine machine = new Machine();
+
+            ifcmd.Execute(machine, machine.Environment);
+
+            Assert.IsNull(machine.Environment.GetValue("one"));
         }
     }
 }

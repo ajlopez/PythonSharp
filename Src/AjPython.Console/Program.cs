@@ -27,7 +27,7 @@
                     if (command == null)
                         break;
 
-                    command.Execute(machine);
+                    command.Execute(machine, machine.Environment);
                 }
                 catch (Exception ex)
                 {

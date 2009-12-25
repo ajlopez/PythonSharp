@@ -33,3 +33,16 @@ Parser.CompileSimpleCommand
 Numbers and NumbersTests
 Binary Operators on Numbers
 AjPython.Console
+SyntaxErrorException
+IfCommand with tests
+ImportCommand with tests
+ImportFromCommand with tests
+Predicates with tests
+Examples in tests: setvar.py, setvars.py, import.py, importfrom.py
+SimpleAssignmentCommand with tests
+ModuleUtilities
+import in Parser
+from import in Parser
+if in Parser
+; in Parser
+indent in Parser, WIP

@@ -14,6 +14,8 @@
         private static string[] opslevel2 = new string[] { "*", "/" };
         private static string[] opslevel3 = new string[] { "**" };
 
+        private bool lastSemi;
+
         private Lexer lexer;
 
         public Parser(Lexer lexer)
@@ -86,7 +88,7 @@
                     this.lexer.PushToken(token);
 
                 IExpression keyExpression = this.CompileExpression();
-                this.CompileExpectedToken(":");
+                this.CompileToken(TokenType.Separator, ":");
                 IExpression valueExpression = this.CompileExpression();
                 dictionaryExpression.Add(keyExpression, valueExpression);
 
@@ -101,6 +103,9 @@
 
         public ICommand CompileCommand()
         {
+            if (!this.lastSemi)
+                this.SkipEmptyLines();
+
             ICommand command = this.CompileSimpleCommand();
 
             if (command == null)
@@ -111,8 +116,26 @@
             return command;
         }
 
+        public ICommand CompileCommandList()
+        {
+            List<ICommand> commands = new List<ICommand>();
+
+            for (ICommand command = this.CompileCommand(); command != null; command = this.CompileCommand())
+                commands.Add(command);
+
+            if (commands.Count == 0)
+                return null;
+
+            if (commands.Count == 1)
+                return commands[0];
+
+            return new CompositeCommand(commands);
+        }
+
         private void CompileEndOfCommand()
         {
+            this.lastSemi = false;
+
             Token token = this.lexer.NextToken();
 
             if (token == null)
@@ -120,6 +143,12 @@
 
             if (token.TokenType == TokenType.EndOfLine)
                 return;
+
+            if (token.TokenType == TokenType.Separator && token.Value == ";")
+            {
+                this.lastSemi = true;
+                return;
+            }
 
             this.lexer.PushToken(token);
 
@@ -139,6 +168,27 @@
                 return new PrintCommand(expression);
             }
 
+            if (token.Value == "import")
+            {
+                Token name = this.CompileName(true);
+
+                return new ImportCommand(name.Value);
+            }
+
+            if (token.Value == "from")
+            {
+                Token name = this.CompileName(true);
+
+                this.CompileName("import");
+
+                IList<string> names = this.CompileNameList();
+
+                return new ImportFromCommand(name.Value, names);
+            }
+
+            if (token.Value == "if")
+                return this.CompileIfCommand();
+
             Token token2 = this.lexer.NextToken();
 
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
@@ -150,7 +200,43 @@
             if (token2 == null)
                 throw new UnexpectedEndOfInputException();
 
-            throw new UnexpectedTokenException(token2);
+            throw new UnexpectedTokenException(token);
+        }
+
+        private IList<string> CompileNameList()
+        {
+            IList<string> names = new List<string>();
+
+            names.Add(this.CompileName(true).Value);
+
+            while (this.TryCompile(TokenType.Separator, ","))
+                names.Add(this.CompileName(true).Value);
+
+            return names;
+        }
+
+        private ICommand CompileIfCommand()
+        {
+            IExpression condition = this.CompileExpression();
+            this.CompileToken(TokenType.Separator, ":");
+            this.lastSemi = true;
+            ICommand command = this.CompileCommand();
+            return new IfCommand(condition, command);
+        }
+
+        private void SkipEmptyLines()
+        {
+            Token token;
+
+            if (this.lexer.NextIndent() != 0)
+                throw new SyntaxErrorException("invalid syntax");
+
+            for (token = this.lexer.NextToken(); token != null && token.TokenType == TokenType.EndOfLine; token = this.lexer.NextToken())
+                if (this.lexer.NextIndent() != 0)
+                    throw new SyntaxErrorException("invalid syntax");
+
+            if (token != null)
+                this.lexer.PushToken(token);
         }
 
         private static Operator CompileOperator(string oper)
@@ -272,51 +358,91 @@
                 case TokenType.Boolean:
                     return new ConstantExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
-                    return new NameExpression(token.Value);
+                    if (!this.TryCompile(TokenType.Operator, "."))
+                        return new NameExpression(token.Value);
+                    return new QualifiedNameExpression(token.Value, this.CompileName(true).Value);
                 case TokenType.Separator:
                     if (token.Value == "(")
                     {
                         IExpression expression = this.CompileExpression();
-                        this.CompileExpectedToken(")");
+                        this.CompileToken(TokenType.Separator, ")");
                         return expression;
                     }
 
                     if (token.Value == "[")
                     {
                         IExpression expression = this.CompileList();
-                        this.CompileExpectedToken("]");
+                        this.CompileToken(TokenType.Separator, "]");
                         return expression;
                     }
 
                     if (token.Value == "{")
                     {
                         IExpression expression = this.CompileDictionary();
-                        this.CompileExpectedToken("}");
+                        this.CompileToken(TokenType.Separator, "}");
                         return expression;
                     }
 
                     break;
             }
 
-            throw new InvalidDataException(string.Format("Unknown '{0}'", token.Value));
+            throw new SyntaxErrorException(string.Format("Unknown '{0}'", token.Value));
         }
 
-        private void CompileExpectedToken(string value)
+        private void CompileToken(TokenType type, string value)
         {
             Token token = this.lexer.NextToken();
 
-            if (token == null || token.Value != value)
-                throw new InvalidDataException(string.Format("{0} expected", value));
+            if (token == null || token.TokenType != type || token.Value != value)
+                throw new SyntaxErrorException(string.Format("'{0}' expected", value));
         }
 
         private Token CompileName()
         {
+            return this.CompileName(false);
+        }
+
+        private Token CompileName(bool required)
+        {
             Token token = this.lexer.NextToken();
 
-            if (token == null || token.TokenType != TokenType.Name)
+            if (token == null && !required)
+                return null;
+
+            if (token.TokenType != TokenType.Name)
                 throw new NameExpectedException();
 
             return token;
+        }
+
+        private Token CompileName(string expected)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null || token.TokenType != TokenType.Name)
+            {
+                if (token != null)
+                    this.lexer.PushToken(token);
+
+                throw new ExpectedTokenException(expected);
+            }
+
+            return token;
+        }
+
+        private bool TryCompile(TokenType type, string value)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return false;
+
+            if (token.TokenType == type && token.Value == value)
+                return true;
+
+            this.lexer.PushToken(token);
+
+            return false;
         }
     }
 }

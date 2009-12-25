@@ -455,6 +455,110 @@
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(PrintCommand));
         }
+
+        [TestMethod]
+        public void CompileCompositeCommand()
+        {
+            Parser parser = new Parser("foo = \"bar\"\r\none = 1");
+
+            ICommand command = parser.CompileCommandList();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(CompositeCommand));
+        }
+
+        [TestMethod]
+        public void CompileCompositeCommandUsingSemicolon()
+        {
+            Parser parser = new Parser("foo = \"bar\";one = 1");
+
+            ICommand command = parser.CompileCommandList();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(CompositeCommand));
+        }
+
+        [TestMethod]
+        public void CompileCompositeCommandUsingSemicolonAndSpaces()
+        {
+            Parser parser = new Parser("foo = \"bar\";   one = 1");
+
+            ICommand command = parser.CompileCommandList();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(CompositeCommand));
+        }
+
+        [TestMethod]
+        public void CompileQualifiedNameExpression()
+        {
+            Parser parser = new Parser("module.foo");
+
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(QualifiedNameExpression));
+
+            QualifiedNameExpression qexpr = (QualifiedNameExpression)expression;
+
+            Assert.AreEqual("module", qexpr.ModuleName);
+            Assert.AreEqual("foo", qexpr.Name);
+        }
+
+        [TestMethod]
+        public void CompileImportCommand()
+        {
+            Parser parser = new Parser("import module");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ImportCommand));
+
+            ImportCommand impcmd = (ImportCommand)command;
+
+            Assert.AreEqual("module", impcmd.ModuleName);
+        }
+
+        [TestMethod]
+        public void CompileImportFromCommand()
+        {
+            Parser parser = new Parser("from module import a, b");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ImportFromCommand));
+
+            ImportFromCommand impcmd = (ImportFromCommand)command;
+
+            Assert.AreEqual("module", impcmd.ModuleName);
+
+            Assert.IsNotNull(impcmd.Names);
+            Assert.AreEqual(2, impcmd.Names.Count);
+            Assert.AreEqual("a", impcmd.Names.First());
+            Assert.AreEqual("b", impcmd.Names.Skip(1).First());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SyntaxErrorException), "SyntaxError: invalid syntax")]
+        public void RaiseIfInvalidSpacesAtStartOfLine()
+        {
+            Parser parser = new Parser("  a=1");
+
+            parser.CompileCommand();
+        }
+
+        [TestMethod]
+        public void CompileIfCommandWithSingleThenCommand()
+        {
+            Parser parser = new Parser("if a: print a");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(IfCommand));
+        }
     }
 }
 

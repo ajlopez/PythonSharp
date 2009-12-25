@@ -47,7 +47,7 @@
         [TestMethod]
         public void ParseOneCharOperators()
         {
-            string operators = "+-*/=";
+            string operators = "+-*/=.";
             Lexer lexer = new Lexer(operators);
 
             Token token;
@@ -93,7 +93,7 @@
         [TestMethod]
         public void ParseSeparators()
         {
-            string separators = "()[]{},:";
+            string separators = "()[]{},:;";
             Lexer lexer = new Lexer(separators);
 
             Token token;
@@ -286,6 +286,23 @@
             Assert.AreEqual(TokenType.EndOfLine, token.TokenType);
 
             Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void NextIndent()
+        {
+            Assert.AreEqual(0, (new Lexer("foo")).NextIndent());
+            Assert.AreEqual(1, (new Lexer(" foo")).NextIndent());
+            Assert.AreEqual(2, (new Lexer("  foo")).NextIndent());
+
+            Lexer lexer = new Lexer("   foo");
+            Assert.AreEqual(3, lexer.NextIndent());
+
+            Token token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Name, token.TokenType);
+            Assert.AreEqual("foo", token.Value);
         }
     }
 }

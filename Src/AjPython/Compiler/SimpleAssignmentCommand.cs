@@ -6,23 +6,36 @@
 
     using AjPython.Expressions;
 
-    public class PrintCommand : ICommand
+    public class SimpleAssignmentCommand : ICommand
     {
+        private string name;
         private IExpression expression;
 
-        public PrintCommand(IExpression expression)
+        public SimpleAssignmentCommand(string name, IExpression expression)
         {
+            if (name == null)
+                throw new System.ArgumentNullException("name");
+
             if (expression == null)
                 throw new System.ArgumentNullException("expression");
 
+            this.name = name;
             this.expression = expression;
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
         }
 
         public IExpression Expression { get { return this.expression; } }
 
         public void Execute(Machine machine, BindingEnvironment environment)
         {
-            machine.Output.WriteLine(this.expression.Evaluate(environment).ToString());
+            environment.SetValue(this.name, this.expression.Evaluate(environment));
         }
     }
 }
