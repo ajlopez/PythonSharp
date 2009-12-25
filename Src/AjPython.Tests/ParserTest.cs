@@ -1,13 +1,15 @@
 ﻿namespace AjPython.Tests
 {
-    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
 
     using AjPython;
+    using AjPython.Commands;
     using AjPython.Compiler;
+    using AjPython.Expressions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,251 +17,444 @@
     public class ParserTest
     {
         [TestMethod]
-        public void CreateWithString()
+        public void CreateWithParser()
         {
-            Parser parser = new Parser("text");
+            Parser compiler = new Parser(new Lexer("text"));
 
-            Assert.IsNotNull(parser);
+            Assert.IsNotNull(compiler);
         }
 
         [TestMethod]
-        public void CreateWithTextReader()
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void RaiseIfParserIsNull()
         {
-            Parser parser = new Parser(new StringReader("text"));
-
-            Assert.IsNotNull(parser);
+            Parser compiler = new Parser((Lexer)null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void RaiseIfTextIsNull()
+        public void CreateWithText()
         {
-            Parser parser = new Parser((string)null);
+            Parser compiler = new Parser("text");
+
+            Assert.IsNotNull(compiler);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void RaiseIfTextReaderIsNull()
+        public void CreateWithReader()
         {
-            Parser parser = new Parser((TextReader)null);
+            Parser compiler = new Parser(new StringReader("text"));
+
+            Assert.IsNotNull(compiler);
         }
 
         [TestMethod]
-        public void ParseOneCharOperators()
+        public void CompileName()
         {
-            string operators = "+-*/=";
-            Parser parser = new Parser(operators);
+            Parser compiler = new Parser("name");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            foreach (char ch in operators)
-            {
-                token = parser.NextToken();
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NameExpression));
 
-                Assert.IsNotNull(token);
-                Assert.AreEqual(TokenType.Operator, token.TokenType);
-                Assert.AreEqual(ch.ToString(), token.Value);
-            }
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.AreEqual("name", ((NameExpression)expression).Name);
         }
 
         [TestMethod]
-        public void ParseMultiCharOperators()
+        public void CompileInteger()
         {
-            string operators = "**";
-            string[] otherOperators = new string[] { "**" };
+            Parser compiler = new Parser("123");
 
-            Parser parser = new Parser(operators);
+            IExpression expression = compiler.CompileExpression();
 
-            Token token;
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(IntegerExpression));
 
-            foreach (string op in otherOperators)
-            {
-                token = parser.NextToken();
+            Assert.AreEqual(123, ((IntegerExpression)expression).Value);
 
-                Assert.IsNotNull(token);
-                Assert.AreEqual(TokenType.Operator, token.TokenType);
-                Assert.AreEqual(op, token.Value);
-            }
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNull(compiler.CompileExpression());
         }
 
         [TestMethod]
-        public void ParseSeparators()
+        public void CompileReal()
         {
-            string separators = "()[]{},:";
-            Parser parser = new Parser(separators);
+            Parser compiler = new Parser("12.34");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            foreach (char ch in separators)
-            {
-                token = parser.NextToken();
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(RealExpression));
 
-                Assert.IsNotNull(token);
-                Assert.AreEqual(TokenType.Separator, token.TokenType);
-                Assert.AreEqual(ch.ToString(), token.Value);
-            }
+            Assert.AreEqual(12.34, ((RealExpression)expression).Value);
 
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNull(compiler.CompileExpression());
         }
 
         [TestMethod]
-        public void ParseName()
+        public void CompileBoolean()
         {
-            Parser parser = new Parser("name");
+            Parser compiler = new Parser("true");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BooleanExpression));
 
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Name, token.TokenType);
-            Assert.AreEqual("name", token.Value);
+            Assert.AreEqual(true, ((BooleanExpression)expression).Value);
 
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNull(compiler.CompileExpression());
         }
 
         [TestMethod]
-        public void ParseNameWithSpaces()
+        public void CompileString()
         {
-            Parser parser = new Parser(" name ");
+            Parser compiler = new Parser("\"foo\"");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(StringExpression));
 
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Name, token.TokenType);
-            Assert.AreEqual("name", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.AreEqual("foo", ((StringExpression)expression).Value);
         }
 
         [TestMethod]
-        public void ParseInteger()
+        public void CompileAndEvaluateAddExpression()
         {
-            Parser parser = new Parser("123");
+            Parser compiler = new Parser("1+2");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
-
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Integer, token.TokenType);
-            Assert.AreEqual("123", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(3, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
-        public void ParseIntegerWithSpaces()
+        public void CompileAndEvaluateSubtractExpression()
         {
-            Parser parser = new Parser(" 123 ");
+            Parser compiler = new Parser("1-2");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
-
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Integer, token.TokenType);
-            Assert.AreEqual("123", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(-1, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
-        public void ParseReal()
+        public void CompileAndEvaluateMultiplyExpression()
         {
-            Parser parser = new Parser("12.34");
+            Parser compiler = new Parser("2*3");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
-
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Real, token.TokenType);
-            Assert.AreEqual("12.34", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(6, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
-        public void ParseBoolean()
+        public void CompileAndEvaluateDivideExpression()
         {
-            Parser parser = new Parser("true false");
+            Parser compiler = new Parser("6/3");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
-
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Boolean, token.TokenType);
-            Assert.AreEqual("true", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.Boolean, token.TokenType);
-            Assert.AreEqual("false", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(2, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
-        public void ParseString()
+        public void CompileAndEvaluatePowerExpression()
         {
-            Parser parser = new Parser("\"foo\"");
+            Parser compiler = new Parser("2**3");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
-
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.String, token.TokenType);
-            Assert.AreEqual("foo", token.Value);
-
-            token = parser.NextToken();
-
-            Assert.IsNull(token);
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(8, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
-        public void ParseQuotedString()
+        public void CompileAndEvaluateListExpression()
         {
-            Parser parser = new Parser("'bar'");
+            Parser compiler = new Parser("[1,2,'foo']");
 
-            Token token;
+            IExpression expression = compiler.CompileExpression();
 
-            token = parser.NextToken();
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
 
-            Assert.IsNotNull(token);
-            Assert.AreEqual(TokenType.String, token.TokenType);
-            Assert.AreEqual("bar", token.Value);
+            object result = expression.Evaluate(new BindingEnvironment());
 
-            token = parser.NextToken();
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
 
-            Assert.IsNull(token);
+            IList list = (IList) result;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.AreEqual("foo", list[2]);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateNullListExpression()
+        {
+            Parser compiler = new Parser("[]");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList list = (IList)result;
+
+            Assert.AreEqual(0, list.Count);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateListWithVarsExpression()
+        {
+            Parser compiler = new Parser("[a, b, c]");
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("a", 1);
+            environment.SetValue("b", 2);
+            environment.SetValue("c", "foo");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList list = (IList)result;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.AreEqual("foo", list[2]);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateListWithExpressionsExpression()
+        {
+            Parser compiler = new Parser("[a+1, b+2, c]");
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("a", 1);
+            environment.SetValue("b", 2);
+            environment.SetValue("c", "foo");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList list = (IList)result;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(2, list[0]);
+            Assert.AreEqual(4, list[1]);
+            Assert.AreEqual("foo", list[2]);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateComplexListExpression()
+        {
+            Parser compiler = new Parser("[1, 2, [a, b], 'foo']");
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("a", 1);
+            environment.SetValue("b", 2);
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList list = (IList)result;
+
+            Assert.AreEqual(4, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.IsNotNull(list[2]);
+            Assert.IsInstanceOfType(list[2], typeof(IList));
+            Assert.AreEqual("foo", list[3]);
+
+            IList list2 = (IList)list[2];
+
+            Assert.IsNotNull(list2);
+            Assert.AreEqual(2, list2.Count);
+            Assert.AreEqual(1, list2[0]);
+            Assert.AreEqual(2, list2[1]);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateDictionaryExpression()
+        {
+            Parser compiler = new Parser("{ 'firstname': 'foo', 'lastname': 'bar' }");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(DictionaryExpression));
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IDictionary));
+
+            IDictionary dictionary = (IDictionary)result;
+
+            Assert.AreEqual(2, dictionary.Keys.Count);
+            Assert.AreEqual("foo", dictionary["firstname"]);
+            Assert.AreEqual("bar", dictionary["lastname"]);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateNullDictionaryExpression()
+        {
+            Parser compiler = new Parser("{ }");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(DictionaryExpression));
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IDictionary));
+
+            IDictionary dictionary = (IDictionary)result;
+
+            Assert.AreEqual(0, dictionary.Keys.Count);
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateExpressionWithManyOperators()
+        {
+            Parser compiler = new Parser("6/3+5-2");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(5, expression.Evaluate(new BindingEnvironment()));
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateExpressionUsingOperatorPrecedence()
+        {
+            Parser compiler = new Parser("3+6/3");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(5, expression.Evaluate(new BindingEnvironment()));
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateExpressionEnclosedInParenthesis()
+        {
+            Parser compiler = new Parser("(6/3)");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(2, expression.Evaluate(new BindingEnvironment()));
+
+            Assert.IsNull(compiler.CompileExpression());
+        }
+
+        [TestMethod]
+        public void CompileAndEvaluateComplexExpressionWithParenthesis()
+        {
+            Parser compiler = new Parser("(6+3)/(1+2)");
+
+            IExpression expression = compiler.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BinaryOperatorExpression));
+            Assert.AreEqual(3, expression.Evaluate(new BindingEnvironment()));
+
+            Assert.IsNull(compiler.CompileExpression());
+        }
+
+        [TestMethod]
+        public void CompileSimpleAssignmentCommand()
+        {
+            Parser compiler = new Parser("foo = \"bar\"");
+
+            ICommand command = compiler.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SimpleAssignmentCommand));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NameExpectedException))]
+        public void RaiseIsCommandDoesNotBeginWithName()
+        {
+            Parser compiler = new Parser("123 = 12");
+
+            ICommand command = compiler.CompileCommand();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedEndOfInputException))]
+        public void RaiseIsCommandIsNotComplete()
+        {
+            Parser compiler = new Parser("foo");
+
+            ICommand command = compiler.CompileCommand();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedTokenException))]
+        public void RaiseIsCommandIsUnknown()
+        {
+            Parser compiler = new Parser("foo bar");
+
+            ICommand command = compiler.CompileCommand();
+        }
+
+        [TestMethod]
+        public void CompilePrintCommand()
+        {
+            Parser compiler = new Parser("print 'foo'");
+
+            ICommand command = compiler.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(PrintCommand));
         }
     }
 }
+

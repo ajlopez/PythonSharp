@@ -6,9 +6,9 @@
     using System.Text;
 
     [Serializable]
-    public abstract class CompilerException : Exception
+    public abstract class ParserException : Exception
     {
-        protected CompilerException(string msg)
+        protected ParserException(string msg)
             : base(msg)
         {
         }

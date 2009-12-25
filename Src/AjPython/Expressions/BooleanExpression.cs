@@ -1,19 +1,19 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public class StringExpression : Expression
+    public class BooleanExpression : IExpression
     {
-        private string value;
+        private bool value;
 
-        public StringExpression(string value)
+        public BooleanExpression(bool value)
         {
             this.value = value;
         }
 
-        public string Value
+        public bool Value
         {
             get
             {
@@ -21,7 +21,7 @@
             }
         }
 
-        public override object Evaluate(Environment environment)
+        public object Evaluate(BindingEnvironment env)
         {
             return this.value;
         }

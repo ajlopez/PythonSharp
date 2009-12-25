@@ -7,12 +7,12 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class EnvironmentTest
+    public class BindingEnvironmentTest
     {
         [TestMethod]
         public void CanCreate()
         {
-            Environment environment = new Environment();
+            BindingEnvironment environment = new BindingEnvironment();
 
             Assert.IsNotNull(environment);
         }
@@ -20,7 +20,7 @@
         [TestMethod]
         public void SetAndGetValue() 
         {
-            Environment environment = new Environment();
+            BindingEnvironment environment = new BindingEnvironment();
 
             environment.SetValue("foo", "bar");
 
@@ -30,7 +30,7 @@
         [TestMethod]
         public void GetNullIfUnknownName()
         {
-            Environment environment = new Environment();
+            BindingEnvironment environment = new BindingEnvironment();
 
             Assert.IsNull(environment.GetValue("foo"));
         }

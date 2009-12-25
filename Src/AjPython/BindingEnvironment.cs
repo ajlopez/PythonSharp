@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class Environment
+    public class BindingEnvironment
     {
         private Dictionary<string, object> values = new Dictionary<string, object>();
 

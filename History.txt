@@ -22,3 +22,9 @@ Simple Assignment Command
 CompileCommand in Compiler
 Machine with Environment, Input and Output
 Print Command
+
+2009-12-25
+Expression refactored to IExpression
+Command refactored to ICommand
+AjPython.Nodes refactored to AjPython.Expressions
+Environment refactored to BindingEnvironment

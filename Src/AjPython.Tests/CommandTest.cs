@@ -7,7 +7,7 @@
 
     using AjPython;
     using AjPython.Commands;
-    using AjPython.Nodes;
+    using AjPython.Expressions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,7 +17,7 @@
         [TestMethod]
         public void CreateSimpleAssignmentCommand()
         {
-            Expression expression = new StringExpression("bar");
+            IExpression expression = new StringExpression("bar");
             SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", expression);
 
             Assert.IsNotNull(command);
@@ -32,7 +32,7 @@
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void RaiseIfNameIsNullForSimpleAssignmentCommand() 
         {
-            Expression expression = new StringExpression("bar");
+            IExpression expression = new StringExpression("bar");
             SimpleAssignmentCommand command = new SimpleAssignmentCommand(null, expression);
         }
 
@@ -57,7 +57,7 @@
         [TestMethod]
         public void CreatePrintCommand()
         {
-            Expression expression = new StringExpression("foo");
+            IExpression expression = new StringExpression("foo");
             PrintCommand command = new PrintCommand(expression);
 
             Assert.IsNotNull(command);

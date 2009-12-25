@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class NameExpectedException : CompilerException
+    public class NameExpectedException : ParserException
     {
         public NameExpectedException()
             : base("A name was expected")

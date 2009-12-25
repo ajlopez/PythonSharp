@@ -1,15 +1,15 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public abstract class BinaryExpression : Expression
+    public abstract class BinaryExpression : IExpression
     {
-        private Expression left;
-        private Expression right;
+        private IExpression left;
+        private IExpression right;
 
-        protected BinaryExpression(Expression left, Expression right)
+        protected BinaryExpression(IExpression left, IExpression right)
         {
             if (left == null)
             {
@@ -25,7 +25,7 @@
             this.right = right;
         }
 
-        public Expression Left
+        public IExpression Left
         {
             get
             {
@@ -33,12 +33,14 @@
             }
         }
 
-        public Expression Right
+        public IExpression Right
         {
             get
             {
                 return this.right;
             }
         }
+
+        public abstract object Evaluate(BindingEnvironment environment);
     }
 }

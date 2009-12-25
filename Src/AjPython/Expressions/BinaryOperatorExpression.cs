@@ -1,4 +1,4 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,13 +8,13 @@
     {
         private Operator @operator;
 
-        public BinaryOperatorExpression(Expression left, Expression right, Operator oper)
+        public BinaryOperatorExpression(IExpression left, IExpression right, Operator oper)
             : base(left, right)
         {
             this.@operator = oper;
         }
 
-        public override object Evaluate(Environment environment)
+        public override object Evaluate(BindingEnvironment environment)
         {
             object leftvalue;
             object rightvalue;

@@ -4,14 +4,14 @@
     using System.Linq;
     using System.Text;
 
-    using AjPython.Nodes;
+    using AjPython.Expressions;
 
-    public class SimpleAssignmentCommand : Command
+    public class SimpleAssignmentCommand : ICommand
     {
         private string name;
-        private Expression expression;
+        private IExpression expression;
 
-        public SimpleAssignmentCommand(string name, Expression expression)
+        public SimpleAssignmentCommand(string name, IExpression expression)
         {
             if (name == null)
             {
@@ -35,7 +35,7 @@
             }
         }
 
-        public Expression Expression
+        public IExpression Expression
         {
             get
             {
@@ -43,7 +43,7 @@
             }
         }
 
-        public override void Execute(Machine machine)
+        public void Execute(Machine machine)
         {
             machine.Environment.SetValue(this.name, this.expression.Evaluate(machine.Environment));
         }

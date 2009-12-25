@@ -4,13 +4,13 @@
     using System.Linq;
     using System.Text;
 
-    using AjPython.Nodes;
+    using AjPython.Expressions;
 
-    public class PrintCommand : Command
+    public class PrintCommand : ICommand
     {
-        private Expression expression;
+        private IExpression expression;
 
-        public PrintCommand(Expression expression)
+        public PrintCommand(IExpression expression)
         {
             if (expression == null)
             {
@@ -20,7 +20,7 @@
             this.expression = expression;
         }
 
-        public Expression Expression
+        public IExpression Expression
         {
             get
             {
@@ -28,7 +28,7 @@
             }
         }
 
-        public override void Execute(Machine machine)
+        public void Execute(Machine machine)
         {
             machine.Output.WriteLine(this.expression.Evaluate(machine.Environment).ToString());
         }

@@ -6,7 +6,7 @@
     using System.Text;
 
     using AjPython;
-    using AjPython.Nodes;
+    using AjPython.Expressions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,7 +18,7 @@
         {
             StringExpression expression = new StringExpression("foo");
 
-            Assert.AreEqual("foo", expression.Evaluate(new Environment()));
+            Assert.AreEqual("foo", expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@
         {
             IntegerExpression expression = new IntegerExpression(123);
 
-            Assert.AreEqual(123, expression.Evaluate(new Environment()));
+            Assert.AreEqual(123, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@
         {
             RealExpression expression = new RealExpression(12.3);
 
-            Assert.AreEqual(12.3, expression.Evaluate(new Environment()));
+            Assert.AreEqual(12.3, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@
         {
             BooleanExpression expression = new BooleanExpression(true);
 
-            Assert.AreEqual(true, expression.Evaluate(new Environment()));
+            Assert.AreEqual(true, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@
         {
             NameExpression expression = new NameExpression("foo");
 
-            Environment environment = new Environment();
+            BindingEnvironment environment = new BindingEnvironment();
 
             environment.SetValue("foo", "bar");
 
@@ -66,7 +66,7 @@
             Assert.IsNotNull(expression.Left);
             Assert.IsNotNull(expression.Right);
 
-            Assert.AreEqual(3, expression.Evaluate(new Environment()));
+            Assert.AreEqual(3, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@
             Assert.IsNotNull(expression.Left);
             Assert.IsNotNull(expression.Right);
 
-            Assert.AreEqual(-1, expression.Evaluate(new Environment()));
+            Assert.AreEqual(-1, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@
             Assert.IsNotNull(expression.Left);
             Assert.IsNotNull(expression.Right);
 
-            Assert.AreEqual(6, expression.Evaluate(new Environment()));
+            Assert.AreEqual(6, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@
             Assert.IsNotNull(expression.Left);
             Assert.IsNotNull(expression.Right);
 
-            Assert.AreEqual(2, expression.Evaluate(new Environment()));
+            Assert.AreEqual(2, expression.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -126,7 +126,7 @@
             Assert.IsNotNull(expression.Expressions);
             Assert.AreEqual(2, expression.Expressions.Count);
 
-            object result = expression.Evaluate(new Environment());
+            object result = expression.Evaluate(new BindingEnvironment());
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IList));

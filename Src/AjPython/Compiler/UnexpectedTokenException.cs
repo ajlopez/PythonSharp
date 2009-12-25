@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
 
-    public class UnexpectedTokenException : CompilerException
+    public class UnexpectedTokenException : ParserException
     {
         public UnexpectedTokenException(Token token)
             : base(string.Format(CultureInfo.CurrentCulture, "Unexpected '{0}'", token.Value))

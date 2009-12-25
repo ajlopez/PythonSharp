@@ -1,19 +1,19 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public class RealExpression : Expression
+    public class IntegerExpression : IExpression
     {
-        private double value;
+        private int value;
 
-        public RealExpression(double value)
+        public IntegerExpression(int value)
         {
             this.value = value;
         }
 
-        public double Value
+        public int Value
         {
             get
             {
@@ -21,7 +21,7 @@
             }
         }
 
-        public override object Evaluate(Environment env)
+        public object Evaluate(BindingEnvironment env)
         {
             return this.value;
         }

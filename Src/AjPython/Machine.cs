@@ -7,11 +7,11 @@
 
     public class Machine
     {
-        private Environment environment = new Environment();
+        private BindingEnvironment environment = new BindingEnvironment();
         private TextReader input = System.Console.In;
         private TextWriter output = System.Console.Out;
 
-        public Environment Environment
+        public BindingEnvironment Environment
         {
             get { return this.environment; }
         }

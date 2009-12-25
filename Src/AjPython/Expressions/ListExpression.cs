@@ -1,19 +1,19 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public class ListExpression : Expression
+    public class ListExpression : IExpression
     {
-        private List<Expression> expressions = new List<Expression>();
+        private List<IExpression> expressions = new List<IExpression>();
 
         public ListExpression()
         {
         }
 
-        public List<Expression> Expressions
+        public List<IExpression> Expressions
         {
             get
             {
@@ -21,16 +21,16 @@
             }
         }
 
-        public void Add(Expression expression)
+        public void Add(IExpression expression)
         {
             this.expressions.Add(expression);
         }
 
-        public override object Evaluate(Environment environment)
+        public object Evaluate(BindingEnvironment environment)
         {
             IList list = new ArrayList();
 
-            foreach (Expression expression in this.expressions)
+            foreach (IExpression expression in this.expressions)
             {
                 list.Add(expression.Evaluate(environment));
             }

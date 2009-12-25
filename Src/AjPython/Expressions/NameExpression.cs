@@ -1,10 +1,10 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public class NameExpression : Expression
+    public class NameExpression : IExpression
     {
         private string name;
 
@@ -21,7 +21,7 @@
             }
         }
 
-        public override object Evaluate(Environment environment)
+        public object Evaluate(BindingEnvironment environment)
         {
             return environment.GetValue(this.name);
         }

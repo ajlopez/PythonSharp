@@ -1,20 +1,20 @@
-﻿namespace AjPython.Nodes
+﻿namespace AjPython.Expressions
 {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public class DictionaryExpression : Expression
+    public class DictionaryExpression : IExpression
     {
-        private List<Expression> keyExpressions = new List<Expression>();
-        private List<Expression> valueExpressions = new List<Expression>();
+        private List<IExpression> keyExpressions = new List<IExpression>();
+        private List<IExpression> valueExpressions = new List<IExpression>();
 
         public DictionaryExpression()
         {
         }
 
-        public List<Expression> KeyExpressions
+        public List<IExpression> KeyExpressions
         {
             get
             {
@@ -22,7 +22,7 @@
             }
         }
 
-        public List<Expression> ValueExpressions
+        public List<IExpression> ValueExpressions
         {
             get
             {
@@ -30,19 +30,19 @@
             }
         }
 
-        public void Add(Expression keyExpression, Expression valueExpression)
+        public void Add(IExpression keyExpression, IExpression valueExpression)
         {
             this.keyExpressions.Add(keyExpression);
             this.valueExpressions.Add(valueExpression);
         }
 
-        public override object Evaluate(Environment environment)
+        public object Evaluate(BindingEnvironment environment)
         {
             IDictionary dictionary = new Hashtable();
 
             int n = 0;
 
-            foreach (Expression keyExpression in this.keyExpressions)
+            foreach (IExpression keyExpression in this.keyExpressions)
             {
                 object key = keyExpression.Evaluate(environment);
                 object value = this.valueExpressions[n].Evaluate(environment);
