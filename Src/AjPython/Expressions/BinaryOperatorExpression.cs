@@ -3,12 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using AjPython.Language;
 
     public class BinaryOperatorExpression : BinaryExpression
     {
-        private Operator @operator;
+        private BinaryOperator @operator;
 
-        public BinaryOperatorExpression(IExpression left, IExpression right, Operator oper)
+        public BinaryOperatorExpression(IExpression left, IExpression right, BinaryOperator oper)
             : base(left, right)
         {
             this.@operator = oper;
@@ -24,15 +25,15 @@
 
             switch (this.@operator)
             {
-                case Operator.Add:
+                case BinaryOperator.Add:
                     return Numbers.Add(leftvalue, rightvalue);
-                case Operator.Subtract:
+                case BinaryOperator.Subtract:
                     return Numbers.Subtract(leftvalue, rightvalue);
-                case Operator.Multiply:
+                case BinaryOperator.Multiply:
                     return Numbers.Multiply(leftvalue, rightvalue);
-                case Operator.Divide:
+                case BinaryOperator.Divide:
                     return Numbers.Divide(leftvalue, rightvalue);
-                case Operator.Power:
+                case BinaryOperator.Power:
                     return System.Convert.ToInt32(System.Math.Pow((int)leftvalue, (int)rightvalue));
             }
 

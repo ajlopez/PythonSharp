@@ -5,6 +5,9 @@
 	
 + import
 
+- support for \ at end of line
+- support for open ( with multiple lines
+
 - Multiple assignment: a, b, c = 'good', 'bad', 'ugly'
 - Calls: log.write("spam, ham\n")
 - Escaped charactes in strings "\n\r"

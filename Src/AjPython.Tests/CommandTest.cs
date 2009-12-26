@@ -57,25 +57,18 @@
         [TestMethod]
         public void CreatePrintCommand()
         {
-            IExpression expression = new ConstantExpression("foo");
-            PrintCommand command = new PrintCommand(expression);
+            IList<IExpression> expressions = new IExpression[] { new ConstantExpression("foo") };
+            PrintCommand command = new PrintCommand(expressions);
 
             Assert.IsNotNull(command);
-            Assert.IsNotNull(command.Expression);
-            Assert.AreEqual(expression, command.Expression);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
-        public void RaiseIfExpressionIsNullForPrintCommand()
-        {
-            PrintCommand command = new PrintCommand(null);
+            Assert.IsNotNull(command.Expressions);
+            Assert.AreEqual(expressions, command.Expressions);
         }
 
         [TestMethod]
         public void ExecutePrintCommand()
         {
-            PrintCommand command = new PrintCommand(new ConstantExpression("bar"));
+            PrintCommand command = new PrintCommand(new IExpression[] { new ConstantExpression("bar") });
             Machine machine = new Machine();
             StringWriter writer = new StringWriter();
             machine.Output = writer;

@@ -8,21 +8,22 @@
 
     public class PrintCommand : ICommand
     {
-        private IExpression expression;
+        private IList<IExpression> expressions;
 
-        public PrintCommand(IExpression expression)
+        public PrintCommand(IList<IExpression> expressions)
         {
-            if (expression == null)
-                throw new System.ArgumentNullException("expression");
-
-            this.expression = expression;
+            this.expressions = expressions;
         }
 
-        public IExpression Expression { get { return this.expression; } }
+        public ICollection<IExpression> Expressions { get { return this.expressions; } }
 
         public void Execute(Machine machine, BindingEnvironment environment)
         {
-            machine.Output.WriteLine(this.expression.Evaluate(environment).ToString());
+            if (this.expressions != null)
+                foreach (IExpression expression in this.expressions)
+                    machine.Output.Write(expression.Evaluate(environment).ToString());
+
+            machine.Output.WriteLine();
         }
     }
 }

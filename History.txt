@@ -47,3 +47,8 @@ if in Parser
 ; in Parser
 indent in Parser, WIP
 nested commands in Parser
+print with multiple arguments
+CompareExpression
+ComparisonOperators
+compare expressions in Parser
+WhileCommand

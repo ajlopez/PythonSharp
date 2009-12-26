@@ -7,13 +7,15 @@
 
     using AjPython.Commands;
     using AjPython.Expressions;
+    using AjPython.Language;
 
     public class Parser
     {
+        private static string[] opslevel0 = new string[] { ">", "<", ">=", "<=", "<>" };
         private static string[] opslevel1 = new string[] { "+", "-" };
         private static string[] opslevel2 = new string[] { "*", "/" };
         private static string[] opslevel3 = new string[] { "**" };
-        private static Token EndOfLineToken = new Token() { TokenType = TokenType.EndOfLine, Value = "\r\n" };
+        private static Token endOfLineToken = new Token() { TokenType = TokenType.EndOfLine, Value = "\r\n" };
 
         private bool lastSemi;
         private int indent;
@@ -40,9 +42,26 @@
 
         public IExpression CompileExpression()
         {
-            IExpression expression = this.CompileBinaryLevel1Expression();
+            IExpression expression = this.CompileBinaryLevel0Expression();
 
             return expression;
+        }
+
+        public IList<IExpression> CompileExpressionList()
+        {
+            IList<IExpression> expressions = new List<IExpression>();
+
+            IExpression expression = this.CompileExpression();
+
+            if (expression == null)
+                return null;
+
+            expressions.Add(expression);
+
+            while (this.TryCompile(TokenType.Separator, ","))
+                expressions.Add(this.CompileExpression());
+
+            return expressions;
         }
 
         public IExpression CompileList()
@@ -165,7 +184,7 @@
                 for (ICommand command = this.CompileCommand(); command != null; command = this.CompileCommand())
                     commands.Add(command);
 
-                this.lexer.PushToken(EndOfLineToken);
+                this.lexer.PushToken(endOfLineToken);
 
                 if (commands.Count == 0)
                     return null;
@@ -179,6 +198,66 @@
             {
                 this.indent = oldindent;
             }
+        }
+
+        private static BinaryOperator CompileOperator(string oper)
+        {
+            if (oper == "+")
+                return BinaryOperator.Add;
+
+            if (oper == "-")
+                return BinaryOperator.Subtract;
+
+            if (oper == "*")
+                return BinaryOperator.Multiply;
+
+            if (oper == "/")
+                return BinaryOperator.Divide;
+
+            if (oper == "**")
+                return BinaryOperator.Power;
+
+            throw new System.InvalidOperationException(string.Format("Unexpected {0}", oper));
+        }
+
+        private static ComparisonOperator CompileCompareOperator(string oper)
+        {
+            if (oper == "<")
+                return ComparisonOperator.Less;
+
+            if (oper == "<=")
+                return ComparisonOperator.LessEqual;
+
+            if (oper == ">")
+                return ComparisonOperator.Greater;
+
+            if (oper == ">=")
+                return ComparisonOperator.GreaterEqual;
+
+            if (oper == "<>")
+                return ComparisonOperator.NotEqual;
+
+            throw new System.InvalidOperationException(string.Format("Unexpected {0}", oper));
+        }
+
+        private static bool IsLevel0Operator(Token token)
+        {
+            return token != null && token.TokenType == TokenType.Operator && opslevel0.Contains(token.Value);
+        }
+
+        private static bool IsLevel1Operator(Token token)
+        {
+            return token != null && token.TokenType == TokenType.Operator && opslevel1.Contains(token.Value);
+        }
+
+        private static bool IsLevel2Operator(Token token)
+        {
+            return token != null && token.TokenType == TokenType.Operator && opslevel2.Contains(token.Value);
+        }
+
+        private static bool IsLevel3Operator(Token token)
+        {
+            return token != null && token.TokenType == TokenType.Operator && opslevel3.Contains(token.Value);
         }
 
         private void CompileEndOfCommand()
@@ -212,10 +291,7 @@
                 return null;
 
             if (token.Value == "print")
-            {
-                IExpression expression = this.CompileExpression();
-                return new PrintCommand(expression);
-            }
+                return new PrintCommand(this.CompileExpressionList());
 
             if (token.Value == "import")
             {
@@ -316,41 +392,6 @@
             }
         }
 
-        private static Operator CompileOperator(string oper)
-        {
-            if (oper == "+")
-                return Operator.Add;
-
-            if (oper == "-")
-                return Operator.Subtract;
-
-            if (oper == "*")
-                return Operator.Multiply;
-
-            if (oper == "/")
-                return Operator.Divide;
-
-            if (oper == "**")
-                return Operator.Power;
-
-            throw new System.InvalidOperationException(string.Format("Unexpected {0}", oper));
-        }
-
-        private static bool IsLevel1Operator(Token token)
-        {
-            return token != null && token.TokenType == TokenType.Operator && opslevel1.Contains(token.Value);
-        }
-
-        private static bool IsLevel2Operator(Token token)
-        {
-            return token != null && token.TokenType == TokenType.Operator && opslevel2.Contains(token.Value);
-        }
-
-        private static bool IsLevel3Operator(Token token)
-        {
-            return token != null && token.TokenType == TokenType.Operator && opslevel3.Contains(token.Value);
-        }
-
         private IExpression CompileBinaryLevel3Expression()
         {
             IExpression expression = this.CompileTerm();
@@ -386,6 +427,28 @@
             {
                 IExpression expression2 = this.CompileBinaryLevel3Expression();
                 expression = new BinaryOperatorExpression(expression, expression2, CompileOperator(token.Value));
+                token = this.lexer.NextToken();
+            }
+
+            if (token != null)
+                this.lexer.PushToken(token);
+
+            return expression;
+        }
+
+        private IExpression CompileBinaryLevel0Expression()
+        {
+            IExpression expression = this.CompileBinaryLevel1Expression();
+
+            if (expression == null)
+                return null;
+
+            Token token = this.lexer.NextToken();
+
+            while (IsLevel0Operator(token))
+            {
+                IExpression expression2 = this.CompileBinaryLevel1Expression();
+                expression = new CompareExpression(CompileCompareOperator(token.Value), expression, expression2);
                 token = this.lexer.NextToken();
             }
 

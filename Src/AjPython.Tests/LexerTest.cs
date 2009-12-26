@@ -47,7 +47,7 @@
         [TestMethod]
         public void ParseOneCharOperators()
         {
-            string operators = "+-*/=.";
+            string operators = "+-*/=.><";
             Lexer lexer = new Lexer(operators);
 
             Token token;

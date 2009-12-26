@@ -10,6 +10,7 @@
     using AjPython.Expressions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using AjPython.Language;
 
     [TestClass]
     public class ExpressionTest
@@ -72,7 +73,7 @@
         [TestMethod]
         public void EvaluateAddExpression()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(1), new ConstantExpression(2), Operator.Add);
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(1), new ConstantExpression(2), BinaryOperator.Add);
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Left);
@@ -84,7 +85,7 @@
         [TestMethod]
         public void EvaluateSubtractExpression()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(1), new ConstantExpression(2), Operator.Subtract);
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(1), new ConstantExpression(2), BinaryOperator.Subtract);
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Left);
@@ -96,7 +97,7 @@
         [TestMethod]
         public void EvaluateMultiplyExpression()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(2), new ConstantExpression(3), Operator.Multiply);
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(2), new ConstantExpression(3), BinaryOperator.Multiply);
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Left);
@@ -108,7 +109,7 @@
         [TestMethod]
         public void EvaluateDivideExpression()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(6), new ConstantExpression(3), Operator.Divide);
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(6), new ConstantExpression(3), BinaryOperator.Divide);
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Left);
@@ -154,14 +155,14 @@
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void RaiseIfLeftIsNull()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(null, new ConstantExpression(3), Operator.Divide);
+            BinaryExpression expression = new BinaryOperatorExpression(null, new ConstantExpression(3), BinaryOperator.Divide);
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void RaiseIfRightIsNull()
         {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(3), null, Operator.Divide);
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(3), null, BinaryOperator.Divide);
         }
 
         [TestMethod]

@@ -454,6 +454,42 @@
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(PrintCommand));
+
+            PrintCommand printcmd = (PrintCommand)command;
+
+            Assert.IsNotNull(printcmd.Expressions);
+            Assert.AreEqual(1, printcmd.Expressions.Count);
+        }
+
+        [TestMethod]
+        public void CompilePrintCommandWithTwoArguments()
+        {
+            Parser parser = new Parser("print 'foo', 'bar'");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(PrintCommand));
+
+            PrintCommand printcmd = (PrintCommand)command;
+
+            Assert.IsNotNull(printcmd.Expressions);
+            Assert.AreEqual(2, printcmd.Expressions.Count);
+        }
+
+        [TestMethod]
+        public void CompileEmptyPrintCommand()
+        {
+            Parser parser = new Parser("print");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(PrintCommand));
+
+            PrintCommand printcmd = (PrintCommand)command;
+
+            Assert.IsNull(printcmd.Expressions);
         }
 
         [TestMethod]
@@ -666,6 +702,50 @@
             Assert.AreEqual(3, machine.Environment.GetValue("three"));
 
             Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileExpressionList()
+        {
+            Parser parser = new Parser("a, b");
+
+            IList<IExpression> expressions = parser.CompileExpressionList();
+
+            Assert.IsNotNull(expressions);
+            Assert.AreEqual(2, expressions.Count);
+            Assert.IsInstanceOfType(expressions[0], typeof(NameExpression));
+            Assert.IsInstanceOfType(expressions[1], typeof(NameExpression));
+        }
+
+        [TestMethod]
+        public void CompileCompareExpression()
+        {
+            Parser parser = new Parser("a < b");
+
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(CompareExpression));
+
+            Assert.IsNull(parser.CompileExpression());
+        }
+
+        [TestMethod]
+        public void EvaluateComparison()
+        {
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("1 < 2"));
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("3 > 2"));
+        }
+
+        private static object CompileAndEvaluateExpression(string text)
+        {
+            Parser parser = new Parser(text);
+
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNull(parser.CompileExpression());
+
+            return expression.Evaluate(null);
         }
     }
 }

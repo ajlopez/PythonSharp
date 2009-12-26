@@ -11,7 +11,7 @@
 
         public CompositeCommand()
         {
-            commands = new List<ICommand>();
+            this.commands = new List<ICommand>();
         }
 
         public CompositeCommand(IList<ICommand> commands)
@@ -23,12 +23,12 @@
 
         public void AddCommand(ICommand command)
         {
-            commands.Add(command);
+            this.commands.Add(command);
         }
 
         public void Execute(Machine machine, BindingEnvironment environment)
         {
-            foreach (ICommand command in commands)
+            foreach (ICommand command in this.commands)
                 command.Execute(machine, environment);
         }
     }

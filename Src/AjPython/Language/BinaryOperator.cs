@@ -1,11 +1,11 @@
-﻿namespace AjPython.Expressions
+﻿namespace AjPython.Language
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public enum Operator
+    public enum BinaryOperator
     {
         Add,
         Subtract,

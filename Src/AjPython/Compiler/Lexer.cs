@@ -10,7 +10,7 @@
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
-        private const string Operators = "+-/*=.";
+        private const string Operators = "+-/*=.><";
         private const string Separators = "()[]{},:;";
 
         private static string[] otherOperators = new string[] { "**" };
@@ -132,6 +132,11 @@
                 throw new InvalidOperationException();
 
             this.lastToken = token;
+        }
+
+        private static bool IsSpace(char ch)
+        {
+            return char.IsWhiteSpace(ch) && ch != '\r' && ch != '\n';
         }
 
         private Token NextEndOfLine(char ch)
@@ -378,11 +383,6 @@
                 throw new EndOfInputException();
 
             return Convert.ToChar(ch);
-        }
-
-        private static bool IsSpace(char ch)
-        {
-            return char.IsWhiteSpace(ch) && ch != '\r' && ch != '\n';
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace AjPython.Commands
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
 
-    using AjPython.Expressions;
     using AjPython.Compiler;
+    using AjPython.Expressions;
     using AjPython.Utilities;
-    using System.IO;
 
     public class ImportCommand : ICommand
     {
