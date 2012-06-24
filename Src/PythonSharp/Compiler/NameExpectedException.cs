@@ -1,0 +1,15 @@
+﻿namespace PythonSharp.Compiler
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    public class NameExpectedException : ParserException
+    {
+        public NameExpectedException()
+            : base("A name was expected")
+        {
+        }
+    }
+}

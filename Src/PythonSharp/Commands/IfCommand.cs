@@ -1,0 +1,32 @@
+﻿namespace PythonSharp.Commands
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using PythonSharp.Expressions;
+
+    public class IfCommand : ICommand
+    {
+        private IExpression condition;
+        private ICommand thencmd;
+
+        public IfCommand(IExpression condition, ICommand thencmd)
+        {
+            this.condition = condition;
+            this.thencmd = thencmd;
+        }
+
+        public IExpression Condition { get { return this.condition; } }
+
+        public ICommand ThenCommand { get { return this.thencmd; } }
+
+        public void Execute(Machine machine, BindingEnvironment environment)
+        {
+            bool isfalse = Predicates.IsFalse(this.condition.Evaluate(environment));
+
+            if (!isfalse)
+                this.thencmd.Execute(machine, environment);
+        }
+    }
+}

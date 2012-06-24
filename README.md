@@ -1,4 +1,4 @@
-# AjPython
+# PythonSharp
 
 An interpreter written in C#, implementing Python language.
 

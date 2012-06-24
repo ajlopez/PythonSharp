@@ -4,7 +4,7 @@ obj
 *.user
 *.pidb
 *.userprefs
-packages/*
+packages
 *.nupkg
-output/*
+output
 TestResults
