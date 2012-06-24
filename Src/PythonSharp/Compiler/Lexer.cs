@@ -16,10 +16,10 @@
         private static string[] otherOperators = new string[] { "**" };
 
         private TextReader reader;
-        private Token lastToken;
         private char lastChar;
         private bool hasChar;
         private int lastIndent;
+        private Stack<Token> tokenStack = new Stack<Token>();
 
         public Lexer(string text)
         {
@@ -71,12 +71,9 @@
 
         public Token NextToken()
         {
-            if (this.lastToken != null)
+            if (this.tokenStack.Count != 0)
             {
-                Token t = this.lastToken;
-                this.lastToken = null;
-
-                return t;
+                return this.tokenStack.Pop();
             }
 
             char ch;
@@ -128,10 +125,7 @@
 
         internal void PushToken(Token token)
         {
-            if (this.lastToken != null)
-                throw new InvalidOperationException();
-
-            this.lastToken = token;
+            this.tokenStack.Push(token);
         }
 
         private static bool IsSpace(char ch)

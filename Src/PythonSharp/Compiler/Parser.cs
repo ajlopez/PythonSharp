@@ -285,10 +285,16 @@
 
         private ICommand CompileSimpleCommand()
         {
-            Token token = this.CompileName();
+            Token token = this.TryCompile(TokenType.Name);
+            IExpression expr;
 
             if (token == null)
-                return null;
+            {
+                expr = this.CompileExpression();
+                if (expr == null)
+                    return null;
+                return new ExpressionCommand(expr);
+            }
 
             if (token.Value == "print")
                 return new PrintCommand(this.CompileExpressionList());
@@ -318,14 +324,21 @@
 
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
             {
-                IExpression expression = this.CompileExpression();
-                return new SimpleAssignmentCommand(token.Value, expression);
+                expr = this.CompileExpression();
+                return new SimpleAssignmentCommand(token.Value, expr);
             }
 
-            if (token2 == null)
-                throw new UnexpectedEndOfInputException();
+            if (token2 != null)
+                this.lexer.PushToken(token2);
 
-            throw new UnexpectedTokenException(token);
+            this.lexer.PushToken(token);
+
+            expr = this.CompileExpression();
+
+            if (expr == null)
+                return null;
+
+            return new ExpressionCommand(expr);
         }
 
         private IList<string> CompileNameList()
@@ -583,6 +596,21 @@
             this.lexer.PushToken(token);
 
             return false;
+        }
+
+        private Token TryCompile(TokenType type)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return null;
+
+            if (token.TokenType == type)
+                return token;
+
+            this.lexer.PushToken(token);
+
+            return null;
         }
     }
 }

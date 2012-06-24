@@ -131,6 +131,40 @@
         }
 
         [TestMethod]
+        public void CompileExpressionCommand()
+        {
+            Parser parser = new Parser("1+2");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+            command.Execute(null, null);
+
+            ExpressionCommand exprcommand = (ExpressionCommand)command;
+            Assert.IsNotNull(exprcommand.Expression);
+            Assert.AreEqual(3, exprcommand.Expression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void CompileExpressionCommandWithName()
+        {
+            Parser parser = new Parser("a+2");
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("a", 1);
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+            command.Execute(null, environment);
+
+            ExpressionCommand exprcommand = (ExpressionCommand)command;
+            Assert.IsNotNull(exprcommand.Expression);
+            Assert.AreEqual(3, exprcommand.Expression.Evaluate(environment));
+        }
+
+        [TestMethod]
         public void CompileAndEvaluateSubtractExpression()
         {
             Parser parser = new Parser("1-2");
@@ -419,21 +453,18 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NameExpectedException))]
-        public void RaiseIsCommandDoesNotBeginWithName()
-        {
-            Parser parser = new Parser("123 = 12");
-
-            ICommand command = parser.CompileCommand();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UnexpectedEndOfInputException))]
-        public void RaiseIsCommandIsNotComplete()
+        public void CompileNameAsExpression()
         {
             Parser parser = new Parser("foo");
 
             ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+
+            ExpressionCommand exprcommand = (ExpressionCommand)command;
+            Assert.IsNotNull(exprcommand.Expression);
+            Assert.IsInstanceOfType(exprcommand.Expression, typeof(NameExpression));
         }
 
         [TestMethod]
