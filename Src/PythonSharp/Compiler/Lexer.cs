@@ -11,9 +11,10 @@
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
         private const string Operators = "+-/*=.><";
+        private const string OperatorStarts = "!";
         private const string Separators = "()[]{},:;";
 
-        private static string[] otherOperators = new string[] { "**" };
+        private static string[] otherOperators = new string[] { "**", "<=", ">=", "==", "<>", "!=" };
 
         private TextReader reader;
         private char lastChar;
@@ -100,7 +101,7 @@
                 if (Separators.Contains(ch))
                     return this.NextSeparator(ch);
 
-                if (Operators.Contains(ch))
+                if (Operators.Contains(ch) || OperatorStarts.Contains(ch))
                     return this.NextOperator(ch);
 
                 throw new InvalidDataException("Unknown input");
@@ -181,11 +182,15 @@
             {
             }
 
-            return new Token() 
-            { 
-                TokenType = TokenType.Operator, 
-                Value = ch.ToString() 
-            };
+            if (Operators.Contains(ch)) {
+                return new Token()
+                {
+                    TokenType = TokenType.Operator,
+                    Value = ch.ToString()
+                };
+            }
+
+            throw new InvalidDataException("Unknown input");
         }
 
         private Token NextSeparator(char ch)

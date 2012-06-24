@@ -69,8 +69,8 @@
         [TestMethod]
         public void ParseMultiCharOperators()
         {
-            string operators = "**";
-            string[] otherOperators = new string[] { "**" };
+            string operators = "** <= >= <> == !=";
+            string[] otherOperators = new string[] { "**", "<=", ">=", "<>", "==", "!=" };
 
             Lexer lexer = new Lexer(operators);
 

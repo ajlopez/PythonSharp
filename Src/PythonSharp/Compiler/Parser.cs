@@ -11,7 +11,7 @@
 
     public class Parser
     {
-        private static string[] opslevel0 = new string[] { ">", "<", ">=", "<=", "<>" };
+        private static string[] opslevel0 = new string[] { ">", "<", ">=", "<=", "<>", "==", "!=" };
         private static string[] opslevel1 = new string[] { "+", "-" };
         private static string[] opslevel2 = new string[] { "*", "/" };
         private static string[] opslevel3 = new string[] { "**" };
@@ -234,7 +234,10 @@
             if (oper == ">=")
                 return ComparisonOperator.GreaterEqual;
 
-            if (oper == "<>")
+            if (oper == "==")
+                return ComparisonOperator.Equal;
+
+            if (oper == "<>" || oper == "!=")
                 return ComparisonOperator.NotEqual;
 
             throw new System.InvalidOperationException(string.Format("Unexpected {0}", oper));

@@ -762,10 +762,16 @@
         }
 
         [TestMethod]
-        public void EvaluateComparison()
+        public void EvaluateNumericComparison()
         {
             Assert.IsTrue((bool)CompileAndEvaluateExpression("1 < 2"));
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("1 <= 2"));
             Assert.IsTrue((bool)CompileAndEvaluateExpression("3 > 2"));
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("3 >= 2"));
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("3 <> 2"));
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("2 == 2"));
+            Assert.IsFalse((bool)CompileAndEvaluateExpression("3 == 2"));
+            Assert.IsTrue((bool)CompileAndEvaluateExpression("3 != 2"));
         }
 
         private static object CompileAndEvaluateExpression(string text)
