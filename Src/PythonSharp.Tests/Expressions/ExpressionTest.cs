@@ -1,4 +1,4 @@
-﻿namespace PythonSharp.Tests
+﻿namespace PythonSharp.Tests.Expressions
 {
     using System;
     using System.Collections;

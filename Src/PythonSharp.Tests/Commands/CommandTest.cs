@@ -1,4 +1,4 @@
-﻿namespace PythonSharp.Tests
+﻿namespace PythonSharp.Tests.Commands
 {
     using System.Collections.Generic;
     using System.IO;

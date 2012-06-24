@@ -1,4 +1,4 @@
-﻿namespace PythonSharp.Tests
+﻿namespace PythonSharp.Tests.Compiler
 {
     using System;
     using System.Collections.Generic;
