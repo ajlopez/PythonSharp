@@ -149,6 +149,18 @@
         }
 
         [TestMethod]
+        public void ParseComment()
+        {
+            Lexer lexer = new Lexer("# this is a comment");
+
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
         public void ParseInteger()
         {
             Lexer lexer = new Lexer("123");

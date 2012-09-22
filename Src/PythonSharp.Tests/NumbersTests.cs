@@ -75,5 +75,14 @@
             Assert.AreEqual(2, Numbers.Divide(4, 2));
             Assert.AreEqual(4 / 3.0, Numbers.Divide(4, 3.0));
         }
+
+        [TestMethod]
+        public void Remainder()
+        {
+            Assert.AreEqual(1, Numbers.Remainder(1, 2));
+            Assert.AreEqual(0, Numbers.Remainder(4, 2));
+            Assert.AreEqual(0, Numbers.Remainder(-3, 3));
+            Assert.AreEqual(-1, Numbers.Remainder(-4, 3));
+        }
     }
 }

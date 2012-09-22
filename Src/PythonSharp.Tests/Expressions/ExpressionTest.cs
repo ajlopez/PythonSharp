@@ -32,6 +32,17 @@
         }
 
         [TestMethod]
+        public void EvaluateCompareExpression()
+        {
+            CompareExpression expression = new CompareExpression(ComparisonOperator.Equal, new ConstantExpression(1), new ConstantExpression(2));
+            var result = expression.Evaluate(null);
+
+            Assert.IsInstanceOfType(result, typeof(bool));
+            Assert.IsFalse((bool)result);
+            Assert.AreEqual(ComparisonOperator.Equal, expression.Operation);
+        }
+
+        [TestMethod]
         public void EvaluateRealExpression()
         {
             ConstantExpression expression = new ConstantExpression(12.3);

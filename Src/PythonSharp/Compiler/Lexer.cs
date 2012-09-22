@@ -10,6 +10,7 @@
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
+        private const char CommentChar = '#';
         private const string Operators = "+-/*=.><";
         private const string OperatorStarts = "!";
         private const string Separators = "()[]{},:;";
@@ -182,7 +183,8 @@
             {
             }
 
-            if (Operators.Contains(ch)) {
+            if (Operators.Contains(ch)) 
+            {
                 return new Token()
                 {
                     TokenType = TokenType.Operator,
@@ -361,6 +363,19 @@
         }
 
         private char NextChar()
+        {
+            char ch = this.NextSimpleChar();
+
+            if (ch == CommentChar)
+            {
+                while (ch != '\r' && ch != '\n')
+                    ch = this.NextSimpleChar();
+            }
+
+            return ch;
+        }
+
+        private char NextSimpleChar()
         {
             if (this.hasChar)
             {

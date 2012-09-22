@@ -39,8 +39,6 @@
                 case ComparisonOperator.GreaterEqual:
                     this.function = Operators.CompareObjectGreaterEqual;
                     break;
-                default:
-                    throw new ArgumentException("Invalid operator");
             }
         }
 

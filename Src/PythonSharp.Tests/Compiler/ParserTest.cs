@@ -379,6 +379,11 @@
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(DictionaryExpression));
 
+            var dictexpr = (DictionaryExpression)expression;
+
+            Assert.AreEqual(0, dictexpr.KeyExpressions.Count);
+            Assert.AreEqual(0, dictexpr.ValueExpressions.Count);
+
             object result = expression.Evaluate(new BindingEnvironment());
 
             Assert.IsNotNull(result);
@@ -387,6 +392,7 @@
             IDictionary dictionary = (IDictionary)result;
 
             Assert.AreEqual(0, dictionary.Keys.Count);
+            Assert.AreEqual(0, dictionary.Values.Count);
         }
 
         [TestMethod]
