@@ -1,13 +1,15 @@
 ﻿namespace PythonSharp.Console
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using PythonSharp;
-    using PythonSharp.Compiler;
     using PythonSharp.Commands;
+    using PythonSharp.Compiler;
+    using PythonSharp.Expressions;
+    using PythonSharp.Utilities;
 
     public class Program
     {
@@ -28,7 +30,30 @@
                         break;
 
                     if (command is ExpressionCommand)
-                        Console.WriteLine(((ExpressionCommand)command).Expression.Evaluate(machine.Environment));
+                    {
+                        IExpression expr = ((ExpressionCommand)command).Expression;
+
+                        if (expr is ListExpression)
+                        {
+                            IList list = (IList)expr.Evaluate(machine.Environment);
+                            Console.Write("(");
+                            var nvalue = 0;
+
+                            foreach (var value in list)
+                            {
+                                if (nvalue > 0)
+                                    Console.Write(", ");
+
+                                Console.Write(ValueUtilities.AsString(value));
+
+                                nvalue++;
+                            }
+
+                            Console.WriteLine(")");
+                        }
+                        else
+                            Console.WriteLine(ValueUtilities.AsString(expr.Evaluate(machine.Environment)));
+                    }
                     else
                         command.Execute(machine, machine.Environment);
                 }

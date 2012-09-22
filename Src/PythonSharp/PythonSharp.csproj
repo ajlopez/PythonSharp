@@ -83,6 +83,7 @@
     <Compile Include="Predicates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Compiler\TokenType.cs" />
+    <Compile Include="Utilities\ValueUtilities.cs" />
     <Compile Include="Utilities\ModuleUtilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

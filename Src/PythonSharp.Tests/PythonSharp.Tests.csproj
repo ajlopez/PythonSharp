@@ -51,6 +51,7 @@
     <Compile Include="Compiler\LexerTest.cs" />
     <Compile Include="PredicatesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ValueUtilitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PythonSharp\PythonSharp.csproj">
