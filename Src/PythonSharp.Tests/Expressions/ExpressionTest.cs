@@ -16,22 +16,6 @@
     public class ExpressionTest
     {
         [TestMethod]
-        public void EvaluateStringConstantExpressions() 
-        {
-            ConstantExpression expression = new ConstantExpression("foo");
-
-            Assert.AreEqual("foo", expression.Evaluate(null));
-        }
-
-        [TestMethod]
-        public void EvaluateIntegerExpression() 
-        {
-            ConstantExpression expression = new ConstantExpression(123);
-
-            Assert.AreEqual(123, expression.Evaluate(null));
-        }
-
-        [TestMethod]
         public void EvaluateCompareExpression()
         {
             CompareExpression expression = new CompareExpression(ComparisonOperator.Equal, new ConstantExpression(1), new ConstantExpression(2));
@@ -40,22 +24,6 @@
             Assert.IsInstanceOfType(result, typeof(bool));
             Assert.IsFalse((bool)result);
             Assert.AreEqual(ComparisonOperator.Equal, expression.Operation);
-        }
-
-        [TestMethod]
-        public void EvaluateRealExpression()
-        {
-            ConstantExpression expression = new ConstantExpression(12.3);
-
-            Assert.AreEqual(12.3, expression.Evaluate(new BindingEnvironment()));
-        }
-
-        [TestMethod]
-        public void EvaluateBooleanConstantExpression()
-        {
-            ConstantExpression expression = new ConstantExpression(true);
-
-            Assert.AreEqual(true, expression.Evaluate(null));
         }
 
         [TestMethod]
@@ -79,101 +47,6 @@
             BindingEnvironment environment = new BindingEnvironment();
 
             expression.Evaluate(environment);
-        }
-
-        [TestMethod]
-        public void EvaluateAddExpression()
-        {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(1), new ConstantExpression(2), BinaryOperator.Add);
-
-            Assert.IsNotNull(expression);
-            Assert.IsNotNull(expression.Left);
-            Assert.IsNotNull(expression.Right);
-
-            Assert.AreEqual(3, expression.Evaluate(new BindingEnvironment()));
-        }
-
-        [TestMethod]
-        public void EvaluateSubtractExpression()
-        {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(1), new ConstantExpression(2), BinaryOperator.Subtract);
-
-            Assert.IsNotNull(expression);
-            Assert.IsNotNull(expression.Left);
-            Assert.IsNotNull(expression.Right);
-
-            Assert.AreEqual(-1, expression.Evaluate(new BindingEnvironment()));
-        }
-
-        [TestMethod]
-        public void EvaluateMultiplyExpression()
-        {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(2), new ConstantExpression(3), BinaryOperator.Multiply);
-
-            Assert.IsNotNull(expression);
-            Assert.IsNotNull(expression.Left);
-            Assert.IsNotNull(expression.Right);
-
-            Assert.AreEqual(6, expression.Evaluate(new BindingEnvironment()));
-        }
-
-        [TestMethod]
-        public void EvaluateDivideExpression()
-        {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(6), new ConstantExpression(3), BinaryOperator.Divide);
-
-            Assert.IsNotNull(expression);
-            Assert.IsNotNull(expression.Left);
-            Assert.IsNotNull(expression.Right);
-
-            Assert.AreEqual(2, expression.Evaluate(new BindingEnvironment()));
-        }
-
-        [TestMethod]
-        public void CreateListExpression()
-        {
-            ListExpression expression = new ListExpression();
-
-            Assert.IsNotNull(expression);
-            Assert.IsNotNull(expression.Expressions);
-            Assert.AreEqual(0, expression.Expressions.Count);
-        }
-
-        [TestMethod]
-        public void EvaluateListExpression()
-        {
-            ListExpression expression = new ListExpression();
-
-            expression.Add(new ConstantExpression(1));
-            expression.Add(new ConstantExpression("foo"));
-
-            Assert.IsNotNull(expression.Expressions);
-            Assert.AreEqual(2, expression.Expressions.Count);
-
-            object result = expression.Evaluate(new BindingEnvironment());
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IList));
-
-            IList list = (IList)result;
-
-            Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(1, list[0]);
-            Assert.AreEqual("foo", list[1]);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
-        public void RaiseIfLeftIsNull()
-        {
-            BinaryExpression expression = new BinaryOperatorExpression(null, new ConstantExpression(3), BinaryOperator.Divide);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
-        public void RaiseIfRightIsNull()
-        {
-            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(3), null, BinaryOperator.Divide);
         }
 
         [TestMethod]

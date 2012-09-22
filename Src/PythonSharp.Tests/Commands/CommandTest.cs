@@ -79,6 +79,19 @@
         }
 
         [TestMethod]
+        public void ExecutePrintCommandWithTwoValues()
+        {
+            PrintCommand command = new PrintCommand(new IExpression[] { new ConstantExpression("bar"), new ConstantExpression("foo") });
+            Machine machine = new Machine();
+            StringWriter writer = new StringWriter();
+            machine.Output = writer;
+
+            command.Execute(machine, machine.Environment);
+
+            Assert.AreEqual("bar foo\r\n", writer.ToString());
+        }
+
+        [TestMethod]
         public void ExecuteCompositeCommand()
         {
             SimpleAssignmentCommand command1 = new SimpleAssignmentCommand("foo", new ConstantExpression("bar"));
