@@ -27,7 +27,10 @@
                     if (command == null)
                         break;
 
-                    command.Execute(machine, machine.Environment);
+                    if (command is ExpressionCommand)
+                        Console.WriteLine(((ExpressionCommand)command).Expression.Evaluate(machine.Environment));
+                    else
+                        command.Execute(machine, machine.Environment);
                 }
                 catch (Exception ex)
                 {
