@@ -411,18 +411,6 @@
   <project key="1263207321">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/25/2009 11:43:17</timestamp>
-      <milliseconds>441</milliseconds>
-    </settings>
-    <timestamp>12/25/2009 20:51:52</timestamp>
-    <milliseconds>529</milliseconds>
-    <violations />
-  </sourcecode>
-  <project key="1538393221">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="Lexer.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>06/24/2012 16:47:27</timestamp>
@@ -430,6 +418,18 @@
     </settings>
     <timestamp>09/22/2012 17:16:49</timestamp>
     <milliseconds>347</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="1538393221">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/24/2012 16:47:27</timestamp>
+      <milliseconds>142</milliseconds>
+    </settings>
+    <timestamp>06/24/2012 18:38:21</timestamp>
+    <milliseconds>722</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

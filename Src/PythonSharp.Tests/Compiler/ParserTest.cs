@@ -165,6 +165,22 @@
         }
 
         [TestMethod]
+        public void CompileExpressionCommandWithList()
+        {
+            Parser parser = new Parser("1, 2");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+            command.Execute(null, null);
+
+            ExpressionCommand exprcommand = (ExpressionCommand)command;
+            Assert.IsNotNull(exprcommand.Expression);
+            Assert.IsInstanceOfType(exprcommand.Expression, typeof(ListExpression));
+        }
+
+        [TestMethod]
         public void CompileAndEvaluateSubtractExpression()
         {
             Parser parser = new Parser("1-2");
@@ -681,7 +697,6 @@
 
             Assert.IsNull(parser.CompileCommand());
         }
-
 
         [TestMethod]
         public void CompileIfCommandWithCompositeThenCommand()

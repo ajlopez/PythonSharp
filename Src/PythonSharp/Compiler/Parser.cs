@@ -286,18 +286,39 @@
             throw new UnexpectedTokenException(token);
         }
 
+        private ICommand CompileExpressionCommand()
+        {
+            IExpression expr = this.CompileExpression();
+
+            if (expr == null)
+                return null;
+
+            ListExpression lexpr = null;
+
+            while (TryCompile(TokenType.Separator, ","))
+            {
+                if (lexpr == null)
+                {
+                    lexpr = new ListExpression();
+                    lexpr.Add(expr);
+                }
+
+                lexpr.Add(this.CompileExpression());
+            }
+
+            if (lexpr != null)
+                return new ExpressionCommand(lexpr);
+
+            return new ExpressionCommand(expr);
+        }
+
         private ICommand CompileSimpleCommand()
         {
             Token token = this.TryCompile(TokenType.Name);
             IExpression expr;
 
             if (token == null)
-            {
-                expr = this.CompileExpression();
-                if (expr == null)
-                    return null;
-                return new ExpressionCommand(expr);
-            }
+                return this.CompileExpressionCommand();
 
             if (token.Value == "print")
                 return new PrintCommand(this.CompileExpressionList());
@@ -336,12 +357,7 @@
 
             this.lexer.PushToken(token);
 
-            expr = this.CompileExpression();
-
-            if (expr == null)
-                return null;
-
-            return new ExpressionCommand(expr);
+            return this.CompileExpressionCommand();
         }
 
         private IList<string> CompileNameList()
