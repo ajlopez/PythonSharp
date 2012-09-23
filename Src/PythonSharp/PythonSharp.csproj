@@ -70,8 +70,10 @@
     <Compile Include="Expressions\ConstantExpression.cs" />
     <Compile Include="Expressions\IndexedExpression.cs" />
     <Compile Include="Expressions\QualifiedNameExpression.cs" />
+    <Compile Include="Expressions\SliceExpression.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Language\ComparisonOperator.cs" />
+    <Compile Include="Language\Slice.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="Expressions\BinaryExpression.cs" />
     <Compile Include="Expressions\BinaryOperatorExpression.cs" />
