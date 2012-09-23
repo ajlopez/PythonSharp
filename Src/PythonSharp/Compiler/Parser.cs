@@ -555,6 +555,8 @@
             else
                 endexpr = this.CompileExpression();
 
+            this.CompileToken(TokenType.Separator, "]");
+
             SliceExpression sexpr = new SliceExpression(indexpr, endexpr);
             return new SlicedExpression(term, sexpr);
         }
