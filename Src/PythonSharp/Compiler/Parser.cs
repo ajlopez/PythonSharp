@@ -514,6 +514,30 @@
 
         private IExpression CompileTerm()
         {
+            IExpression term = this.CompileSimpleTerm();
+
+            if (term == null)
+                return null;
+
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return term;
+
+            if (token.TokenType != TokenType.Separator || token.Value != "[") 
+            {
+                this.lexer.PushToken(token);
+                return term;
+            }
+
+            IExpression indexpr = this.CompileExpression();
+            this.CompileToken(TokenType.Separator, "]");
+
+            return new IndexedExpression(term, indexpr);
+        }
+
+        private IExpression CompileSimpleTerm()
+        {
             Token token = this.lexer.NextToken();
 
             if (token == null)

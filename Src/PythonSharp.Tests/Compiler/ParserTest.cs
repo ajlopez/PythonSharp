@@ -853,6 +853,21 @@
             Assert.IsTrue((bool)CompileAndEvaluateExpression("3 != 2"));
         }
 
+        [TestMethod]
+        public void CompileIndexedExpression()
+        {
+            Parser parser = new Parser("'foo'[1]");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(IndexedExpression));
+
+            IndexedExpression iexpr = (IndexedExpression)expression;
+
+            Assert.AreEqual("foo", iexpr.TargetExpression.Evaluate(null));
+            Assert.AreEqual(1, iexpr.IndexExpression.Evaluate(null));
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Parser parser = new Parser(text);
