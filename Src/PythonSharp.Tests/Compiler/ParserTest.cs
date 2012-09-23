@@ -5,13 +5,12 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
     using PythonSharp.Commands;
     using PythonSharp.Compiler;
     using PythonSharp.Expressions;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Language;
 
     [TestClass]
     public class ParserTest
@@ -866,6 +865,43 @@
 
             Assert.AreEqual("foo", iexpr.TargetExpression.Evaluate(null));
             Assert.AreEqual(1, iexpr.IndexExpression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void CompileSlicedExpression()
+        {
+            Parser parser = new Parser("'foo'[1:2]");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(SlicedExpression));
+
+            SlicedExpression sexpr = (SlicedExpression)expression;
+
+            Assert.AreEqual("foo", sexpr.TargetExpression.Evaluate(null));
+            Slice slice = (Slice)sexpr.SliceExpression.Evaluate(null);
+            Assert.IsTrue(slice.Begin.HasValue);
+            Assert.IsTrue(slice.End.HasValue);
+            Assert.AreEqual(1, slice.Begin.Value);
+            Assert.AreEqual(2, slice.End.Value);
+        }
+
+        [TestMethod]
+        public void CompileSlicedExpressionWithNullEnd()
+        {
+            Parser parser = new Parser("'foo'[1:]");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(SlicedExpression));
+
+            SlicedExpression sexpr = (SlicedExpression)expression;
+
+            Assert.AreEqual("foo", sexpr.TargetExpression.Evaluate(null));
+            Slice slice = (Slice)sexpr.SliceExpression.Evaluate(null);
+            Assert.IsTrue(slice.Begin.HasValue);
+            Assert.IsFalse(slice.End.HasValue);
+            Assert.AreEqual(1, slice.Begin.Value);
         }
 
         private static object CompileAndEvaluateExpression(string text)

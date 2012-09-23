@@ -19,7 +19,7 @@
 
         public IExpression TargetExpression { get { return this.targetExpression; } }
 
-        public IExpression IndexExpression { get { return this.sliceExpression; } }
+        public SliceExpression SliceExpression { get { return this.sliceExpression; } }
 
         public object Evaluate(BindingEnvironment environment)
         {

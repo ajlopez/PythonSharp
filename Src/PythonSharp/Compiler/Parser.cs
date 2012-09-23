@@ -531,9 +531,17 @@
             }
 
             IExpression indexpr = this.CompileExpression();
-            this.CompileToken(TokenType.Separator, "]");
 
-            return new IndexedExpression(term, indexpr);
+            if (!this.TryCompile(TokenType.Separator, ":"))
+            {
+                this.CompileToken(TokenType.Separator, "]");
+
+                return new IndexedExpression(term, indexpr);
+            }
+
+            IExpression endexpr = this.CompileExpression();
+            SliceExpression sexpr = new SliceExpression(indexpr, endexpr);
+            return new SlicedExpression(term, sexpr);
         }
 
         private IExpression CompileSimpleTerm()
@@ -582,7 +590,9 @@
                     break;
             }
 
-            throw new UnexpectedTokenException(token);
+            this.lexer.PushToken(token);
+
+            return null;
         }
 
         private void CompileToken(TokenType type, string value)
