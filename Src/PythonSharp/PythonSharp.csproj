@@ -68,6 +68,7 @@
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
     <Compile Include="Expressions\ConstantExpression.cs" />
+    <Compile Include="Expressions\SlicedExpression.cs" />
     <Compile Include="Expressions\IndexedExpression.cs" />
     <Compile Include="Expressions\QualifiedNameExpression.cs" />
     <Compile Include="Expressions\SliceExpression.cs" />
