@@ -530,16 +530,31 @@
                 return term;
             }
 
-            IExpression indexpr = this.CompileExpression();
+            IExpression indexpr = null;
+            IExpression endexpr = null;
 
             if (!this.TryCompile(TokenType.Separator, ":"))
             {
-                this.CompileToken(TokenType.Separator, "]");
+                indexpr = this.CompileExpression();
 
-                return new IndexedExpression(term, indexpr);
+                if (!this.TryCompile(TokenType.Separator, ":"))
+                {
+                    this.CompileToken(TokenType.Separator, "]");
+
+                    if (indexpr != null)
+                        return new IndexedExpression(term, indexpr);
+
+                    return new SlicedExpression(term, new SliceExpression(null, null));
+                }
+
+                if (this.TryCompile(TokenType.Separator, "]"))
+                    return new SlicedExpression(term, new SliceExpression(indexpr, endexpr));
+
+                endexpr = this.CompileExpression();
             }
+            else
+                endexpr = this.CompileExpression();
 
-            IExpression endexpr = this.CompileExpression();
             SliceExpression sexpr = new SliceExpression(indexpr, endexpr);
             return new SlicedExpression(term, sexpr);
         }

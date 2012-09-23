@@ -107,14 +107,14 @@
         [TestMethod]
         public void CompileString()
         {
-            Parser parser = new Parser("\"foo\"");
+            Parser parser = new Parser("\"spam\"");
 
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
 
-            Assert.AreEqual("foo", ((ConstantExpression)expression).Value);
+            Assert.AreEqual("spam", ((ConstantExpression)expression).Value);
         }
 
         [TestMethod]
@@ -230,7 +230,7 @@
         [TestMethod]
         public void CompileAndEvaluateListExpression()
         {
-            Parser parser = new Parser("[1,2,'foo']");
+            Parser parser = new Parser("[1,2,'spam']");
 
             IExpression expression = parser.CompileExpression();
 
@@ -247,7 +247,7 @@
             Assert.AreEqual(3, list.Count);
             Assert.AreEqual(1, list[0]);
             Assert.AreEqual(2, list[1]);
-            Assert.AreEqual("foo", list[2]);
+            Assert.AreEqual("spam", list[2]);
         }
 
         [TestMethod]
@@ -286,7 +286,7 @@
 
             environment.SetValue("a", 1);
             environment.SetValue("b", 2);
-            environment.SetValue("c", "foo");
+            environment.SetValue("c", "spam");
 
             IExpression expression = parser.CompileExpression();
 
@@ -303,7 +303,7 @@
             Assert.AreEqual(3, list.Count);
             Assert.AreEqual(1, list[0]);
             Assert.AreEqual(2, list[1]);
-            Assert.AreEqual("foo", list[2]);
+            Assert.AreEqual("spam", list[2]);
         }
 
         [TestMethod]
@@ -314,7 +314,7 @@
 
             environment.SetValue("a", 1);
             environment.SetValue("b", 2);
-            environment.SetValue("c", "foo");
+            environment.SetValue("c", "spam");
 
             IExpression expression = parser.CompileExpression();
 
@@ -331,13 +331,13 @@
             Assert.AreEqual(3, list.Count);
             Assert.AreEqual(2, list[0]);
             Assert.AreEqual(4, list[1]);
-            Assert.AreEqual("foo", list[2]);
+            Assert.AreEqual("spam", list[2]);
         }
 
         [TestMethod]
         public void CompileAndEvaluateComplexListExpression()
         {
-            Parser parser = new Parser("[1, 2, [a, b], 'foo']");
+            Parser parser = new Parser("[1, 2, [a, b], 'spam']");
             BindingEnvironment environment = new BindingEnvironment();
 
             environment.SetValue("a", 1);
@@ -360,7 +360,7 @@
             Assert.AreEqual(2, list[1]);
             Assert.IsNotNull(list[2]);
             Assert.IsInstanceOfType(list[2], typeof(IList));
-            Assert.AreEqual("foo", list[3]);
+            Assert.AreEqual("spam", list[3]);
 
             IList list2 = (IList)list[2];
 
@@ -373,7 +373,7 @@
         [TestMethod]
         public void CompileAndEvaluateDictionaryExpression()
         {
-            Parser parser = new Parser("{ 'firstname': 'foo', 'lastname': 'bar' }");
+            Parser parser = new Parser("{ 'firstname': 'spam', 'lastname': 'bar' }");
 
             IExpression expression = parser.CompileExpression();
 
@@ -388,7 +388,7 @@
             IDictionary dictionary = (IDictionary)result;
 
             Assert.AreEqual(2, dictionary.Keys.Count);
-            Assert.AreEqual("foo", dictionary["firstname"]);
+            Assert.AreEqual("spam", dictionary["firstname"]);
             Assert.AreEqual("bar", dictionary["lastname"]);
         }
 
@@ -422,7 +422,7 @@
         [ExpectedException(typeof(ExpectedTokenException))]
         public void RaiseIfDictionaryExpressionWithMissingComma()
         {
-            Parser parser = new Parser("{ 'firstname': 'foo' 'lastname': 'bar' }");
+            Parser parser = new Parser("{ 'firstname': 'spam' 'lastname': 'bar' }");
             parser.CompileExpression();
         }
 
@@ -430,7 +430,7 @@
         [ExpectedException(typeof(ExpectedTokenException))]
         public void RaiseIfDictionaryExpressionWithMissingPeriod()
         {
-            Parser parser = new Parser("{ 'firstname' 'foo', 'lastname': 'bar' }");
+            Parser parser = new Parser("{ 'firstname' 'spam', 'lastname': 'bar' }");
             parser.CompileExpression();
         }
 
@@ -489,7 +489,7 @@
         [TestMethod]
         public void CompileSimpleAssignmentCommand()
         {
-            Parser parser = new Parser("foo = \"bar\"");
+            Parser parser = new Parser("spam = \"bar\"");
 
             ICommand command = parser.CompileCommand();
 
@@ -500,7 +500,7 @@
         [TestMethod]
         public void CompileNameAsExpression()
         {
-            Parser parser = new Parser("foo");
+            Parser parser = new Parser("spam");
 
             ICommand command = parser.CompileCommand();
 
@@ -516,7 +516,7 @@
         [ExpectedException(typeof(UnexpectedTokenException))]
         public void RaiseIsCommandIsUnknown()
         {
-            Parser parser = new Parser("foo bar");
+            Parser parser = new Parser("spam bar");
 
             ICommand command = parser.CompileCommand();
         }
@@ -524,7 +524,7 @@
         [TestMethod]
         public void CompilePrintCommand()
         {
-            Parser parser = new Parser("print 'foo'");
+            Parser parser = new Parser("print 'spam'");
 
             ICommand command = parser.CompileCommand();
 
@@ -540,7 +540,7 @@
         [TestMethod]
         public void CompilePrintCommandWithTwoArguments()
         {
-            Parser parser = new Parser("print 'foo', 'bar'");
+            Parser parser = new Parser("print 'spam', 'bar'");
 
             ICommand command = parser.CompileCommand();
 
@@ -571,7 +571,7 @@
         [TestMethod]
         public void CompileCompositeCommand()
         {
-            Parser parser = new Parser("foo = \"bar\"\r\none = 1");
+            Parser parser = new Parser("spam = \"bar\"\r\none = 1");
 
             ICommand command = parser.CompileCommandList();
 
@@ -592,7 +592,7 @@
         [TestMethod]
         public void CompileCompositeCommandUsingSemicolon()
         {
-            Parser parser = new Parser("foo = \"bar\";one = 1");
+            Parser parser = new Parser("spam = \"bar\";one = 1");
 
             ICommand command = parser.CompileCommandList();
 
@@ -603,7 +603,7 @@
         [TestMethod]
         public void CompileCompositeCommandUsingSemicolonAndSpaces()
         {
-            Parser parser = new Parser("foo = \"bar\";   one = 1");
+            Parser parser = new Parser("spam = \"bar\";   one = 1");
 
             ICommand command = parser.CompileCommandList();
 
@@ -614,7 +614,7 @@
         [TestMethod]
         public void CompileQualifiedNameExpression()
         {
-            Parser parser = new Parser("module.foo");
+            Parser parser = new Parser("module.spam");
 
             IExpression expression = parser.CompileExpression();
 
@@ -624,7 +624,7 @@
             QualifiedNameExpression qexpr = (QualifiedNameExpression)expression;
 
             Assert.AreEqual("module", qexpr.ModuleName);
-            Assert.AreEqual("foo", qexpr.Name);
+            Assert.AreEqual("spam", qexpr.Name);
         }
 
         [TestMethod]
@@ -855,7 +855,7 @@
         [TestMethod]
         public void CompileIndexedExpression()
         {
-            Parser parser = new Parser("'foo'[1]");
+            Parser parser = new Parser("'spam'[1]");
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNotNull(expression);
@@ -863,14 +863,14 @@
 
             IndexedExpression iexpr = (IndexedExpression)expression;
 
-            Assert.AreEqual("foo", iexpr.TargetExpression.Evaluate(null));
+            Assert.AreEqual("spam", iexpr.TargetExpression.Evaluate(null));
             Assert.AreEqual(1, iexpr.IndexExpression.Evaluate(null));
         }
 
         [TestMethod]
         public void CompileSlicedExpression()
         {
-            Parser parser = new Parser("'foo'[1:2]");
+            Parser parser = new Parser("'spam'[1:2]");
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNotNull(expression);
@@ -878,7 +878,7 @@
 
             SlicedExpression sexpr = (SlicedExpression)expression;
 
-            Assert.AreEqual("foo", sexpr.TargetExpression.Evaluate(null));
+            Assert.AreEqual("spam", sexpr.TargetExpression.Evaluate(null));
             Slice slice = (Slice)sexpr.SliceExpression.Evaluate(null);
             Assert.IsTrue(slice.Begin.HasValue);
             Assert.IsTrue(slice.End.HasValue);
@@ -889,7 +889,7 @@
         [TestMethod]
         public void CompileSlicedExpressionWithNullEnd()
         {
-            Parser parser = new Parser("'foo'[1:]");
+            Parser parser = new Parser("'spam'[1:]");
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNotNull(expression);
@@ -897,11 +897,46 @@
 
             SlicedExpression sexpr = (SlicedExpression)expression;
 
-            Assert.AreEqual("foo", sexpr.TargetExpression.Evaluate(null));
+            Assert.AreEqual("spam", sexpr.TargetExpression.Evaluate(null));
             Slice slice = (Slice)sexpr.SliceExpression.Evaluate(null);
             Assert.IsTrue(slice.Begin.HasValue);
             Assert.IsFalse(slice.End.HasValue);
             Assert.AreEqual(1, slice.Begin.Value);
+        }
+
+        [TestMethod]
+        public void CompileSlicedExpressionWithNullBegin()
+        {
+            Parser parser = new Parser("'spam'[:2]");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(SlicedExpression));
+
+            SlicedExpression sexpr = (SlicedExpression)expression;
+
+            Assert.AreEqual("spam", sexpr.TargetExpression.Evaluate(null));
+            Slice slice = (Slice)sexpr.SliceExpression.Evaluate(null);
+            Assert.IsFalse(slice.Begin.HasValue);
+            Assert.IsTrue(slice.End.HasValue);
+            Assert.AreEqual(2, slice.End.Value);
+        }
+
+        [TestMethod]
+        public void CompileSlicedExpressionWithNullBeginAndEnd()
+        {
+            Parser parser = new Parser("'spam'[:]");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(SlicedExpression));
+
+            SlicedExpression sexpr = (SlicedExpression)expression;
+
+            Assert.AreEqual("spam", sexpr.TargetExpression.Evaluate(null));
+            Slice slice = (Slice)sexpr.SliceExpression.Evaluate(null);
+            Assert.IsFalse(slice.Begin.HasValue);
+            Assert.IsFalse(slice.End.HasValue);
         }
 
         private static object CompileAndEvaluateExpression(string text)
