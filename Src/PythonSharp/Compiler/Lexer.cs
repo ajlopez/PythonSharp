@@ -10,6 +10,7 @@
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
+        private const char EscapeChar = '\\';
         private const char CommentChar = '#';
         private const string Operators = "+-/*=.><";
         private const string OperatorStarts = "!";
@@ -94,10 +95,10 @@
                     return this.NextName(ch);
 
                 if (ch == StringChar)
-                    return this.NextString();
+                    return this.NextString(StringChar);
 
                 if (ch == QuotedStringChar)
-                    return this.NextQuotedString();
+                    return this.NextString(QuotedStringChar);
 
                 if (Separators.Contains(ch))
                     return this.NextSeparator(ch);
@@ -204,7 +205,7 @@
             };
         }
 
-        private Token NextString()
+        private Token NextString(char endchar)
         {
             StringBuilder sb = new StringBuilder();
             char ch;
@@ -213,34 +214,11 @@
             {
                 ch = this.NextChar();
 
-                while (ch != StringChar)
+                while (ch != endchar)
                 {
-                    sb.Append(ch);
-                    ch = this.NextChar();
-                }
-            }
-            catch (EndOfInputException)
-            {
-            }
+                    if (ch == EscapeChar)
+                        ch = this.NextChar();
 
-            Token token = new Token();
-            token.Value = sb.ToString();
-            token.TokenType = TokenType.String;
-
-            return token;
-        }
-
-        private Token NextQuotedString()
-        {
-            StringBuilder sb = new StringBuilder();
-            char ch;
-
-            try
-            {
-                ch = this.NextChar();
-
-                while (ch != QuotedStringChar)
-                {
                     sb.Append(ch);
                     ch = this.NextChar();
                 }

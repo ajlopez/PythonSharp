@@ -75,7 +75,7 @@
                 if (listExpression.Expressions.Count != 0)
                 {
                     if (token.Value != ",")
-                        throw new InvalidDataException(string.Format("Unexpected '{0}'", token.Value));
+                        throw new ExpectedTokenException(",");
                 }
                 else
                     this.lexer.PushToken(token);
@@ -103,7 +103,7 @@
                 if (dictionaryExpression.KeyExpressions.Count != 0)
                 {
                     if (token.Value != ",")
-                        throw new InvalidDataException(string.Format("Unexpected '{0}'", token.Value));
+                        throw new ExpectedTokenException(",");
                 }
                 else
                     this.lexer.PushToken(token);
@@ -295,7 +295,7 @@
 
             ListExpression lexpr = null;
 
-            while (TryCompile(TokenType.Separator, ","))
+            while (this.TryCompile(TokenType.Separator, ","))
             {
                 if (lexpr == null)
                 {
@@ -566,12 +566,7 @@
             Token token = this.lexer.NextToken();
 
             if (token == null || token.TokenType != type || token.Value != value)
-                throw new SyntaxErrorException(string.Format("'{0}' expected", value));
-        }
-
-        private Token CompileName()
-        {
-            return this.CompileName(false);
+                throw new ExpectedTokenException(value);
         }
 
         private Token CompileName(bool required)
@@ -581,7 +576,7 @@
             if (token == null && !required)
                 return null;
 
-            if (token.TokenType != TokenType.Name)
+            if (token == null || token.TokenType != TokenType.Name)
                 throw new NameExpectedException();
 
             return token;
@@ -591,13 +586,8 @@
         {
             Token token = this.lexer.NextToken();
 
-            if (token == null || token.TokenType != TokenType.Name)
-            {
-                if (token != null)
-                    this.lexer.PushToken(token);
-
+            if (token == null || token.TokenType != TokenType.Name || token.Value != expected)
                 throw new ExpectedTokenException(expected);
-            }
 
             return token;
         }

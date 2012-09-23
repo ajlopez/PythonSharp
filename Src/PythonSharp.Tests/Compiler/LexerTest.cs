@@ -161,6 +161,47 @@
         }
 
         [TestMethod]
+        public void ParseNameComment()
+        {
+            Lexer lexer = new Lexer("name # this is a comment");
+
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Name, token.TokenType);
+            Assert.AreEqual("name", token.Value);
+
+            token = lexer.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
+        public void ParseCommentName()
+        {
+            Lexer lexer = new Lexer("# this is a comment\nname");
+
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.EndOfLine, token.TokenType);
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Name, token.TokenType);
+            Assert.AreEqual("name", token.Value);
+
+            token = lexer.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
         public void ParseInteger()
         {
             Lexer lexer = new Lexer("123");
@@ -268,6 +309,24 @@
             Assert.IsNotNull(token);
             Assert.AreEqual(TokenType.String, token.TokenType);
             Assert.AreEqual("bar", token.Value);
+
+            token = lexer.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
+        public void ParseQuotedStringWithEscapedQuote()
+        {
+            Lexer lexer = new Lexer("'bar\\''");
+
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.String, token.TokenType);
+            Assert.AreEqual("bar'", token.Value);
 
             token = lexer.NextToken();
 

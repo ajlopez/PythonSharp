@@ -272,6 +272,14 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExpectedTokenException))]
+        public void RaiseIfCompileListWithMissingComma()
+        {
+            Parser parser = new Parser("[1 2]");
+            parser.CompileExpression();
+        }
+
+        [TestMethod]
         public void CompileAndEvaluateListWithVarsExpression()
         {
             Parser parser = new Parser("[a, b, c]");
@@ -409,6 +417,22 @@
 
             Assert.AreEqual(0, dictionary.Keys.Count);
             Assert.AreEqual(0, dictionary.Values.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExpectedTokenException))]
+        public void RaiseIfDictionaryExpressionWithMissingComma()
+        {
+            Parser parser = new Parser("{ 'firstname': 'foo' 'lastname': 'bar' }");
+            parser.CompileExpression();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExpectedTokenException))]
+        public void RaiseIfDictionaryExpressionWithMissingPeriod()
+        {
+            Parser parser = new Parser("{ 'firstname' 'foo', 'lastname': 'bar' }");
+            parser.CompileExpression();
         }
 
         [TestMethod]
@@ -557,6 +581,16 @@
         }
 
         [TestMethod]
+        public void CompileEmptyCommandList()
+        {
+            Parser parser = new Parser("");
+
+            ICommand command = parser.CompileCommandList();
+
+            Assert.IsNull(command);
+        }
+
+        [TestMethod]
         public void CompileCompositeCommandUsingSemicolon()
         {
             Parser parser = new Parser("foo = \"bar\";one = 1");
@@ -610,6 +644,14 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NameExpectedException))]
+        public void RaiseIfCompileImportCommandWithoutModuleName()
+        {
+            Parser parser = new Parser("import");
+            parser.CompileCommand();
+        }
+
+        [TestMethod]
         public void CompileImportFromCommand()
         {
             Parser parser = new Parser("from module import a, b");
@@ -627,6 +669,14 @@
             Assert.AreEqual(2, impcmd.Names.Count);
             Assert.AreEqual("a", impcmd.Names.First());
             Assert.AreEqual("b", impcmd.Names.Skip(1).First());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExpectedTokenException))]
+        public void RaiseIfCompileImportFromCommandWithNoImportWord()
+        {
+            Parser parser = new Parser("from module imports a, b");
+            parser.CompileCommand();
         }
 
         [TestMethod]
@@ -754,6 +804,14 @@
             Assert.AreEqual(3, machine.Environment.GetValue("three"));
 
             Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedEndOfInputException))]
+        public void RaiseIfCompileIfHasNoCommand()
+        {
+            Parser parser = new Parser("if 0:");
+            parser.CompileCommand();
         }
 
         [TestMethod]

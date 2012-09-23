@@ -428,8 +428,14 @@
       <timestamp>06/24/2012 16:47:27</timestamp>
       <milliseconds>142</milliseconds>
     </settings>
-    <timestamp>06/24/2012 18:38:21</timestamp>
-    <milliseconds>722</milliseconds>
-    <violations />
+    <timestamp>09/23/2012 16:55:52</timestamp>
+    <milliseconds>856</milliseconds>
+    <violations>
+      <violation namespace="Microsoft.StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to TryCompile must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>298</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
 </stylecopresultscache>
