@@ -558,7 +558,7 @@
                     break;
             }
 
-            throw new SyntaxErrorException(string.Format("Unknown '{0}'", token.Value));
+            throw new UnexpectedTokenException(token);
         }
 
         private void CompileToken(TokenType type, string value)

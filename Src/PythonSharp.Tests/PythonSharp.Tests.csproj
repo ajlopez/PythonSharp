@@ -42,6 +42,7 @@
     <Compile Include="ExamplesTests.cs" />
     <Compile Include="Expressions\BinaryOperatorExpressionTest.cs" />
     <Compile Include="Expressions\ConstantExpressionTest.cs" />
+    <Compile Include="Expressions\IndexedExpressionTests.cs" />
     <Compile Include="Expressions\ListExpressionTest.cs" />
     <Compile Include="NumbersTests.cs" />
     <Compile Include="Compiler\ParserTest.cs" />
