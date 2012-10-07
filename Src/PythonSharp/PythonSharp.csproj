@@ -66,6 +66,7 @@
     <Compile Include="Compiler\Token.cs" />
     <Compile Include="Compiler\UnexpectedTokenException.cs" />
     <Compile Include="BindingEnvironment.cs" />
+    <Compile Include="Exceptions\AttributeError.cs" />
     <Compile Include="Exceptions\NameError.cs" />
     <Compile Include="Exceptions\TypeError.cs" />
     <Compile Include="Expressions\CallExpression.cs" />

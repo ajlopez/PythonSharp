@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
 
     public class QualifiedNameExpression : IExpression
     {
@@ -31,7 +32,7 @@
             if (environment.HasValue(this.name))
                 return value;
 
-            throw new InvalidOperationException(string.Format("NameError: name '{0}.{1}' not defined", this.modulename, this.name));
+            throw new AttributeError(string.Format("'module' object has no attribute '{0}'", this.name));
         }
     }
 }
