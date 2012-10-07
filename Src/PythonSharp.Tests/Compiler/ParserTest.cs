@@ -853,6 +853,20 @@
         }
 
         [TestMethod]
+        public void CompileNoneAsNullConstantExpression()
+        {
+            Parser parser = new Parser("None");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+
+            ConstantExpression cexpr = (ConstantExpression)expression;
+
+            Assert.IsNull(cexpr.Value);
+        }
+
+        [TestMethod]
         public void CompileIndexedExpression()
         {
             Parser parser = new Parser("'spam'[1]");

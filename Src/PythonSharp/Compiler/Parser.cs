@@ -580,7 +580,7 @@
                     return new ConstantExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
                     if (!this.TryCompile(TokenType.Operator, "."))
-                        return new NameExpression(token.Value);
+                        return MakeName(token.Value);
                     return new QualifiedNameExpression(token.Value, this.CompileName(true).Value);
                 case TokenType.Separator:
                     if (token.Value == "(")
@@ -618,6 +618,14 @@
 
             if (token == null || token.TokenType != type || token.Value != value)
                 throw new ExpectedTokenException(value);
+        }
+
+        private IExpression MakeName(string name)
+        {
+            if (name == "None")
+                return new ConstantExpression(null);
+
+            return new NameExpression(name);
         }
 
         private Token CompileName(bool required)

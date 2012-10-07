@@ -4,6 +4,20 @@
 	- print of expressions
 	
 + import
++ from ... import
+
+Types
+= numbers
+	- complex
+= strings
+	- review escape, multiline
++ lists
++ dictionaries
+- tuples
+- files
+- sets
+- None
+- booleans
 
 - support for \ at end of line
 - support for open ( with multiple lines
