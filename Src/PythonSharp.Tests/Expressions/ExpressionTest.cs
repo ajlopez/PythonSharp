@@ -23,23 +23,6 @@
             Assert.IsFalse((bool)result);
             Assert.AreEqual(ComparisonOperator.Equal, expression.Operation);
         }
-
-        [TestMethod]
-        public void EvaluateQualifiedNameExpression()
-        {
-            QualifiedNameExpression expression = new QualifiedNameExpression("module", "foo");
-            BindingEnvironment environment = new BindingEnvironment();
-            BindingEnvironment modenv = new BindingEnvironment();
-
-            modenv.SetValue("foo", "bar");
-            environment.SetValue("module", modenv);
-
-            object result = expression.Evaluate(environment);
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(string));
-            Assert.AreEqual("bar", result);
-        }
     }
 }
 

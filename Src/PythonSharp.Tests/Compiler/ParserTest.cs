@@ -612,19 +612,20 @@
         }
 
         [TestMethod]
-        public void CompileQualifiedNameExpression()
+        public void CompileAttributeExpression()
         {
             Parser parser = new Parser("module.spam");
 
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNotNull(expression);
-            Assert.IsInstanceOfType(expression, typeof(QualifiedNameExpression));
+            Assert.IsInstanceOfType(expression, typeof(AttributeExpression));
 
-            QualifiedNameExpression qexpr = (QualifiedNameExpression)expression;
+            AttributeExpression attrexpr = (AttributeExpression)expression;
 
-            Assert.AreEqual("module", qexpr.ModuleName);
-            Assert.AreEqual("spam", qexpr.Name);
+            Assert.IsNotNull(attrexpr.Expression);
+            Assert.IsInstanceOfType(attrexpr.Expression, typeof(NameExpression));
+            Assert.AreEqual("spam", attrexpr.Name);
         }
 
         [TestMethod]

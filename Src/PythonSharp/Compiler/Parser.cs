@@ -519,6 +519,9 @@
             if (term == null)
                 return null;
 
+            while (TryCompile(TokenType.Operator, "."))
+                term = new AttributeExpression(term, this.CompileName(true).Value);
+
             Token token = this.lexer.NextToken();
 
             if (token == null)
@@ -529,11 +532,10 @@
                 IList<IExpression> expressions = this.CompileExpressionList();
                 this.CompileToken(TokenType.Separator, ")");
 
-                // TODO refactor
-                if (term is QualifiedNameExpression) 
+                if (term is AttributeExpression) 
                 {
-                    QualifiedNameExpression qnexpr = (QualifiedNameExpression)term;
-                    return new MethodCallExpression(new NameExpression(qnexpr.ModuleName), qnexpr.Name, expressions);
+                    AttributeExpression attrexpr = (AttributeExpression)term;
+                    return new MethodCallExpression(attrexpr.Expression, attrexpr.Name, expressions);
                 }
 
                 return new CallExpression(term, expressions);
@@ -594,9 +596,7 @@
                 case TokenType.Boolean:
                     return new ConstantExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
-                    if (!this.TryCompile(TokenType.Operator, "."))
-                        return this.MakeName(token.Value);
-                    return new QualifiedNameExpression(token.Value, this.CompileName(true).Value);
+                    return this.MakeName(token.Value);
                 case TokenType.Separator:
                     if (token.Value == "(")
                     {
