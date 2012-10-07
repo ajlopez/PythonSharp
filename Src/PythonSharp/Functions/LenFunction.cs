@@ -25,7 +25,10 @@
             if (argument is string)
                 return ((string)argument).Length;
 
-            return ((ICollection)argument).Count;
+            if (argument is ICollection)
+                return ((ICollection)argument).Count;
+
+            throw new TypeError(string.Format("object of type '{0}' has no len()", Types.GetTypeName(argument)));
         }
     }
 }

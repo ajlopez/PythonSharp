@@ -86,6 +86,21 @@
                 Assert.AreEqual("len() takes exactly one argument (2 given)", ex.Message);
             }
         }
+
+        [TestMethod]
+        public void RaiseWhenIntegerArguments()
+        {
+            try
+            {
+                this.len.Apply(new object[] { 123 });
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
+                Assert.AreEqual("object of type 'int' has no len()", ex.Message);
+            }
+        }
     }
 }
 
