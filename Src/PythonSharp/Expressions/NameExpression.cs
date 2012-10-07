@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
 
     public class NameExpression : IExpression
     {
@@ -26,7 +27,7 @@
             if (environment.HasValue(this.name))
                 return value;
 
-            throw new InvalidOperationException(string.Format("NameError: name '{0}' not defined", this.name));
+            throw new NameError(string.Format("name '{0}' is not defined", this.name));
         }
     }
 }

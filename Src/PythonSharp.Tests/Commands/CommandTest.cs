@@ -105,6 +105,7 @@
 
             Assert.AreEqual("bar", machine.Environment.GetValue("foo"));
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
+            Assert.IsNotNull(command.Commands);
         }
 
         [TestMethod]

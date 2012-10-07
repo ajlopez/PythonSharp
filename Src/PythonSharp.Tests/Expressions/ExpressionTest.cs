@@ -25,29 +25,6 @@
         }
 
         [TestMethod]
-        public void EvaluateNameExpression() 
-        {
-            NameExpression expression = new NameExpression("foo");
-
-            BindingEnvironment environment = new BindingEnvironment();
-
-            environment.SetValue("foo", "bar");
-
-            Assert.AreEqual("bar", expression.Evaluate(environment));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException), "NameError: name 'foo' is not defined")]
-        public void RaiseIfNameIsUndefined()
-        {
-            NameExpression expression = new NameExpression("foo");
-
-            BindingEnvironment environment = new BindingEnvironment();
-
-            expression.Evaluate(environment);
-        }
-
-        [TestMethod]
         public void EvaluateQualifiedNameExpression()
         {
             QualifiedNameExpression expression = new QualifiedNameExpression("module", "foo");
