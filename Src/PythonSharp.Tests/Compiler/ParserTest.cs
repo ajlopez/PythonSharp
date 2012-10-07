@@ -242,7 +242,7 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IList));
 
-            IList list = (IList) result;
+            IList list = (IList)result;
 
             Assert.AreEqual(3, list.Count);
             Assert.AreEqual(1, list[0]);
@@ -582,7 +582,7 @@
         [TestMethod]
         public void CompileEmptyCommandList()
         {
-            Parser parser = new Parser("");
+            Parser parser = new Parser(string.Empty);
 
             ICommand command = parser.CompileCommandList();
 

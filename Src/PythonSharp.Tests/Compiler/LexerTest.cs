@@ -5,11 +5,9 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
     using PythonSharp.Compiler;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class LexerTest

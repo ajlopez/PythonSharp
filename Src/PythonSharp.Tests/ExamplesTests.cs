@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PythonSharp.Compiler;
-using PythonSharp.Commands;
-
-namespace PythonSharp.Tests
+﻿namespace PythonSharp.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Commands;
+    using PythonSharp.Compiler;
+
     [TestClass]
     public class ExamplesTests
     {

@@ -4,10 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
-    using PythonSharp;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp;
 
     [TestClass]
     public class MachineTest

@@ -1,10 +1,9 @@
 ﻿namespace PythonSharp.Tests
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -49,7 +48,7 @@
         [TestMethod]
         public void AddAsConcatenate()
         {
-            Assert.AreEqual("Hello world", Numbers.Add("Hello " , "world"));
+            Assert.AreEqual("Hello world", Numbers.Add("Hello ", "world"));
             Assert.AreEqual("Message 1", Numbers.Add("Message ", 1));
             Assert.AreEqual("1 Message", Numbers.Add(1, " Message"));
         }

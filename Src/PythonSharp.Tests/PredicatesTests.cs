@@ -1,11 +1,11 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace PythonSharp.Tests
+﻿namespace PythonSharp.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class PredicatesTests
     {
@@ -16,7 +16,7 @@ namespace PythonSharp.Tests
             Assert.IsTrue(Predicates.IsFalse(false));
             Assert.IsTrue(Predicates.IsFalse(0));
             Assert.IsTrue(Predicates.IsFalse(0.0));
-            Assert.IsTrue(Predicates.IsFalse(""));
+            Assert.IsTrue(Predicates.IsFalse(string.Empty));
         }
 
         [TestMethod]

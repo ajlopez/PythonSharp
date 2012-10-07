@@ -1,6 +1,7 @@
 ﻿namespace PythonSharp.Tests.Functions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -22,15 +23,22 @@
         [TestMethod]
         public void LenString()
         {
-            Assert.AreEqual(4, len.Apply(new object[] { "spam" }));
-            Assert.AreEqual(0, len.Apply(new object[] { string.Empty }));
+            Assert.AreEqual(4, this.len.Apply(new object[] { "spam" }));
+            Assert.AreEqual(0, this.len.Apply(new object[] { string.Empty }));
         }
 
         [TestMethod]
         public void LenList()
         {
-            Assert.AreEqual(3, len.Apply(new object[] { new object[] { 1, 2, 3 } }));
-            Assert.AreEqual(2, len.Apply(new object[] { new List<object>() { 1, 2 } }));
+            Assert.AreEqual(3, this.len.Apply(new object[] { new object[] { 1, 2, 3 } }));
+            Assert.AreEqual(2, this.len.Apply(new object[] { new List<object>() { 1, 2 } }));
+        }
+
+        [TestMethod]
+        public void LenDictionary()
+        {
+            IDictionary dictionary = new Hashtable() { { "one", 1 }, { "two", 2 } };
+            Assert.AreEqual(2, this.len.Apply(new object[] { dictionary }));
         }
 
         [TestMethod]
@@ -38,7 +46,7 @@
         {
             try
             {
-                len.Apply(null);
+                this.len.Apply(null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -53,7 +61,7 @@
         {
             try
             {
-                len.Apply(new object[] {});
+                this.len.Apply(new object[] { });
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -68,7 +76,7 @@
         {
             try
             {
-                len.Apply(new object[] { 1, 2 });
+                this.len.Apply(new object[] { 1, 2 });
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)

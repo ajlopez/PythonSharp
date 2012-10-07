@@ -5,11 +5,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
     using PythonSharp.Expressions;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Language;
 
     [TestClass]

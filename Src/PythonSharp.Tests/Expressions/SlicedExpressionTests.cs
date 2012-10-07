@@ -1,12 +1,12 @@
 ﻿namespace PythonSharp.Tests.Expressions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Expressions;
-    using System.Collections;
 
     [TestClass]
     public class SlicedExpressionTests
