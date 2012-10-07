@@ -994,6 +994,12 @@
         }
 
         [TestMethod]
+        public void EvaluateMethodCallExpression()
+        {
+            Assert.AreEqual(1, CompileAndEvaluateExpression("'spam'.find('pa')"));
+        }
+
+        [TestMethod]
         public void EvaluateLen()
         {
             Assert.AreEqual(4, CompileAndEvaluateExpression("len('spam')"));
