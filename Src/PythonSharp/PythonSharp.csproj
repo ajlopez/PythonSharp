@@ -70,6 +70,7 @@
     <Compile Include="Exceptions\NameError.cs" />
     <Compile Include="Exceptions\TypeError.cs" />
     <Compile Include="Expressions\CallExpression.cs" />
+    <Compile Include="Expressions\MethodCallExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />
     <Compile Include="Language\IType.cs" />
     <Compile Include="Language\IMethod.cs" />
