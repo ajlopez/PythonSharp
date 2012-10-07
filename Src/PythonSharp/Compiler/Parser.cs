@@ -524,6 +524,13 @@
             if (token == null)
                 return term;
 
+            if (token.TokenType == TokenType.Separator && token.Value == "(")
+            {
+                IList<IExpression> expressions = this.CompileExpressionList();
+                this.CompileToken(TokenType.Separator, ")");
+                return new CallExpression(term, expressions);
+            }
+
             if (token.TokenType != TokenType.Separator || token.Value != "[") 
             {
                 this.lexer.PushToken(token);

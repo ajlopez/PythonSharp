@@ -965,15 +965,32 @@
             Assert.AreEqual("spamspamspam", CompileAndEvaluateExpression("'spam' * 3"));
         }
 
+        [TestMethod]
+        public void CompileCallExpression()
+        {
+            Parser parser = new Parser("len('spam')");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(CallExpression));
+        }
+
+        [TestMethod]
+        public void EvaluateLen()
+        {
+            Assert.AreEqual(4, CompileAndEvaluateExpression("len('spam')"));
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
+            Machine machine = new Machine();
             Parser parser = new Parser(text);
 
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNull(parser.CompileExpression());
 
-            return expression.Evaluate(null);
+            return expression.Evaluate(machine.Environment);
         }
     }
 }
