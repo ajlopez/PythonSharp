@@ -66,6 +66,9 @@
     <Compile Include="Compiler\Token.cs" />
     <Compile Include="Compiler\UnexpectedTokenException.cs" />
     <Compile Include="BindingEnvironment.cs" />
+    <Compile Include="Expressions\CallExpression.cs" />
+    <Compile Include="Functions\LenFunction.cs" />
+    <Compile Include="Language\IFunction.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
     <Compile Include="Expressions\ConstantExpression.cs" />

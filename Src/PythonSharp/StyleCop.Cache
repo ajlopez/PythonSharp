@@ -456,9 +456,6 @@
     <milliseconds>639</milliseconds>
     <violations />
   </sourcecode>
-  <project key="1538393221">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="CompareExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>06/24/2012 16:47:27</timestamp>
@@ -502,6 +499,27 @@
     </settings>
     <timestamp>10/07/2012 05:33:41</timestamp>
     <milliseconds>795</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="1538393221">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="IFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/24/2012 16:47:27</timestamp>
+      <milliseconds>142</milliseconds>
+    </settings>
+    <timestamp>10/07/2012 15:31:01</timestamp>
+    <milliseconds>742</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="CallExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/24/2012 16:47:27</timestamp>
+      <milliseconds>142</milliseconds>
+    </settings>
+    <timestamp>10/07/2012 15:33:05</timestamp>
+    <milliseconds>121</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>
