@@ -4,12 +4,18 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Functions;
 
     public class Machine
     {
         private BindingEnvironment environment = new BindingEnvironment();
         private TextReader input = System.Console.In;
         private TextWriter output = System.Console.Out;
+
+        public Machine()
+        {
+            this.environment.SetValue("len", new LenFunction());
+        }
 
         public BindingEnvironment Environment
         {
