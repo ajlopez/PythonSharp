@@ -528,6 +528,14 @@
             {
                 IList<IExpression> expressions = this.CompileExpressionList();
                 this.CompileToken(TokenType.Separator, ")");
+
+                // TODO refactor
+                if (term is QualifiedNameExpression) 
+                {
+                    QualifiedNameExpression qnexpr = (QualifiedNameExpression)term;
+                    return new MethodCallExpression(new NameExpression(qnexpr.ModuleName), qnexpr.Name, expressions);
+                }
+
                 return new CallExpression(term, expressions);
             }
 

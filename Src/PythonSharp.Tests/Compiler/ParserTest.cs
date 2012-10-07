@@ -976,6 +976,24 @@
         }
 
         [TestMethod]
+        public void CompileMethodCallExpression()
+        {
+            Parser parser = new Parser("foo.find('spam')");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(MethodCallExpression));
+
+            MethodCallExpression mcexpression = (MethodCallExpression)expression;
+            Assert.IsNotNull(mcexpression.TargetExpression);
+            Assert.IsInstanceOfType(mcexpression.TargetExpression, typeof(NameExpression));
+            Assert.AreEqual("find", mcexpression.MethodName);
+            Assert.IsNotNull(mcexpression.ArgumentExpressions);
+            Assert.AreEqual(1, mcexpression.ArgumentExpressions.Count);
+            Assert.IsInstanceOfType(mcexpression.ArgumentExpressions[0], typeof(ConstantExpression));
+        }
+
+        [TestMethod]
         public void EvaluateLen()
         {
             Assert.AreEqual(4, CompileAndEvaluateExpression("len('spam')"));
