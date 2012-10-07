@@ -71,7 +71,11 @@
     <Compile Include="Exceptions\TypeError.cs" />
     <Compile Include="Expressions\CallExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />
+    <Compile Include="Language\IType.cs" />
+    <Compile Include="Language\IMethod.cs" />
     <Compile Include="Language\IFunction.cs" />
+    <Compile Include="Language\NativeMethod.cs" />
+    <Compile Include="Language\StringType.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
     <Compile Include="Expressions\ConstantExpression.cs" />
