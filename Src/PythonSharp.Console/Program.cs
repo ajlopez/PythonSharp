@@ -52,7 +52,11 @@
                             Console.WriteLine(")");
                         }
                         else
-                            Console.WriteLine(ValueUtilities.AsString(expr.Evaluate(machine.Environment)));
+                        {
+                            object value = expr.Evaluate(machine.Environment);
+                            if (value != null)
+                                Console.WriteLine(ValueUtilities.AsString(expr.Evaluate(machine.Environment)));
+                        }
                     }
                     else
                         command.Execute(machine, machine.Environment);
@@ -66,7 +70,7 @@
 
         private static void PrintIntro()
         {
-            System.Console.WriteLine("PythonSharp 0.1");
+            System.Console.WriteLine("PythonSharp 0.0.1");
             System.Console.Write(">>> ");
             System.Console.Out.Flush();
         }
