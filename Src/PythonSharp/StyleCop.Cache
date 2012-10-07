@@ -527,8 +527,17 @@
       <timestamp>06/24/2012 16:47:27</timestamp>
       <milliseconds>142</milliseconds>
     </settings>
-    <timestamp>10/07/2012 16:11:57</timestamp>
-    <milliseconds>443</milliseconds>
+    <timestamp>10/07/2012 16:27:31</timestamp>
+    <milliseconds>375</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="TypeError.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/24/2012 16:47:27</timestamp>
+      <milliseconds>142</milliseconds>
+    </settings>
+    <timestamp>10/07/2012 16:27:46</timestamp>
+    <milliseconds>8</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

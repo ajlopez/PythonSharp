@@ -147,15 +147,6 @@
     <milliseconds>313</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="LenFunctionTests.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>06/24/2012 16:47:26</timestamp>
-      <milliseconds>750</milliseconds>
-    </settings>
-    <timestamp>10/07/2012 16:15:29</timestamp>
-    <milliseconds>937</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="StringsTests.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>06/24/2012 16:47:26</timestamp>
@@ -165,9 +156,6 @@
     <milliseconds>924</milliseconds>
     <violations />
   </sourcecode>
-  <project key="4407095">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="MachineTest.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>06/24/2012 16:47:26</timestamp>
@@ -193,6 +181,18 @@
     </settings>
     <timestamp>10/07/2012 16:15:50</timestamp>
     <milliseconds>821</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="4407095">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="LenFunctionTests.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/24/2012 16:47:26</timestamp>
+      <milliseconds>750</milliseconds>
+    </settings>
+    <timestamp>10/07/2012 16:28:06</timestamp>
+    <milliseconds>403</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

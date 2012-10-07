@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
     using PythonSharp.Language;
 
     public class LenFunction : IFunction
@@ -14,7 +15,7 @@
             int nargs = arguments == null ? 0 : arguments.Count;
 
             if (nargs != 1)
-                throw new ArgumentException(string.Format("len() takes exactly one argument ({0} given)", nargs));
+                throw new TypeError(string.Format("len() takes exactly one argument ({0} given)", nargs));
 
             object argument = arguments[0];
 

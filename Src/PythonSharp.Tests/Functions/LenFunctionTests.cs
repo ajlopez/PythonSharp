@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Exceptions;
     using PythonSharp.Functions;
     using PythonSharp.Language;
 
@@ -51,7 +52,7 @@
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
                 Assert.AreEqual("len() takes exactly one argument (0 given)", ex.Message);
             }
         }
@@ -66,7 +67,7 @@
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
                 Assert.AreEqual("len() takes exactly one argument (0 given)", ex.Message);
             }
         }
@@ -81,7 +82,7 @@
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
                 Assert.AreEqual("len() takes exactly one argument (2 given)", ex.Message);
             }
         }
