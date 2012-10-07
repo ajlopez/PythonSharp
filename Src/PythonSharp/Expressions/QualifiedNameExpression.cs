@@ -22,7 +22,7 @@
 
         public object Evaluate(BindingEnvironment environment)
         {
-            BindingEnvironment moduleenv = (BindingEnvironment) environment.GetValue(this.modulename);
+            BindingEnvironment moduleenv = (BindingEnvironment)environment.GetValue(this.modulename);
             object value = moduleenv.GetValue(this.name);
 
             if (value != null)

@@ -4,10 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
-    using PythonSharp.Language;
-
     using Microsoft.VisualBasic.CompilerServices;
+    using PythonSharp.Language;
 
     public class CompareExpression : BinaryExpression
     {

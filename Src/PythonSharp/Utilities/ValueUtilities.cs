@@ -16,6 +16,7 @@
             if (value is string)
             {
                 string text = (string)value;
+                
                 if (text.IndexOf('\'') >= 0)
                 {
                     if (text.IndexOf('"') >= 0)
@@ -23,8 +24,10 @@
                         text = text.Replace("'", "\\'");
                         return string.Format("'{0}'", text);
                     }
+
                     return string.Format("\"{0}\"", text);
                 }
+
                 return string.Format("'{0}'", text);
             }
 

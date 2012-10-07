@@ -50,6 +50,18 @@
         }
 
         [TestMethod]
+        public void EvaluateMultiplyExpressionWithLeftString()
+        {
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression("spam"), new ConstantExpression(3), BinaryOperator.Multiply);
+
+            Assert.IsNotNull(expression);
+            Assert.IsNotNull(expression.Left);
+            Assert.IsNotNull(expression.Right);
+
+            Assert.AreEqual("spamspamspam", expression.Evaluate(new BindingEnvironment()));
+        }
+
+        [TestMethod]
         public void EvaluateDivideExpression()
         {
             BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(6), new ConstantExpression(3), BinaryOperator.Divide);

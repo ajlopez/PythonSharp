@@ -7,8 +7,8 @@
 
     public class Slice
     {
-        int? begin;
-        int? end;
+        private int? begin;
+        private int? end;
 
         public Slice(int? begin, int? end)
         {

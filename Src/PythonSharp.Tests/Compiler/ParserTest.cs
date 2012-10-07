@@ -953,6 +953,18 @@
             Assert.IsFalse(slice.End.HasValue);
         }
 
+        [TestMethod]
+        public void EvaluateConcatenateStrings()
+        {
+            Assert.AreEqual("spam", CompileAndEvaluateExpression("'sp' + 'am'"));
+        }
+
+        [TestMethod]
+        public void EvaluateRepeatString()
+        {
+            Assert.AreEqual("spamspamspam", CompileAndEvaluateExpression("'spam' * 3"));
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

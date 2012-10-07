@@ -30,6 +30,8 @@
                 case BinaryOperator.Subtract:
                     return Numbers.Subtract(leftvalue, rightvalue);
                 case BinaryOperator.Multiply:
+                    if (Strings.IsString(leftvalue))
+                        return Strings.Multiply(leftvalue, rightvalue);
                     return Numbers.Multiply(leftvalue, rightvalue);
                 case BinaryOperator.Divide:
                     return Numbers.Divide(leftvalue, rightvalue);
