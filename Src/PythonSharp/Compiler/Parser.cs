@@ -592,7 +592,7 @@
                 case TokenType.Integer:
                     return new ConstantExpression(System.Convert.ToInt32(token.Value));
                 case TokenType.Real:
-                    return new ConstantExpression(System.Convert.ToDouble(token.Value));
+                    return new ConstantExpression(System.Convert.ToDouble(token.Value, System.Globalization.CultureInfo.InvariantCulture));
                 case TokenType.Boolean:
                     return new ConstantExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
