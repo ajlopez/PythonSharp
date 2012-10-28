@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
 
     public class StringType : IType
     {
@@ -35,6 +36,9 @@
         {
             if (separator == null)
                 return new string[] { text };
+
+            if (string.IsNullOrEmpty(separator))
+                throw new ValueError("empty separator");
 
             IList<string> result = new List<string>();
 
