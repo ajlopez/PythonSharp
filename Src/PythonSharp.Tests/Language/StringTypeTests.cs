@@ -23,5 +23,23 @@
         {
             Assert.AreEqual(1, this.type.GetMethod("find").Apply("foo", new object[] { "o" }));
         }
+
+        [TestMethod]
+        public void InvokeSingleReplace()
+        {
+            Assert.AreEqual("sXYZm", this.type.GetMethod("replace").Apply("spam", new object[] { "pa", "XYZ" }));
+        }
+
+        [TestMethod]
+        public void InvokeMultipleReplace()
+        {
+            Assert.AreEqual("sXYZmsXYZm", this.type.GetMethod("replace").Apply("spamspam", new object[] { "pa", "XYZ" }));
+        }
+
+        [TestMethod]
+        public void InvokeNoReplace()
+        {
+            Assert.AreEqual("spam", this.type.GetMethod("replace").Apply("spam", new object[] { "po", "XYZ" }));
+        }
     }
 }
