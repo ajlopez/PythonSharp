@@ -41,5 +41,47 @@
         {
             Assert.AreEqual("spam", this.type.GetMethod("replace").Apply("spam", new object[] { "po", "XYZ" }));
         }
+
+        [TestMethod]
+        public void InvokeSingleSplit()
+        {
+            var result = this.type.GetMethod("split").Apply("spam", new object[] { "a" });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string[]));
+
+            var strings = (string[])result;
+            Assert.AreEqual(2, strings.Length);
+            Assert.AreEqual("sp", strings[0]);
+            Assert.AreEqual("m", strings[1]);
+        }
+
+        [TestMethod]
+        public void InvokeDoubleSplit()
+        {
+            var result = this.type.GetMethod("split").Apply("spamspam", new object[] { "a" });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string[]));
+
+            var strings = (string[])result;
+            Assert.AreEqual(3, strings.Length);
+            Assert.AreEqual("sp", strings[0]);
+            Assert.AreEqual("msp", strings[1]);
+            Assert.AreEqual("m", strings[2]);
+        }
+
+        [TestMethod]
+        public void InvokeSplitWithNull()
+        {
+            var result = this.type.GetMethod("split").Apply("spam", new object[] { null });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string[]));
+
+            var strings = (string[])result;
+            Assert.AreEqual(1, strings.Length);
+            Assert.AreEqual("spam", strings[0]);
+        }
     }
 }
