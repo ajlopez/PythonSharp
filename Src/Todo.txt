@@ -19,6 +19,9 @@ Types
 - None
 - booleans
 
+String Type
+	.split() by spaces != .split(" ")
+
 - support for \ at end of line
 - support for open ( with multiple lines
 

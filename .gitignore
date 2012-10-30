@@ -4,6 +4,7 @@ obj
 *.user
 *.pidb
 *.userprefs
+*.gpState
 packages
 *.nupkg
 output
