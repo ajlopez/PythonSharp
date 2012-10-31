@@ -21,6 +21,10 @@ Types
 
 String Type
 	.split() by spaces != .split(" ")
+	
+Import
+	cached import, import only once
+	from foo import *
 
 - support for \ at end of line
 - support for open ( with multiple lines
