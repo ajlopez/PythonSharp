@@ -7,12 +7,26 @@
 
     public class BindingEnvironment
     {
+        private BindingEnvironment parent;
         private Dictionary<string, object> values = new Dictionary<string, object>();
+
+        public BindingEnvironment()
+        {
+        }
+
+        public BindingEnvironment(BindingEnvironment parent)
+        {
+            this.parent = parent;
+        }
 
         public object GetValue(string name)
         {
             if (!this.values.ContainsKey(name))
+            {
+                if (this.parent != null)
+                    return this.parent.GetValue(name);
                 return null;
+            }
 
             return this.values[name];
         }

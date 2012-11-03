@@ -44,6 +44,16 @@
 
             Assert.IsNull(environment.GetValue("foo"));
         }
+
+        [TestMethod]
+        public void GetValueFromParent()
+        {
+            BindingEnvironment parent = new BindingEnvironment();
+            parent.SetValue("one", 1);
+            BindingEnvironment environment = new BindingEnvironment(parent);
+
+            Assert.AreEqual(1, environment.GetValue("one"));
+        }
     }
 }
 
