@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\DefCommand.cs" />
     <Compile Include="Commands\ExpressionCommand.cs" />
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Commands\WhileCommand.cs" />
