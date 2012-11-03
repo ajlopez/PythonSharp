@@ -1022,6 +1022,40 @@
             Assert.AreEqual(1, ((ConstantExpression)scommand.Expression).Value);
         }
 
+        [TestMethod]
+        public void CompileSimpleDefFunction()
+        {
+            Parser parser = new Parser("def foo(a, b):\r\n    print a\r\n    print b");
+
+            var command = parser.CompileCommand();
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefCommand));
+
+            var dcommand = (DefCommand)command;
+            Assert.AreEqual("foo", dcommand.Name);
+            Assert.IsNotNull(dcommand.ArgumentNames);
+            Assert.AreEqual(2, dcommand.ArgumentNames.Count);
+            Assert.AreEqual("a", dcommand.ArgumentNames[0]);
+            Assert.AreEqual("b", dcommand.ArgumentNames[1]);
+            Assert.IsNotNull(dcommand.Body);
+            Assert.IsInstanceOfType(dcommand.Body, typeof(CompositeCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileTwoSimpleDefFunction()
+        {
+            Parser parser = new Parser("def foo(a):\r\n    print a\r\ndef bar(b):\r\n    print b");
+
+            var command = parser.CompileCommand();
+            Assert.IsInstanceOfType(command, typeof(DefCommand));
+            command = parser.CompileCommand();
+            Assert.IsInstanceOfType(command, typeof(DefCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

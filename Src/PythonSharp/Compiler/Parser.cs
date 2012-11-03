@@ -344,6 +344,9 @@
             if (token.Value == "if")
                 return this.CompileIfCommand();
 
+            if (token.Value == "def")
+                return this.CompileDefCommand();
+
             Token token2 = this.lexer.NextToken();
 
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
@@ -397,6 +400,23 @@
             }
 
             return new IfCommand(condition, thencommand);
+        }
+
+        private ICommand CompileDefCommand()
+        {
+            Token token = this.CompileName(true);
+            string name = token.Value;
+            this.CompileToken(TokenType.Separator, "(");
+            IList<string> argumentNames = this.CompileNameList();
+            this.CompileToken(TokenType.Separator, ")");
+
+            this.CompileToken(TokenType.Separator, ":");
+            this.CompileToken(TokenType.EndOfLine);
+
+            int newindent = this.lexer.NextIndent();
+            ICommand body = this.CompileNestedCommandList(newindent);
+
+            return new DefCommand(name, argumentNames, body);
         }
 
         private void SkipEmptyLines()
@@ -633,6 +653,14 @@
 
             if (token == null || token.TokenType != type || token.Value != value)
                 throw new ExpectedTokenException(value);
+        }
+
+        private void CompileToken(TokenType type)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null || token.TokenType != type)
+                throw new ExpectedTokenException(type.ToString());
         }
 
         private IExpression MakeName(string name)
