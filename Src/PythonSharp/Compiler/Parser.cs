@@ -519,7 +519,7 @@
             if (term == null)
                 return null;
 
-            while (TryCompile(TokenType.Operator, "."))
+            while (this.TryCompile(TokenType.Operator, "."))
                 term = new AttributeExpression(term, this.CompileName(true).Value);
 
             Token token = this.lexer.NextToken();
