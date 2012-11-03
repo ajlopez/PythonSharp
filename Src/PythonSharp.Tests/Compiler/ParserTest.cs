@@ -1056,6 +1056,17 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompilePassCommand()
+        {
+            Parser parser = new Parser("pass");
+
+            var command = parser.CompileCommand();
+            Assert.IsInstanceOfType(command, typeof(PassCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

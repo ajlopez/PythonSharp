@@ -347,6 +347,9 @@
             if (token.Value == "def")
                 return this.CompileDefCommand();
 
+            if (token.Value == "pass")
+                return new PassCommand();
+
             Token token2 = this.lexer.NextToken();
 
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
