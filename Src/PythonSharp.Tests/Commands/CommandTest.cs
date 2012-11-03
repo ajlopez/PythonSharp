@@ -118,27 +118,5 @@
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));
         }
-
-        [TestMethod]
-        public void ExecuteIfCommandWithTrueCondition()
-        {
-            IfCommand ifcmd = new IfCommand(new ConstantExpression(true), new SetCommand("one", new ConstantExpression(1)));
-            Machine machine = new Machine();
-
-            ifcmd.Execute(machine, machine.Environment);
-
-            Assert.AreEqual(1, machine.Environment.GetValue("one"));
-        }
-
-        [TestMethod]
-        public void ExecuteIfCommandWithFalseCondition()
-        {
-            IfCommand ifcmd = new IfCommand(new ConstantExpression(false), new SetCommand("one", new ConstantExpression(1)));
-            Machine machine = new Machine();
-
-            ifcmd.Execute(machine, machine.Environment);
-
-            Assert.IsNull(machine.Environment.GetValue("one"));
-        }
     }
 }
