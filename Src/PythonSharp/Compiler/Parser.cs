@@ -344,6 +344,9 @@
             if (token.Value == "if")
                 return this.CompileIfCommand();
 
+            if (token.Value == "while")
+                return this.CompileWhileCommand();
+
             if (token.Value == "def")
                 return this.CompileDefCommand();
 
@@ -403,6 +406,33 @@
             }
 
             return new IfCommand(condition, thencommand);
+        }
+
+        private ICommand CompileWhileCommand()
+        {
+            IExpression condition = this.CompileExpression();
+            ICommand command;
+
+            this.CompileToken(TokenType.Separator, ":");
+
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                throw new UnexpectedEndOfInputException();
+
+            if (token.TokenType != TokenType.EndOfLine)
+            {
+                this.lexer.PushToken(token);
+                this.lastSemi = true;
+                command = this.CompileCommandList();
+            }
+            else
+            {
+                int newindent = this.lexer.NextIndent();
+                command = this.CompileNestedCommandList(newindent);
+            }
+
+            return new WhileCommand(condition, command);
         }
 
         private ICommand CompileDefCommand()

@@ -1067,6 +1067,86 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileWhileCommandWithSingleCommandSameLine()
+        {
+            Parser parser = new Parser("while a: print a");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(WhileCommand));
+
+            WhileCommand whilecmd = (WhileCommand)cmd;
+
+            Assert.IsNotNull(whilecmd.Condition);
+            Assert.IsInstanceOfType(whilecmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(whilecmd.Command);
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(PrintCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileWhileCommandWithCompositeCommandSameLine()
+        {
+            Parser parser = new Parser("while a: print a; print b");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(WhileCommand));
+
+            WhileCommand whilecmd = (WhileCommand)cmd;
+
+            Assert.IsNotNull(whilecmd.Condition);
+            Assert.IsInstanceOfType(whilecmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(whilecmd.Command);
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(CompositeCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileWhileCommandWithSingleCommand()
+        {
+            Parser parser = new Parser("while a:\r\n  print a");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(WhileCommand));
+
+            WhileCommand whilecmd = (WhileCommand)cmd;
+
+            Assert.IsNotNull(whilecmd.Condition);
+            Assert.IsInstanceOfType(whilecmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(whilecmd.Command);
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(PrintCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileWhileCommandWithCompositeCommand()
+        {
+            Parser parser = new Parser("while a:\r\n  print a\r\n  print b");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(WhileCommand));
+
+            WhileCommand whilecmd = (WhileCommand)cmd;
+
+            Assert.IsNotNull(whilecmd.Condition);
+            Assert.IsInstanceOfType(whilecmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(whilecmd.Command);
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(CompositeCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();
