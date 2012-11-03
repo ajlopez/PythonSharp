@@ -51,6 +51,7 @@
     <Compile Include="Expressions\SlicedExpressionTests.cs" />
     <Compile Include="Expressions\SliceExpressionTests.cs" />
     <Compile Include="Functions\LenFunctionTests.cs" />
+    <Compile Include="Language\DefinedClassTests.cs" />
     <Compile Include="Language\StringTypeTests.cs" />
     <Compile Include="NumbersTests.cs" />
     <Compile Include="Compiler\ParserTest.cs" />

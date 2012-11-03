@@ -74,6 +74,7 @@
     <Compile Include="Expressions\AttributeExpression.cs" />
     <Compile Include="Expressions\MethodCallExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />
+    <Compile Include="Language\DefinedClass.cs" />
     <Compile Include="Language\IType.cs" />
     <Compile Include="Language\IMethod.cs" />
     <Compile Include="Language\IFunction.cs" />
