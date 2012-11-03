@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandTest.cs" />
+    <Compile Include="Commands\SetCommandTests.cs" />
     <Compile Include="ExamplesTests.cs" />
     <Compile Include="Expressions\BinaryOperatorExpressionTest.cs" />
     <Compile Include="Expressions\CallExpressionTests.cs" />

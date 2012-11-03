@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Commands\CompositeCommand.cs" />
     <Compile Include="Commands\ExpressionCommand.cs" />
+    <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Commands\WhileCommand.cs" />
     <Compile Include="Commands\IfCommand.cs" />
     <Compile Include="Commands\ImportFromCommand.cs" />
