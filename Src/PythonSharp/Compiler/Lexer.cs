@@ -214,6 +214,15 @@
             {
                 ch = this.NextChar();
 
+                if (ch == endchar)
+                {
+                    char ch2 = this.NextChar();
+                    if (ch2 == endchar)
+                        return NextMultilineString(endchar);
+                    else
+                        this.PushChar(ch2);
+                }
+
                 while (ch != endchar)
                 {
                     if (ch == EscapeChar)
@@ -221,6 +230,49 @@
 
                     sb.Append(ch);
                     ch = this.NextChar();
+                }
+            }
+            catch (EndOfInputException)
+            {
+            }
+
+            Token token = new Token();
+            token.Value = sb.ToString();
+            token.TokenType = TokenType.String;
+
+            return token;
+        }
+
+        private Token NextMultilineString(char endchar)
+        {
+            StringBuilder sb = new StringBuilder();
+            char ch;
+
+            try
+            {
+                while (true)
+                {
+                    ch = this.NextChar();
+
+                    if (ch == endchar)
+                    {
+                        char ch2 = this.NextChar();
+                        if (ch2 == endchar)
+                        {
+                            char ch3 = this.NextChar();
+
+                            if (ch3 == endchar)
+                                break;
+
+                            this.PushChar(ch3);
+                            this.PushChar(ch2);
+                        }
+                    }
+
+                    if (ch == EscapeChar)
+                        ch = this.NextChar();
+
+                    sb.Append(ch);
                 }
             }
             catch (EndOfInputException)

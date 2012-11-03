@@ -373,5 +373,31 @@
             Assert.AreEqual(TokenType.Name, token.TokenType);
             Assert.AreEqual("foo", token.Value);
         }
+
+        [TestMethod]
+        public void ParseMultilineSingleQuotedString()
+        {
+            Lexer lexer = new Lexer("'''This is a\r\nmultiline\r\nstring'''");
+            
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(TokenType.String, result.TokenType);
+            Assert.AreEqual("This is a\r\nmultiline\r\nstring", result.Value);
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void ParseMultilineDoubleQuotedString()
+        {
+            Lexer lexer = new Lexer("\"\"\"This is a\r\nmultiline\r\nstring\"\"\"");
+
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(TokenType.String, result.TokenType);
+            Assert.AreEqual("This is a\r\nmultiline\r\nstring", result.Value);
+            Assert.IsNull(lexer.NextToken());
+        }
     }
 }
