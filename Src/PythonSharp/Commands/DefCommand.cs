@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public class DefCommand : ICommand
     {
@@ -26,7 +27,7 @@
 
         public void Execute(Machine machine, BindingEnvironment environment)
         {
-            throw new NotImplementedException();
+            environment.SetValue(this.name, new DefinedFunction(this.argumentNames, this.body));
         }
     }
 }
