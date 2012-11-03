@@ -405,6 +405,37 @@
                 thencommand = this.CompileNestedCommandList(newindent);
             }
 
+            token = this.lexer.NextToken();
+
+            if (token != null && token.TokenType == TokenType.EndOfLine)
+                if (this.TryCompile(TokenType.Name, "else"))
+                {
+                    ICommand elsecommand;
+
+                    this.CompileToken(TokenType.Separator, ":");
+
+                    token = this.lexer.NextToken();
+
+                    if (token == null)
+                        throw new UnexpectedEndOfInputException();
+
+                    if (token.TokenType != TokenType.EndOfLine)
+                    {
+                        this.lexer.PushToken(token);
+                        this.lastSemi = true;
+                        elsecommand = this.CompileCommandList();
+                    }
+                    else
+                    {
+                        int newindent = this.lexer.NextIndent();
+                        elsecommand = this.CompileNestedCommandList(newindent);
+                    }
+
+                    return new IfCommand(condition, thencommand, elsecommand);
+                }
+                else
+                    this.lexer.PushToken(token);
+
             return new IfCommand(condition, thencommand);
         }
 
