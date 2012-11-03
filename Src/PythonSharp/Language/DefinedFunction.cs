@@ -37,7 +37,7 @@
                     else
                         environment.SetValue(this.argumentNames[k], null);
 
-            this.body.Execute(null, environment);
+            this.body.Execute(machine, environment);
 
             return null;
         }
