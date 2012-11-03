@@ -349,7 +349,7 @@
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
             {
                 expr = this.CompileExpression();
-                return new SimpleAssignmentCommand(token.Value, expr);
+                return new SetCommand(token.Value, expr);
             }
 
             if (token2 != null)

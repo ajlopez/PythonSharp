@@ -56,7 +56,6 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Compiler\SyntaxErrorException.cs" />
-    <Compile Include="Compiler\SimpleAssignmentCommand.cs" />
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\ParserException.cs" />
     <Compile Include="Compiler\UnexpectedEndOfInputException.cs" />

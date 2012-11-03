@@ -494,7 +494,7 @@
             ICommand command = parser.CompileCommand();
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(SimpleAssignmentCommand));
+            Assert.IsInstanceOfType(command, typeof(SetCommand));
         }
 
         [TestMethod]
@@ -1004,6 +1004,22 @@
         public void EvaluateLen()
         {
             Assert.AreEqual(4, CompileAndEvaluateExpression("len('spam')"));
+        }
+
+        [TestMethod]
+        public void CompileSimpleSetVariable()
+        {
+            Parser parser = new Parser("a=1");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SetCommand));
+
+            var scommand = (SetCommand)command;
+            Assert.AreEqual("a", scommand.Target);
+            Assert.IsInstanceOfType(scommand.Expression, typeof(ConstantExpression));
+            Assert.AreEqual(1, ((ConstantExpression)scommand.Expression).Value);
         }
 
         private static object CompileAndEvaluateExpression(string text)

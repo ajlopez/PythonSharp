@@ -13,43 +13,17 @@
     public class CommandTest
     {
         [TestMethod]
-        public void CreateSimpleAssignmentCommand()
+        public void CreateSetCommand()
         {
             IExpression expression = new ConstantExpression("bar");
-            SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", expression);
+            SetCommand command = new SetCommand("foo", expression);
 
             Assert.IsNotNull(command);
-            Assert.IsNotNull(command.Name);
+            Assert.IsNotNull(command.Target);
             Assert.IsNotNull(command.Expression);
 
-            Assert.AreEqual("foo", command.Name);
+            Assert.AreEqual("foo", command.Target);
             Assert.AreEqual(expression, command.Expression);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
-        public void RaiseIfNameIsNullForSimpleAssignmentCommand() 
-        {
-            IExpression expression = new ConstantExpression("bar");
-            SimpleAssignmentCommand command = new SimpleAssignmentCommand(null, expression);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentNullException))]
-        public void RaiseIfExpressionIsNullForSimpleAssignmentCommand()
-        {
-            SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", null);
-        }
-
-        [TestMethod]
-        public void ExecuteSimpleAssignmentCommand()
-        {
-            SimpleAssignmentCommand command = new SimpleAssignmentCommand("foo", new ConstantExpression("bar"));
-            Machine machine = new Machine();
-
-            command.Execute(machine, machine.Environment);
-
-            Assert.AreEqual("bar", machine.Environment.GetValue("foo"));
         }
 
         [TestMethod]
@@ -92,8 +66,8 @@
         [TestMethod]
         public void ExecuteCompositeCommand()
         {
-            SimpleAssignmentCommand command1 = new SimpleAssignmentCommand("foo", new ConstantExpression("bar"));
-            SimpleAssignmentCommand command2 = new SimpleAssignmentCommand("one", new ConstantExpression(1));
+            SetCommand command1 = new SetCommand("foo", new ConstantExpression("bar"));
+            SetCommand command2 = new SetCommand("one", new ConstantExpression(1));
 
             CompositeCommand command = new CompositeCommand();
             command.AddCommand(command1);
@@ -148,7 +122,7 @@
         [TestMethod]
         public void ExecuteIfCommandWithTrueCondition()
         {
-            IfCommand ifcmd = new IfCommand(new ConstantExpression(true), new SimpleAssignmentCommand("one", new ConstantExpression(1)));
+            IfCommand ifcmd = new IfCommand(new ConstantExpression(true), new SetCommand("one", new ConstantExpression(1)));
             Machine machine = new Machine();
 
             ifcmd.Execute(machine, machine.Environment);
@@ -159,7 +133,7 @@
         [TestMethod]
         public void ExecuteIfCommandWithFalseCondition()
         {
-            IfCommand ifcmd = new IfCommand(new ConstantExpression(false), new SimpleAssignmentCommand("one", new ConstantExpression(1)));
+            IfCommand ifcmd = new IfCommand(new ConstantExpression(false), new SetCommand("one", new ConstantExpression(1)));
             Machine machine = new Machine();
 
             ifcmd.Execute(machine, machine.Environment);
