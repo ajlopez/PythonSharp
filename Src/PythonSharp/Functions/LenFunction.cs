@@ -30,5 +30,10 @@
 
             throw new TypeError(string.Format("object of type '{0}' has no len()", Types.GetTypeName(argument)));
         }
+
+        public object Apply(Machine machine, BindingEnvironment environment, IList<object> arguments)
+        {
+            return this.Apply(arguments);
+        }
     }
 }

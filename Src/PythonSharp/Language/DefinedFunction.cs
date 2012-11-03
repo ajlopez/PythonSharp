@@ -23,7 +23,12 @@
 
         public object Apply(IList<object> arguments)
         {
-            BindingEnvironment environment = new BindingEnvironment();
+            return this.Apply(null, null, arguments);
+        }
+
+        public object Apply(Machine machine, BindingEnvironment env, IList<object> arguments)
+        {
+            BindingEnvironment environment = new BindingEnvironment(env);
 
             if (this.argumentNames != null)
                 for (int k = 0; k < this.argumentNames.Count; k++)

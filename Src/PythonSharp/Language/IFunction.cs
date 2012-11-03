@@ -8,5 +8,6 @@
     public interface IFunction
     {
         object Apply(IList<object> arguments);
+        object Apply(Machine machine, BindingEnvironment environment, IList<object> arguments);
     }
 }

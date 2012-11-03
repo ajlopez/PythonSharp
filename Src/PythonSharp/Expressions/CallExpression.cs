@@ -34,7 +34,7 @@
                     arguments.Add(argexpr.Evaluate(environment));
             }
 
-            return function.Apply(arguments);
+            return function.Apply(null, null, arguments);
         }
     }
 }
