@@ -1065,6 +1065,29 @@
         }
 
         [TestMethod]
+        public void CompileSimpleDefFunctionWithDefaultArgumentValues()
+        {
+            Parser parser = new Parser("def foo(a=1, b=2):\r\n    print(a)\r\n    print(b)");
+
+            var command = parser.CompileCommand();
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefCommand));
+
+            var dcommand = (DefCommand)command;
+            Assert.AreEqual("foo", dcommand.Name);
+            Assert.IsNotNull(dcommand.ParameterExpressions);
+            Assert.AreEqual(2, dcommand.ParameterExpressions.Count);
+            Assert.AreEqual("a", dcommand.ParameterExpressions[0].Name);
+            Assert.AreEqual("b", dcommand.ParameterExpressions[1].Name);
+            Assert.IsNotNull(dcommand.ParameterExpressions[0].DefaultExpression);
+            Assert.IsNotNull(dcommand.ParameterExpressions[1].DefaultExpression);
+            Assert.IsNotNull(dcommand.Body);
+            Assert.IsInstanceOfType(dcommand.Body, typeof(CompositeCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
         public void CompileSimpleDefFunctionWithoutParameters()
         {
             Parser parser = new Parser("def foo():\r\n    pass");

@@ -218,7 +218,7 @@
                 {
                     char ch2 = this.NextChar();
                     if (ch2 == endchar)
-                        return NextMultilineString(endchar);
+                        return this.NextMultilineString(endchar);
                     else
                         this.PushChar(ch2);
                 }
