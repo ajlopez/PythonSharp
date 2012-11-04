@@ -12,6 +12,7 @@
         private string name;
         private IList<Parameter> parameters;
         private int nparameters;
+        private bool hasdefault;
         private ICommand body;
 
         public DefinedFunction(string name, IList<Parameter> parameters, ICommand body)
@@ -21,7 +22,14 @@
             this.body = body;
 
             if (parameters != null)
-                this.nparameters = parameters.Count;
+                foreach (var parameter in parameters)
+                    if (parameter.DefaultValue == null)
+                        this.nparameters++;
+                    else
+                    {
+                        this.hasdefault = true;
+                        break;
+                    }
         }
 
         public string Name { get { return this.name; } }
@@ -41,7 +49,7 @@
                 nargs = arguments.Count;
 
             if (nargs != this.nparameters)
-                throw new TypeError(string.Format("{0}() takes exactly {1} positional argument{2} ({3} given)", this.name, this.nparameters, this.nparameters == 1 ? "" : "s", nargs));
+                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nparameters, this.nparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
             if (this.parameters != null)
                 for (int k = 0; k < this.parameters.Count; k++)

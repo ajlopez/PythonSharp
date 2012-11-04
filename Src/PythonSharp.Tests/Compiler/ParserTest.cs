@@ -1,5 +1,6 @@
 ﻿namespace PythonSharp.Tests.Compiler
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
@@ -11,6 +12,7 @@
     using PythonSharp.Compiler;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using PythonSharp.Exceptions;
 
     [TestClass]
     public class ParserTest
@@ -1319,6 +1321,23 @@
             var retcommand = (ReturnCommand)command;
 
             Assert.IsNotNull(retcommand.Expression);
+        }
+
+        [TestMethod]
+        public void RaiseWhenTwoListArguments()
+        {
+            Parser parser = new Parser("def foo(*a, *b):");
+            
+            try 
+            {
+                parser.CompileCommand();
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("invalid syntax", ex.Message);
+            }
         }
 
         private static object CompileAndEvaluateExpression(string text)

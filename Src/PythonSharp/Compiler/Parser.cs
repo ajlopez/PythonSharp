@@ -4,8 +4,8 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-
     using PythonSharp.Commands;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
 
@@ -402,10 +402,23 @@
             if (this.TryPeekCompile(TokenType.Separator, ")"))
                 return parameters;
 
-            parameters.Add(this.CompileParameterExpression());
+            ParameterExpression parexpr = this.CompileParameterExpression();
+
+            bool haslist = parexpr.IsList;
+
+            parameters.Add(parexpr);
 
             while (this.TryCompile(TokenType.Separator, ","))
-                parameters.Add(this.CompileParameterExpression());
+            {
+                parexpr = this.CompileParameterExpression();
+                if (parexpr.IsList)
+                    if (haslist)
+                        throw new SyntaxError("invalid syntax");
+                    else
+                        haslist = true;
+
+                parameters.Add(parexpr);
+            }
 
             return parameters;
         }

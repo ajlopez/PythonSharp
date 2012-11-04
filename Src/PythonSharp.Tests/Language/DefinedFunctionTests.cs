@@ -87,6 +87,30 @@
         }
 
         [TestMethod]
+        public void RaiseWhenFewerThanExpectedParametersProvided()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", new ConstantExpression(1), false) };
+            CompositeCommand body = new CompositeCommand();
+
+            Machine machine = new Machine();
+            StringWriter writer = new StringWriter();
+            machine.Output = writer;
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            try
+            {
+                func.Apply(machine.Environment, new object[] { });
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
+                Assert.AreEqual("foo() takes at least 1 positional argument (0 given)", ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void RaiseWhenOneParameterExpectedAndNoneIsProvided()
         {
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false) };
