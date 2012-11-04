@@ -42,9 +42,16 @@
 
         [TestMethod]
         [DeploymentItem("Examples/return.py")]
-        public void ExecuteReturn()
+        public void ExecuteReturnFile()
         {
             Assert.AreEqual("1\r\n", this.ExecuteFileAndPrint("return.py"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/factorial.py")]
+        public void ExecuteFactorialFile()
+        {
+            Assert.AreEqual("1\r\n2\r\n6\r\n24\r\n", this.ExecuteFileAndPrint("factorial.py"));
         }
 
         private string ExecuteAndPrint(string text)
