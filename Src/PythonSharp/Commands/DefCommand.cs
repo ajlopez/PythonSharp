@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
 
@@ -18,6 +19,17 @@
             this.name = name;
             this.parameterExpressions = parameterExpressions;
             this.body = body;
+
+            if (this.parameterExpressions != null)
+            {
+                bool hasdefault = false;
+
+                foreach (var parexpr in this.parameterExpressions)
+                    if (parexpr.DefaultExpression != null)
+                        hasdefault = true;
+                    else if (hasdefault)
+                        throw new SyntaxError("non-default argument follows default argument");
+            }
         }
 
         public string Name { get { return this.name; } }

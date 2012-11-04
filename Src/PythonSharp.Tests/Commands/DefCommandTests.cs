@@ -1,11 +1,12 @@
 ﻿namespace PythonSharp.Tests.Commands
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
 
@@ -45,6 +46,24 @@
 
             Assert.AreEqual(parameters.Count, dfunc.Parameters.Count);
             Assert.AreEqual(body, dfunc.Body);
+        }
+
+        [TestMethod]
+        public void RaiseWhenNonDefaultArgumentFollowsDefaultArgument()
+        {
+            IList<ParameterExpression> parameters = new ParameterExpression[] { new ParameterExpression("a", new ConstantExpression(1), false), new ParameterExpression("b", null, false) };
+            ICommand body = new SetCommand("c", new ConstantExpression(1));
+
+            try
+            {
+                DefCommand command = new DefCommand("foo", parameters, body);
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("non-default argument follows default argument", ex.Message);
+            }
         }
     }
 }
