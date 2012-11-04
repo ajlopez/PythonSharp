@@ -8,16 +8,16 @@
 
     public class DefinedFunction : IFunction
     {
-        private IList<string> argumentNames;
+        private IList<Parameter> parameters;
         private ICommand body;
 
-        public DefinedFunction(IList<string> argumentNames, ICommand body)
+        public DefinedFunction(IList<Parameter> parameters, ICommand body)
         {
-            this.argumentNames = argumentNames;
+            this.parameters = parameters;
             this.body = body;
         }
 
-        public ICollection<string> ArgumentNames { get { return this.argumentNames; } }
+        public ICollection<Parameter> Parameters { get { return this.parameters; } }
 
         public ICommand Body { get { return this.body; } }
 
@@ -31,12 +31,12 @@
             Machine machine = env.Machine;
             BindingEnvironment environment = new BindingEnvironment(env);
 
-            if (this.argumentNames != null)
-                for (int k = 0; k < this.argumentNames.Count; k++)
+            if (this.parameters != null)
+                for (int k = 0; k < this.parameters.Count; k++)
                     if (arguments != null && arguments.Count > k)
-                        environment.SetValue(this.argumentNames[k], arguments[k]);
+                        environment.SetValue(this.parameters[k].Name, arguments[k]);
                     else
-                        environment.SetValue(this.argumentNames[k], null);
+                        environment.SetValue(this.parameters[k].Name, null);
 
             this.body.Execute(environment);
 

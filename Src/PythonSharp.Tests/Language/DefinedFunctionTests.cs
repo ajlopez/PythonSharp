@@ -16,18 +16,18 @@
         [TestMethod]
         public void CreateSimpleDefinedFunction()
         {
-            IList<string> argumentNames = new string[] { "a", "b" };
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, false) };
             ICommand body = new SetCommand("c", new NameExpression("a"));
-            DefinedFunction func = new DefinedFunction(argumentNames, body);
+            DefinedFunction func = new DefinedFunction(parameters, body);
 
-            Assert.AreEqual(argumentNames, func.ArgumentNames);
+            Assert.AreEqual(parameters, func.Parameters);
             Assert.AreEqual(body, func.Body);
         }
 
         [TestMethod]
         public void ExecuteFunctionWithPrint()
         {
-            IList<string> argumentNames = new string[] { "a", "b" };
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, false) };
             CompositeCommand body = new CompositeCommand();
             body.AddCommand(new ExpressionCommand(new CallExpression(new NameExpression("print"), new IExpression[] { new NameExpression("a") })));
             body.AddCommand(new ExpressionCommand(new CallExpression(new NameExpression("print"), new IExpression[] { new NameExpression("b") })));
@@ -36,7 +36,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            DefinedFunction func = new DefinedFunction(argumentNames, body);
+            DefinedFunction func = new DefinedFunction(parameters, body);
 
             func.Apply(machine.Environment, new object[] { 1, 2 });
             Assert.AreEqual("1\r\n2\r\n", writer.ToString());

@@ -15,21 +15,21 @@
         [TestMethod]
         public void CreateSimpleDefCommand()
         {
-            IList<string> argumentNames = new string[] { "a", "b" };
+            IList<ParameterExpression> parameters = new ParameterExpression[] { new ParameterExpression("a", null, false), new ParameterExpression("b", null, false) };
             ICommand body = new SetCommand("c", new ConstantExpression(1));
-            DefCommand command = new DefCommand("foo", argumentNames, body);
+            DefCommand command = new DefCommand("foo", parameters, body);
 
             Assert.AreEqual("foo", command.Name);
-            Assert.AreEqual(argumentNames, command.ArgumentNames);
+            Assert.AreEqual(parameters, command.ParameterExpressions);
             Assert.AreEqual(body, command.Body);
         }
 
         [TestMethod]
         public void ExecuteSimpleDefCommand()
         {
-            IList<string> argumentNames = new string[] { "a", "b" };
+            IList<ParameterExpression> parameters = new ParameterExpression[] { new ParameterExpression("a", null, false), new ParameterExpression("b", null, false) };
             ICommand body = new SetCommand("c", new ConstantExpression(1));
-            DefCommand command = new DefCommand("foo", argumentNames, body);
+            DefCommand command = new DefCommand("foo", parameters, body);
 
             Machine machine = new Machine();
 
@@ -43,7 +43,7 @@
 
             var dfunc = (DefinedFunction)func;
 
-            Assert.AreEqual(argumentNames, dfunc.ArgumentNames);
+            Assert.AreEqual(parameters.Count, dfunc.Parameters.Count);
             Assert.AreEqual(body, dfunc.Body);
         }
     }

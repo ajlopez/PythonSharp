@@ -5,29 +5,39 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Language;
+    using PythonSharp.Expressions;
 
     public class DefCommand : ICommand
     {
         private string name;
-        private IList<string> argumentNames;
+        private IList<ParameterExpression> parameterExpressions;
         private ICommand body;
 
-        public DefCommand(string name, IList<string> argumentNames, ICommand body)
+        public DefCommand(string name, IList<ParameterExpression> parameterExpressions, ICommand body)
         {
             this.name = name;
-            this.argumentNames = argumentNames;
+            this.parameterExpressions = parameterExpressions;
             this.body = body;
         }
 
         public string Name { get { return this.name; } }
 
-        public IList<string> ArgumentNames { get { return this.argumentNames; } }
+        public IList<ParameterExpression> ParameterExpressions { get { return this.parameterExpressions; } }
 
         public ICommand Body { get { return this.body; } }
 
         public void Execute(BindingEnvironment environment)
         {
-            environment.SetValue(this.name, new DefinedFunction(this.argumentNames, this.body));
+            IList<Parameter> parameters = null;
+
+            if (this.parameterExpressions != null && this.parameterExpressions.Count > 0)
+            {
+                parameters = new List<Parameter>();
+                foreach (var parexpr in this.parameterExpressions)
+                    parameters.Add((Parameter)parexpr.Evaluate(environment));
+            }
+
+            environment.SetValue(this.name, new DefinedFunction(parameters, this.body));
         }
     }
 }

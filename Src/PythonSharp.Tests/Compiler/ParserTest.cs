@@ -1054,10 +1054,10 @@
 
             var dcommand = (DefCommand)command;
             Assert.AreEqual("foo", dcommand.Name);
-            Assert.IsNotNull(dcommand.ArgumentNames);
-            Assert.AreEqual(2, dcommand.ArgumentNames.Count);
-            Assert.AreEqual("a", dcommand.ArgumentNames[0]);
-            Assert.AreEqual("b", dcommand.ArgumentNames[1]);
+            Assert.IsNotNull(dcommand.ParameterExpressions);
+            Assert.AreEqual(2, dcommand.ParameterExpressions.Count);
+            Assert.AreEqual("a", dcommand.ParameterExpressions[0].Name);
+            Assert.AreEqual("b", dcommand.ParameterExpressions[1].Name);
             Assert.IsNotNull(dcommand.Body);
             Assert.IsInstanceOfType(dcommand.Body, typeof(CompositeCommand));
 

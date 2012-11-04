@@ -477,7 +477,12 @@
             int newindent = this.lexer.NextIndent();
             ICommand body = this.CompileNestedCommandList(newindent);
 
-            return new DefCommand(name, argumentNames, body);
+            IList<ParameterExpression> parameters = new List<ParameterExpression>();
+
+            foreach (var parameter in argumentNames)
+                parameters.Add(new ParameterExpression(parameter, null, false));
+
+            return new DefCommand(name, parameters, body);
         }
 
         private void SkipEmptyLines()
