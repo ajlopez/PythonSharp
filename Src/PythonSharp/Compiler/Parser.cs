@@ -658,6 +658,46 @@
             return expression;
         }
 
+        private IList<IExpression> CompileArgumentExpressionList()
+        {
+            IList<IExpression> expressions = new List<IExpression>();
+
+            IExpression expression = this.CompileArgumentExpression();
+
+            if (expression == null)
+                return null;
+
+            expressions.Add(expression);
+
+            while (this.TryCompile(TokenType.Separator, ","))
+                expressions.Add(this.CompileArgumentExpression());
+
+            return expressions;
+        }
+
+        private IExpression CompileArgumentExpression()
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return null;
+
+            if (token.TokenType == TokenType.Name)
+            {
+                Token token2 = this.lexer.NextToken();
+
+                if (token2 != null)
+                    if (token2.TokenType == TokenType.Operator && token2.Value == "=")
+                        return new NamedArgumentExpression(token.Value, this.CompileExpression());
+                    else
+                        this.lexer.PushToken(token2);
+            }
+
+            this.lexer.PushToken(token);
+
+            return this.CompileExpression();
+        }
+
         private IExpression CompileTerm()
         {
             IExpression term = this.CompileSimpleTerm();
@@ -675,7 +715,7 @@
 
             if (token.TokenType == TokenType.Separator && token.Value == "(")
             {
-                IList<IExpression> expressions = this.CompileExpressionList();
+                IList<IExpression> expressions = this.CompileArgumentExpressionList();
                 this.CompileToken(TokenType.Separator, ")");
 
                 if (term is AttributeExpression) 

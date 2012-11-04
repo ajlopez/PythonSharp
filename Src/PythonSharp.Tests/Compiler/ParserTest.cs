@@ -1340,6 +1340,34 @@
             }
         }
 
+        [TestMethod]
+        public void CompileCallWithNamedArgument()
+        {
+            Parser parser = new Parser("foo(a=1+2)");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+
+            var exprcmd = (ExpressionCommand)command;
+
+            Assert.IsNotNull(exprcmd.Expression);
+            Assert.IsInstanceOfType(exprcmd.Expression, typeof(CallExpression));
+
+            var callexpr = (CallExpression)exprcmd.Expression;
+
+            Assert.IsNotNull(callexpr.TargetExpression);
+            Assert.IsInstanceOfType(callexpr.TargetExpression, typeof(NameExpression));
+            Assert.IsNotNull(callexpr.ArgumentExpressions);
+            Assert.AreEqual(1, callexpr.ArgumentExpressions.Count);
+            Assert.IsInstanceOfType(callexpr.ArgumentExpressions[0], typeof(NamedArgumentExpression));
+
+            var nexpr = (NamedArgumentExpression)callexpr.ArgumentExpressions[0];
+            Assert.AreEqual("a", nexpr.Name);
+            Assert.IsNotNull(nexpr.Expression);
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();
