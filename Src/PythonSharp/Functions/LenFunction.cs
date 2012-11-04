@@ -10,7 +10,7 @@
 
     public class LenFunction : IFunction
     {
-        public object Apply(IList<object> arguments)
+        public object Apply(BindingEnvironment environment, IList<object> arguments)
         {
             int nargs = arguments == null ? 0 : arguments.Count;
 
@@ -29,11 +29,6 @@
                 return ((ICollection)argument).Count;
 
             throw new TypeError(string.Format("object of type '{0}' has no len()", Types.GetTypeName(argument)));
-        }
-
-        public object Apply(BindingEnvironment environment, IList<object> arguments)
-        {
-            return this.Apply(arguments);
         }
     }
 }

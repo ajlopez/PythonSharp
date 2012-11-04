@@ -24,22 +24,22 @@
         [TestMethod]
         public void LenString()
         {
-            Assert.AreEqual(4, this.len.Apply(new object[] { "spam" }));
-            Assert.AreEqual(0, this.len.Apply(new object[] { string.Empty }));
+            Assert.AreEqual(4, this.len.Apply(null, new object[] { "spam" }));
+            Assert.AreEqual(0, this.len.Apply(null, new object[] { string.Empty }));
         }
 
         [TestMethod]
         public void LenList()
         {
-            Assert.AreEqual(3, this.len.Apply(new object[] { new object[] { 1, 2, 3 } }));
-            Assert.AreEqual(2, this.len.Apply(new object[] { new List<object>() { 1, 2 } }));
+            Assert.AreEqual(3, this.len.Apply(null, new object[] { new object[] { 1, 2, 3 } }));
+            Assert.AreEqual(2, this.len.Apply(null, new object[] { new List<object>() { 1, 2 } }));
         }
 
         [TestMethod]
         public void LenDictionary()
         {
             IDictionary dictionary = new Hashtable() { { "one", 1 }, { "two", 2 } };
-            Assert.AreEqual(2, this.len.Apply(new object[] { dictionary }));
+            Assert.AreEqual(2, this.len.Apply(null, new object[] { dictionary }));
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@
         {
             try
             {
-                this.len.Apply(null);
+                this.len.Apply(null, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@
         {
             try
             {
-                this.len.Apply(new object[] { });
+                this.len.Apply(null, new object[] { });
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@
         {
             try
             {
-                this.len.Apply(new object[] { 1, 2 });
+                this.len.Apply(null, new object[] { 1, 2 });
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@
         {
             try
             {
-                this.len.Apply(new object[] { 123 });
+                this.len.Apply(null, new object[] { 123 });
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)

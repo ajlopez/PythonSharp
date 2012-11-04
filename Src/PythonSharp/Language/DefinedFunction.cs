@@ -21,11 +21,6 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public object Apply(IList<object> arguments)
-        {
-            throw new NotImplementedException();
-        }
-
         public object Apply(BindingEnvironment env, IList<object> arguments)
         {
             Machine machine = env.Machine;

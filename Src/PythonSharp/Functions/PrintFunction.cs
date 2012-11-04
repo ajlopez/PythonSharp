@@ -8,11 +8,6 @@
 
     public class PrintFunction : IFunction
     {
-        public object Apply(IList<object> arguments)
-        {
-            throw new NotImplementedException();
-        }
-
         public object Apply(BindingEnvironment environment, IList<object> arguments)
         {
             Machine machine = environment.Machine;
