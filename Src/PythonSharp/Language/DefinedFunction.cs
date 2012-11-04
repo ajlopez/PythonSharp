@@ -11,6 +11,7 @@
     {
         private string name;
         private IList<Parameter> parameters;
+        private int nrequiredparameters;
         private int nparameters;
         private bool hasdefault;
         private ICommand body;
@@ -22,14 +23,17 @@
             this.body = body;
 
             if (parameters != null)
+            {
+                this.nparameters = parameters.Count;
                 foreach (var parameter in parameters)
                     if (parameter.DefaultValue == null)
-                        this.nparameters++;
+                        this.nrequiredparameters++;
                     else
                     {
                         this.hasdefault = true;
                         break;
                     }
+            }
         }
 
         public string Name { get { return this.name; } }
@@ -48,8 +52,8 @@
             if (arguments != null)
                 nargs = arguments.Count;
 
-            if (nargs != this.nparameters)
-                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nparameters, this.nparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
+            if (nargs < this.nrequiredparameters || nargs > this.nparameters)
+                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nrequiredparameters, this.nrequiredparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
             if (this.parameters != null)
                 for (int k = 0; k < this.parameters.Count; k++)

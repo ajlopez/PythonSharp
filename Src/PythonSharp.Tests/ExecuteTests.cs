@@ -54,6 +54,13 @@
             Assert.AreEqual("1\r\n2\r\n6\r\n24\r\n", this.ExecuteFileAndPrint("factorial.py"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples/defargs.py")]
+        public void ExecuteDefArgsFile()
+        {
+            Assert.AreEqual("3\r\n4\r\n5\r\n", this.ExecuteFileAndPrint("defargs.py"));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.Execute(text);
