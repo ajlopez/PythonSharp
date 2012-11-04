@@ -117,8 +117,6 @@
             CompositeCommand body = new CompositeCommand();
 
             Machine machine = new Machine();
-            StringWriter writer = new StringWriter();
-            machine.Output = writer;
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
@@ -132,6 +130,17 @@
                 Assert.IsInstanceOfType(ex, typeof(TypeError));
                 Assert.AreEqual("foo() takes exactly 1 positional argument (0 given)", ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void EvaluateUsingDefaultValuesForArguments()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
+            ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            Assert.AreEqual(3, func.Apply(new BindingEnvironment(), null));
         }
     }
 }

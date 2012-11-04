@@ -56,7 +56,7 @@
                     if (arguments != null && arguments.Count > k)
                         environment.SetValue(this.parameters[k].Name, arguments[k]);
                     else
-                        environment.SetValue(this.parameters[k].Name, null);
+                        environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
 
             this.body.Execute(environment);
 
