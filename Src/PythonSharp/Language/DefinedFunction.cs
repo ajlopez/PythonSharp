@@ -15,6 +15,7 @@
         private int nmaxparameters;
         private int nparameters;
         private bool hasdefault;
+        private bool haslist;
         private ICommand body;
 
         public DefinedFunction(string name, IList<Parameter> parameters, ICommand body)
@@ -31,10 +32,13 @@
                 {
                     if (parameter.DefaultValue != null)
                         this.hasdefault = true;
-                    if (!this.hasdefault)
-                        this.nminparameters++;
                     if (parameter.IsList)
+                    {
+                        this.haslist = true;
                         this.nmaxparameters = Int32.MaxValue;
+                    }
+                    if (!this.hasdefault && !this.haslist)
+                        this.nminparameters++;
                 }
             }
         }
@@ -59,16 +63,27 @@
                 throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nminparameters, this.nminparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
             if (this.parameters != null)
-                for (int k = 0; k < this.parameters.Count; k++)
+            {
+                int k;
+
+                for (k = 0; k < this.parameters.Count; k++)
                     if (arguments != null && arguments.Count > k)
                         if (this.parameters[k].IsList)
                             environment.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
                         else
                             environment.SetValue(this.parameters[k].Name, arguments[k]);
-                    else if (this.parameters[k].IsList && this.parameters[k].DefaultValue == null)
-                        environment.SetValue(this.parameters[k].Name, new List<object>());
+                    else if (this.parameters[k].IsList)
+                    {
+                        if (this.parameters[k].DefaultValue == null)
+                            environment.SetValue(this.parameters[k].Name, new List<object>());
+                        else
+                            environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
+
+                        break;
+                    }
                     else
                         environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
+            }
 
             this.body.Execute(environment);
 

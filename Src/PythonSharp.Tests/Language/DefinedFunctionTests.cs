@@ -162,5 +162,43 @@
             Assert.AreEqual(2, list[0]);
             Assert.AreEqual(3, list[1]);
         }
+
+        [TestMethod]
+        public void EvaluateUsingEmptyListArgument()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, true) };
+            ICommand body = new ReturnCommand(new NameExpression("b"));
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            var result = func.Apply(new BindingEnvironment(), new object[] { 1 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList<object>));
+
+            var list = (IList<object>)result;
+
+            Assert.AreEqual(0, list.Count);
+        }
+
+        [TestMethod]
+        public void EvaluateUsingEmptyListArgumentWithDefaultValue()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", new object[] { 1, 2 }, true) };
+            ICommand body = new ReturnCommand(new NameExpression("b"));
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            var result = func.Apply(new BindingEnvironment(), new object[] { 1 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList<object>));
+
+            var list = (IList<object>)result;
+
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+        }
     }
 }
