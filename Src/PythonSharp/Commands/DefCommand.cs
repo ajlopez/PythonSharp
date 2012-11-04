@@ -37,7 +37,7 @@
                     parameters.Add((Parameter)parexpr.Evaluate(environment));
             }
 
-            environment.SetValue(this.name, new DefinedFunction(parameters, this.body));
+            environment.SetValue(this.name, new DefinedFunction(this.name, parameters, this.body));
         }
     }
 }

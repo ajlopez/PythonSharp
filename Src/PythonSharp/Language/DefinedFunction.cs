@@ -5,17 +5,26 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Commands;
+    using PythonSharp.Exceptions;
 
     public class DefinedFunction : IFunction
     {
+        private string name;
         private IList<Parameter> parameters;
+        private int nparameters;
         private ICommand body;
 
-        public DefinedFunction(IList<Parameter> parameters, ICommand body)
+        public DefinedFunction(string name, IList<Parameter> parameters, ICommand body)
         {
+            this.name = name;
             this.parameters = parameters;
             this.body = body;
+
+            if (parameters != null)
+                this.nparameters = parameters.Count;
         }
+
+        public string Name { get { return this.name; } }
 
         public ICollection<Parameter> Parameters { get { return this.parameters; } }
 
@@ -25,6 +34,14 @@
         {
             Machine machine = env.Machine;
             BindingEnvironment environment = new BindingEnvironment(env);
+
+            int nargs = 0;
+
+            if (arguments != null)
+                nargs = arguments.Count;
+
+            if (nargs != this.nparameters)
+                throw new TypeError(string.Format("{0}() takes exactly {1} positional argument{2} ({3} given)", this.name, this.nparameters, this.nparameters == 1 ? "" : "s", nargs));
 
             if (this.parameters != null)
                 for (int k = 0; k < this.parameters.Count; k++)
