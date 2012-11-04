@@ -27,43 +27,6 @@
         }
 
         [TestMethod]
-        public void CreatePrintCommand()
-        {
-            IList<IExpression> expressions = new IExpression[] { new ConstantExpression("foo") };
-            PrintCommand command = new PrintCommand(expressions);
-
-            Assert.IsNotNull(command);
-            Assert.IsNotNull(command.Expressions);
-            Assert.AreEqual(expressions, command.Expressions);
-        }
-
-        [TestMethod]
-        public void ExecutePrintCommand()
-        {
-            PrintCommand command = new PrintCommand(new IExpression[] { new ConstantExpression("bar") });
-            Machine machine = new Machine();
-            StringWriter writer = new StringWriter();
-            machine.Output = writer;
-
-            command.Execute(machine, machine.Environment);
-
-            Assert.AreEqual("bar\r\n", writer.ToString());
-        }
-
-        [TestMethod]
-        public void ExecutePrintCommandWithTwoValues()
-        {
-            PrintCommand command = new PrintCommand(new IExpression[] { new ConstantExpression("bar"), new ConstantExpression("foo") });
-            Machine machine = new Machine();
-            StringWriter writer = new StringWriter();
-            machine.Output = writer;
-
-            command.Execute(machine, machine.Environment);
-
-            Assert.AreEqual("bar foo\r\n", writer.ToString());
-        }
-
-        [TestMethod]
         public void ExecuteCompositeCommand()
         {
             SetCommand command1 = new SetCommand("foo", new ConstantExpression("bar"));

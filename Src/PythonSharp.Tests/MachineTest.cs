@@ -29,6 +29,8 @@
 
             Assert.IsNotNull(machine.Environment.GetValue("len"));
             Assert.IsInstanceOfType(machine.Environment.GetValue("len"), typeof(LenFunction));
+            Assert.IsNotNull(machine.Environment.GetValue("print"));
+            Assert.IsInstanceOfType(machine.Environment.GetValue("print"), typeof(PrintFunction));
         }
     }
 }

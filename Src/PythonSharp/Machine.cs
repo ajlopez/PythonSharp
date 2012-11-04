@@ -15,6 +15,7 @@
         public Machine()
         {
             this.environment.SetValue("len", new LenFunction());
+            this.environment.SetValue("print", new PrintFunction());
         }
 
         public BindingEnvironment Environment
