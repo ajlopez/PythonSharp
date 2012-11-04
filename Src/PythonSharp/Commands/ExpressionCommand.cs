@@ -17,7 +17,7 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             this.expression.Evaluate(environment);
         }

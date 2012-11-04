@@ -59,7 +59,7 @@
                         }
                     }
                     else
-                        command.Execute(machine, machine.Environment);
+                        command.Execute(machine.Environment);
                 }
                 catch (Exception ex)
                 {

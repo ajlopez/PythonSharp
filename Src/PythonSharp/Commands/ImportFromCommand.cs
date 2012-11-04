@@ -24,14 +24,14 @@
 
         public ICollection<string> Names { get { return this.names; } }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
             ICommand command = parser.CompileCommandList();
 
-            BindingEnvironment modenv = new BindingEnvironment();
+            BindingEnvironment modenv = new BindingEnvironment(environment.Machine);
 
-            command.Execute(machine, modenv);
+            command.Execute(modenv);
 
             foreach (string name in this.names)
                 environment.SetValue(name, modenv.GetValue(name));

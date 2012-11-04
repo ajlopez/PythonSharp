@@ -56,7 +56,6 @@
     <Compile Include="Commands\ImportFromCommand.cs" />
     <Compile Include="Commands\ImportCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Compiler\SyntaxErrorException.cs" />
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\ParserException.cs" />

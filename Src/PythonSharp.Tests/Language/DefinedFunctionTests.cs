@@ -29,8 +29,8 @@
         {
             IList<string> argumentNames = new string[] { "a", "b" };
             CompositeCommand body = new CompositeCommand();
-            body.AddCommand(new PrintCommand(new IExpression[] { new NameExpression("a") }));
-            body.AddCommand(new PrintCommand(new IExpression[] { new NameExpression("b") }));
+            body.AddCommand(new ExpressionCommand(new CallExpression(new NameExpression("print"), new IExpression[] { new NameExpression("a") })));
+            body.AddCommand(new ExpressionCommand(new CallExpression(new NameExpression("print"), new IExpression[] { new NameExpression("b") })));
 
             Machine machine = new Machine();
             StringWriter writer = new StringWriter();
@@ -38,7 +38,7 @@
 
             DefinedFunction func = new DefinedFunction(argumentNames, body);
 
-            func.Apply(machine, null, new object[] { 1, 2 });
+            func.Apply(machine.Environment, new object[] { 1, 2 });
             Assert.AreEqual("1\r\n2\r\n", writer.ToString());
         }
     }

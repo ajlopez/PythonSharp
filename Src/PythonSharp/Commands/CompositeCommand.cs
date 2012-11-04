@@ -26,10 +26,10 @@
             this.commands.Add(command);
         }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             foreach (ICommand command in this.commands)
-                command.Execute(machine, environment);
+                command.Execute(environment);
         }
     }
 }

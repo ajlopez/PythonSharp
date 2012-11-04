@@ -30,15 +30,15 @@
 
         public ICommand ElseCommand { get { return this.elsecmd; } }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             bool isfalse = Predicates.IsFalse(this.condition.Evaluate(environment));
 
             if (!isfalse)
-                this.thencmd.Execute(machine, environment);
+                this.thencmd.Execute(environment);
             else
                 if (this.elsecmd != null)
-                    this.elsecmd.Execute(machine, environment);
+                    this.elsecmd.Execute(environment);
         }
     }
 }

@@ -22,7 +22,7 @@
 
             Machine machine = new Machine();
 
-            command.Execute(machine, machine.Environment);
+            command.Execute(machine.Environment);
 
             Assert.AreEqual(1, machine.Environment.GetValue("a"));
         }
@@ -37,7 +37,7 @@
 
             Machine machine = new Machine();
 
-            command.Execute(machine, machine.Environment);
+            command.Execute(machine.Environment);
 
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));
@@ -54,7 +54,7 @@
 
             Machine machine = new Machine();
 
-            command.Execute(machine, machine.Environment);
+            command.Execute(machine.Environment);
 
             object mod = machine.Environment.GetValue("setvar");
 
@@ -77,7 +77,7 @@
 
             Machine machine = new Machine();
 
-            command.Execute(machine, machine.Environment);
+            command.Execute(machine.Environment);
 
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));

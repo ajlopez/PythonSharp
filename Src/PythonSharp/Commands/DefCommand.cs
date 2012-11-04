@@ -25,7 +25,7 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             environment.SetValue(this.name, new DefinedFunction(this.argumentNames, this.body));
         }

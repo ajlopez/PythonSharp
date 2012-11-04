@@ -13,8 +13,10 @@
             throw new NotImplementedException();
         }
 
-        public object Apply(Machine machine, BindingEnvironment environment, IList<object> arguments)
+        public object Apply(BindingEnvironment environment, IList<object> arguments)
         {
+            Machine machine = environment.Machine;
+
             if (arguments != null)
             {
                 int narg = 0;

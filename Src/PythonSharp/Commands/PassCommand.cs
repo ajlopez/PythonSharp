@@ -8,7 +8,7 @@
 
     public class PassCommand : ICommand
     {
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
         }
     }

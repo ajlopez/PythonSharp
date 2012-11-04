@@ -19,7 +19,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            var result = print.Apply(machine, null, new object[] { "bar" });
+            var result = print.Apply(machine.Environment, new object[] { "bar" });
 
             Assert.IsNull(result);
             Assert.AreEqual("bar\r\n", writer.ToString());
@@ -33,7 +33,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            var result = print.Apply(machine, null, new object[] { "bar", "foo" });
+            var result = print.Apply(machine.Environment, new object[] { "bar", "foo" });
 
             Assert.IsNull(result);
 

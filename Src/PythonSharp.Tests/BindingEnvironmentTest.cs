@@ -15,6 +15,8 @@
             BindingEnvironment environment = new BindingEnvironment();
 
             Assert.IsNotNull(environment);
+            Assert.IsNull(environment.Machine);
+            Assert.IsNull(environment.Parent);
         }
 
         [TestMethod]
@@ -53,6 +55,26 @@
             BindingEnvironment environment = new BindingEnvironment(parent);
 
             Assert.AreEqual(1, environment.GetValue("one"));
+        }
+
+        [TestMethod]
+        public void GetMachine()
+        {
+            Machine machine = new Machine();
+            BindingEnvironment environment = new BindingEnvironment(machine);
+
+            Assert.AreEqual(machine, environment.Machine);
+        }
+
+        [TestMethod]
+        public void GetMachineFromParent()
+        {
+            Machine machine = new Machine();
+            BindingEnvironment parent = new BindingEnvironment(machine);
+            parent.SetValue("one", 1);
+            BindingEnvironment environment = new BindingEnvironment(parent);
+
+            Assert.AreEqual(machine, environment.Machine);
         }
     }
 }

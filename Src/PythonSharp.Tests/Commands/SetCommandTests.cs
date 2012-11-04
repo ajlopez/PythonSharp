@@ -17,7 +17,7 @@
             IExpression expression = new ConstantExpression(1);
             BindingEnvironment environment = new BindingEnvironment();
             ICommand command = new SetCommand("spam", expression);
-            command.Execute(null, environment);
+            command.Execute(environment);
 
             Assert.AreEqual(1, environment.GetValue("spam"));
         }
@@ -43,7 +43,7 @@
             SetCommand command = new SetCommand("foo", new ConstantExpression("bar"));
             Machine machine = new Machine();
 
-            command.Execute(machine, machine.Environment);
+            command.Execute(machine.Environment);
 
             Assert.AreEqual("bar", machine.Environment.GetValue("foo"));
         }

@@ -8,12 +8,13 @@
 
     public class Machine
     {
-        private BindingEnvironment environment = new BindingEnvironment();
+        private BindingEnvironment environment;
         private TextReader input = System.Console.In;
         private TextWriter output = System.Console.Out;
 
         public Machine()
         {
+            this.environment = new BindingEnvironment(this);
             this.environment.SetValue("len", new LenFunction());
             this.environment.SetValue("print", new PrintFunction());
         }

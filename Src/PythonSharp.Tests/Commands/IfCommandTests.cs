@@ -17,7 +17,7 @@
             IfCommand ifcmd = new IfCommand(new ConstantExpression(true), new SetCommand("one", new ConstantExpression(1)));
             Machine machine = new Machine();
 
-            ifcmd.Execute(machine, machine.Environment);
+            ifcmd.Execute(machine.Environment);
 
             Assert.IsNotNull(ifcmd.ThenCommand);
             Assert.IsNull(ifcmd.ElseCommand);
@@ -30,7 +30,7 @@
             IfCommand ifcmd = new IfCommand(new ConstantExpression(false), new SetCommand("one", new ConstantExpression(1)));
             Machine machine = new Machine();
 
-            ifcmd.Execute(machine, machine.Environment);
+            ifcmd.Execute(machine.Environment);
 
             Assert.IsNull(machine.Environment.GetValue("one"));
         }
@@ -41,7 +41,7 @@
             IfCommand ifcmd = new IfCommand(new ConstantExpression(false), new SetCommand("one", new ConstantExpression(1)), new SetCommand("two", new ConstantExpression(2)));
             Machine machine = new Machine();
 
-            ifcmd.Execute(machine, machine.Environment);
+            ifcmd.Execute(machine.Environment);
 
             Assert.IsNull(machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));

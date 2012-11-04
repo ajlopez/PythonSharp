@@ -22,7 +22,7 @@
 
             WhileCommand command = new WhileCommand(condition, body);
 
-            command.Execute(null, environment);
+            command.Execute(environment);
 
             Assert.AreEqual(condition, command.Condition);
             Assert.AreEqual(body, command.Command);

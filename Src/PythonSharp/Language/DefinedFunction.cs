@@ -23,11 +23,12 @@
 
         public object Apply(IList<object> arguments)
         {
-            return this.Apply(null, null, arguments);
+            throw new NotImplementedException();
         }
 
-        public object Apply(Machine machine, BindingEnvironment env, IList<object> arguments)
+        public object Apply(BindingEnvironment env, IList<object> arguments)
         {
+            Machine machine = env.Machine;
             BindingEnvironment environment = new BindingEnvironment(env);
 
             if (this.argumentNames != null)
@@ -37,7 +38,7 @@
                     else
                         environment.SetValue(this.argumentNames[k], null);
 
-            this.body.Execute(machine, environment);
+            this.body.Execute(environment);
 
             return null;
         }

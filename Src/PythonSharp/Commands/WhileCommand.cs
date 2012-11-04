@@ -21,10 +21,10 @@
 
         public ICommand Command { get { return this.command; } }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             while (!Predicates.IsFalse(this.condition.Evaluate(environment)))
-                this.command.Execute(machine, environment);
+                this.command.Execute(environment);
         }
     }
 }

@@ -8,15 +8,35 @@
     public class BindingEnvironment
     {
         private BindingEnvironment parent;
+        private Machine machine;
         private Dictionary<string, object> values = new Dictionary<string, object>();
 
         public BindingEnvironment()
         {
         }
 
+        public BindingEnvironment(Machine machine)
+        {
+            this.machine = machine;
+        }
+
         public BindingEnvironment(BindingEnvironment parent)
         {
             this.parent = parent;
+        }
+
+        public BindingEnvironment Parent { get { return this.parent; } }
+
+        public Machine Machine
+        {
+            get
+            {
+                if (this.machine != null)
+                    return this.machine;
+                if (this.parent != null)
+                    return this.parent.Machine;
+                return null;
+            }
         }
 
         public object GetValue(string name)

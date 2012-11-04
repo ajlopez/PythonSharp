@@ -320,9 +320,6 @@
             if (token == null)
                 return this.CompileExpressionCommand();
 
-            if (token.Value == "print")
-                return new PrintCommand(this.CompileExpressionList());
-
             if (token.Value == "import")
             {
                 Token name = this.CompileName(true);

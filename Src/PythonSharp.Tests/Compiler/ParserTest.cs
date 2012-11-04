@@ -138,7 +138,7 @@
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
-            command.Execute(null, null);
+            command.Execute(null);
 
             ExpressionCommand exprcommand = (ExpressionCommand)command;
             Assert.IsNotNull(exprcommand.Expression);
@@ -156,7 +156,7 @@
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
-            command.Execute(null, environment);
+            command.Execute(environment);
 
             ExpressionCommand exprcommand = (ExpressionCommand)command;
             Assert.IsNotNull(exprcommand.Expression);
@@ -172,7 +172,7 @@
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
-            command.Execute(null, null);
+            command.Execute(null);
 
             ExpressionCommand exprcommand = (ExpressionCommand)command;
             Assert.IsNotNull(exprcommand.Expression);
@@ -522,50 +522,71 @@
         }
 
         [TestMethod]
-        public void CompilePrintCommand()
+        public void CompilePrintFunction()
         {
-            Parser parser = new Parser("print 'spam'");
+            Parser parser = new Parser("print('spam')");
 
             ICommand command = parser.CompileCommand();
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(PrintCommand));
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
 
-            PrintCommand printcmd = (PrintCommand)command;
+            var exprcmd = (ExpressionCommand)command;
 
-            Assert.IsNotNull(printcmd.Expressions);
-            Assert.AreEqual(1, printcmd.Expressions.Count);
+            Assert.IsNotNull(exprcmd.Expression);
+            Assert.IsInstanceOfType(exprcmd.Expression, typeof(CallExpression));
+
+            var callexpr = (CallExpression)exprcmd.Expression;
+
+            Assert.IsNotNull(callexpr.TargetExpression);
+            Assert.IsInstanceOfType(callexpr.TargetExpression, typeof(NameExpression));
+            Assert.IsNotNull(callexpr.ArgumentExpressions);
+            Assert.AreEqual(1, callexpr.ArgumentExpressions.Count);
         }
 
         [TestMethod]
-        public void CompilePrintCommandWithTwoArguments()
+        public void CompilePrintFunctionWithTwoArguments()
         {
-            Parser parser = new Parser("print 'spam', 'bar'");
+            Parser parser = new Parser("print('spam', 'bar')");
 
             ICommand command = parser.CompileCommand();
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(PrintCommand));
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
 
-            PrintCommand printcmd = (PrintCommand)command;
+            var exprcmd = (ExpressionCommand)command;
+            
+            Assert.IsNotNull(exprcmd.Expression);
+            Assert.IsInstanceOfType(exprcmd.Expression, typeof(CallExpression));
 
-            Assert.IsNotNull(printcmd.Expressions);
-            Assert.AreEqual(2, printcmd.Expressions.Count);
+            var callexpr = (CallExpression)exprcmd.Expression;
+
+            Assert.IsNotNull(callexpr.TargetExpression);
+            Assert.IsInstanceOfType(callexpr.TargetExpression, typeof(NameExpression));
+            Assert.IsNotNull(callexpr.ArgumentExpressions);
+            Assert.AreEqual(2, callexpr.ArgumentExpressions.Count);
         }
 
         [TestMethod]
-        public void CompileEmptyPrintCommand()
+        public void CompileEmptyPrintFunction()
         {
-            Parser parser = new Parser("print");
+            Parser parser = new Parser("print()");
 
             ICommand command = parser.CompileCommand();
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(PrintCommand));
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
 
-            PrintCommand printcmd = (PrintCommand)command;
+            var exprcmd = (ExpressionCommand)command;
 
-            Assert.IsNull(printcmd.Expressions);
+            Assert.IsNotNull(exprcmd.Expression);
+            Assert.IsInstanceOfType(exprcmd.Expression, typeof(CallExpression));
+
+            var callexpr = (CallExpression)exprcmd.Expression;
+
+            Assert.IsNotNull(callexpr.TargetExpression);
+            Assert.IsInstanceOfType(callexpr.TargetExpression, typeof(NameExpression));
+            Assert.IsNull(callexpr.ArgumentExpressions);
         }
 
         [TestMethod]
@@ -691,7 +712,7 @@
         [TestMethod]
         public void CompileIfCommandWithSingleThenCommandSameLine()
         {
-            Parser parser = new Parser("if a: print a");
+            Parser parser = new Parser("if a: print(a)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -703,7 +724,7 @@
             Assert.IsNotNull(ifcmd.Condition);
             Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
             Assert.IsNotNull(ifcmd.ThenCommand);
-            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(PrintCommand));
+            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(ExpressionCommand));
 
             Assert.IsNull(parser.CompileCommand());
         }
@@ -711,7 +732,7 @@
         [TestMethod]
         public void CompileIfCommandWithCompositeThenCommandSameLine()
         {
-            Parser parser = new Parser("if a: print a; print b");
+            Parser parser = new Parser("if a: print(a); print(b)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -731,7 +752,7 @@
         [TestMethod]
         public void CompileIfCommandWithSingleThenCommand()
         {
-            Parser parser = new Parser("if a:\r\n  print a");
+            Parser parser = new Parser("if a:\r\n  print(a)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -743,7 +764,7 @@
             Assert.IsNotNull(ifcmd.Condition);
             Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
             Assert.IsNotNull(ifcmd.ThenCommand);
-            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(PrintCommand));
+            Assert.IsInstanceOfType(ifcmd.ThenCommand, typeof(ExpressionCommand));
 
             Assert.IsNull(parser.CompileCommand());
         }
@@ -751,7 +772,7 @@
         [TestMethod]
         public void CompileIfCommandWithCompositeThenCommand()
         {
-            Parser parser = new Parser("if a:\r\n  print a\r\n  print b");
+            Parser parser = new Parser("if a:\r\n  print(a)\r\n  print(b)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -775,7 +796,7 @@
             Machine machine = new Machine();
             ICommand cmd = parser.CompileCommand();
 
-            cmd.Execute(machine, machine.Environment);
+            cmd.Execute(machine.Environment);
 
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));
@@ -790,7 +811,7 @@
             Machine machine = new Machine();
             ICommand cmd = parser.CompileCommand();
 
-            cmd.Execute(machine, machine.Environment);
+            cmd.Execute(machine.Environment);
 
             Assert.IsNull(machine.Environment.GetValue("one"));
             Assert.IsNull(machine.Environment.GetValue("two"));
@@ -799,7 +820,7 @@
 
             Assert.IsNotNull(cmd);
 
-            cmd.Execute(machine, machine.Environment);
+            cmd.Execute(machine.Environment);
 
             Assert.AreEqual(3, machine.Environment.GetValue("three"));
 
@@ -1025,7 +1046,7 @@
         [TestMethod]
         public void CompileSimpleDefFunction()
         {
-            Parser parser = new Parser("def foo(a, b):\r\n    print a\r\n    print b");
+            Parser parser = new Parser("def foo(a, b):\r\n    print(a)\r\n    print(b)");
 
             var command = parser.CompileCommand();
             Assert.IsNotNull(command);
@@ -1046,7 +1067,7 @@
         [TestMethod]
         public void CompileTwoSimpleDefFunction()
         {
-            Parser parser = new Parser("def foo(a):\r\n    print a\r\ndef bar(b):\r\n    print b");
+            Parser parser = new Parser("def foo(a):\r\n    print(a)\r\ndef bar(b):\r\n    print(b)");
 
             var command = parser.CompileCommand();
             Assert.IsInstanceOfType(command, typeof(DefCommand));
@@ -1070,7 +1091,7 @@
         [TestMethod]
         public void CompileWhileCommandWithSingleCommandSameLine()
         {
-            Parser parser = new Parser("while a: print a");
+            Parser parser = new Parser("while a: print(a)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1082,7 +1103,7 @@
             Assert.IsNotNull(whilecmd.Condition);
             Assert.IsInstanceOfType(whilecmd.Condition, typeof(NameExpression));
             Assert.IsNotNull(whilecmd.Command);
-            Assert.IsInstanceOfType(whilecmd.Command, typeof(PrintCommand));
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(ExpressionCommand));
 
             Assert.IsNull(parser.CompileCommand());
         }
@@ -1090,7 +1111,7 @@
         [TestMethod]
         public void CompileWhileCommandWithCompositeCommandSameLine()
         {
-            Parser parser = new Parser("while a: print a; print b");
+            Parser parser = new Parser("while a: print(a); print(b)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1110,7 +1131,7 @@
         [TestMethod]
         public void CompileWhileCommandWithSingleCommand()
         {
-            Parser parser = new Parser("while a:\r\n  print a");
+            Parser parser = new Parser("while a:\r\n  print(a)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1122,7 +1143,7 @@
             Assert.IsNotNull(whilecmd.Condition);
             Assert.IsInstanceOfType(whilecmd.Condition, typeof(NameExpression));
             Assert.IsNotNull(whilecmd.Command);
-            Assert.IsInstanceOfType(whilecmd.Command, typeof(PrintCommand));
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(ExpressionCommand));
 
             Assert.IsNull(parser.CompileCommand());
         }
@@ -1130,7 +1151,7 @@
         [TestMethod]
         public void CompileWhileCommandWithCompositeCommand()
         {
-            Parser parser = new Parser("while a:\r\n  print a\r\n  print b");
+            Parser parser = new Parser("while a:\r\n  print(a)\r\n  print(b)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1150,7 +1171,7 @@
         [TestMethod]
         public void CompileIfCommandWithSingleElseCommandSameLine()
         {
-            Parser parser = new Parser("if a:\r\n  print b\r\nelse: print a");
+            Parser parser = new Parser("if a:\r\n  print(b)\r\nelse: print(a)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1163,7 +1184,7 @@
             Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
             Assert.IsNotNull(ifcmd.ThenCommand);
             Assert.IsNotNull(ifcmd.ElseCommand);
-            Assert.IsInstanceOfType(ifcmd.ElseCommand, typeof(PrintCommand));
+            Assert.IsInstanceOfType(ifcmd.ElseCommand, typeof(ExpressionCommand));
 
             Assert.IsNull(parser.CompileCommand());
         }
@@ -1171,7 +1192,7 @@
         [TestMethod]
         public void CompileIfCommandWithCompositeElseCommandSameLine()
         {
-            Parser parser = new Parser("if a: \r\n  print c\r\nelse: print a; print b");
+            Parser parser = new Parser("if a: \r\n  print(c)\r\nelse: print(a); print(b)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1192,7 +1213,7 @@
         [TestMethod]
         public void CompileIfCommandWithSingleElseCommand()
         {
-            Parser parser = new Parser("if a:\r\n  print b\r\nelse:\r\n  print a");
+            Parser parser = new Parser("if a:\r\n  print(b)\r\nelse:\r\n  print(a)");
 
             ICommand cmd = parser.CompileCommand();
 
@@ -1205,7 +1226,7 @@
             Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
             Assert.IsNotNull(ifcmd.ThenCommand);
             Assert.IsNotNull(ifcmd.ElseCommand);
-            Assert.IsInstanceOfType(ifcmd.ElseCommand, typeof(PrintCommand));
+            Assert.IsInstanceOfType(ifcmd.ElseCommand, typeof(ExpressionCommand));
 
             Assert.IsNull(parser.CompileCommand());
         }
@@ -1213,7 +1234,7 @@
         [TestMethod]
         public void CompileIfCommandWithCompositeElseCommand()
         {
-            Parser parser = new Parser("if a:\r\n  print a\r\nelse:\r\n  print a\r\n  print b");
+            Parser parser = new Parser("if a:\r\n  print(a)\r\nelse:\r\n  print(a)\r\n  print(b)");
 
             ICommand cmd = parser.CompileCommand();
 

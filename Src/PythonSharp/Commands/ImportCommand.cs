@@ -20,14 +20,14 @@
 
         public string ModuleName { get { return this.modname; } }
 
-        public void Execute(Machine machine, BindingEnvironment environment)
+        public void Execute(BindingEnvironment environment)
         {
             Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
             ICommand command = parser.CompileCommandList();
 
-            BindingEnvironment modenv = new BindingEnvironment();
+            BindingEnvironment modenv = new BindingEnvironment(environment.Machine);
 
-            command.Execute(machine, modenv);
+            command.Execute(modenv);
 
             environment.SetValue(this.modname, modenv);
         }

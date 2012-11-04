@@ -33,7 +33,7 @@
 
             Machine machine = new Machine();
 
-            command.Execute(machine, machine.Environment);
+            command.Execute(machine.Environment);
 
             var func = machine.Environment.GetValue("foo");
 
