@@ -378,6 +378,33 @@
             return names;
         }
 
+        private IList<ParameterExpression> CompileParameterExpressionList()
+        {
+            IList<ParameterExpression> parameters = new List<ParameterExpression>();
+
+            if (this.TryPeekCompile(TokenType.Separator, ")"))
+                return parameters;
+
+            parameters.Add(this.CompileParameterExpression());
+
+            while (this.TryCompile(TokenType.Separator, ","))
+                parameters.Add(this.CompileParameterExpression());
+
+            return parameters;
+        }
+
+        private ParameterExpression CompileParameterExpression()
+        {
+            bool isList = this.TryCompile(TokenType.Operator, "*");
+            string name = this.CompileName(true).Value;
+            IExpression expression = null;
+
+            if (this.TryCompile(TokenType.Operator, "="))
+                expression = this.CompileExpression();
+
+            return new ParameterExpression(name, expression, isList);
+        }
+
         private ICommand CompileIfCommand()
         {
             IExpression condition = this.CompileExpression();
@@ -468,7 +495,7 @@
             Token token = this.CompileName(true);
             string name = token.Value;
             this.CompileToken(TokenType.Separator, "(");
-            IList<string> argumentNames = this.CompileNameList();
+            IList<ParameterExpression> parameters = this.CompileParameterExpressionList();
             this.CompileToken(TokenType.Separator, ")");
 
             this.CompileToken(TokenType.Separator, ":");
@@ -476,11 +503,6 @@
 
             int newindent = this.lexer.NextIndent();
             ICommand body = this.CompileNestedCommandList(newindent);
-
-            IList<ParameterExpression> parameters = new List<ParameterExpression>();
-
-            foreach (var parameter in argumentNames)
-                parameters.Add(new ParameterExpression(parameter, null, false));
 
             return new DefCommand(name, parameters, body);
         }
@@ -758,6 +780,21 @@
                 throw new ExpectedTokenException(expected);
 
             return token;
+        }
+
+        private bool TryPeekCompile(TokenType type, string value)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return false;
+
+            this.lexer.PushToken(token);
+
+            if (token.TokenType == type && token.Value == value)
+                return true;
+
+            return false;
         }
 
         private bool TryCompile(TokenType type, string value)
