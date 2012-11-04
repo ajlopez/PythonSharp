@@ -52,6 +52,7 @@
     <Compile Include="Expressions\IndexedExpressionTests.cs" />
     <Compile Include="Expressions\ListExpressionTest.cs" />
     <Compile Include="Expressions\NameExpressionTests.cs" />
+    <Compile Include="Expressions\ParameterExpressionTests.cs" />
     <Compile Include="Expressions\SlicedExpressionTests.cs" />
     <Compile Include="Expressions\SliceExpressionTests.cs" />
     <Compile Include="Functions\LenFunctionTests.cs" />

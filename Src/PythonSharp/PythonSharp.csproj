@@ -75,6 +75,7 @@
     <Compile Include="Expressions\CallExpression.cs" />
     <Compile Include="Expressions\AttributeExpression.cs" />
     <Compile Include="Expressions\MethodCallExpression.cs" />
+    <Compile Include="Expressions\ParameterExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />
     <Compile Include="Language\DefinedClass.cs" />
     <Compile Include="Language\DefinedFunction.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Language\IMethod.cs" />
     <Compile Include="Language\IFunction.cs" />
     <Compile Include="Language\NativeMethod.cs" />
+    <Compile Include="Language\Parameter.cs" />
     <Compile Include="Language\StringType.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
