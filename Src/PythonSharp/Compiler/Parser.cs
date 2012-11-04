@@ -286,6 +286,20 @@
             throw new UnexpectedTokenException(token);
         }
 
+        private bool TryPeekCompileEndOfCommand()
+        {
+            Token token = this.lexer.NextToken();
+            this.lexer.PushToken(token);
+
+            if (token == null || token.TokenType == TokenType.EndOfLine)
+                return true;
+
+            if (token.TokenType == TokenType.Separator && token.Value == ";")
+                return true;
+
+            return false;
+        }
+
         private ICommand CompileExpressionCommand()
         {
             IExpression expr = this.CompileExpression();
@@ -350,6 +364,9 @@
             if (token.Value == "pass")
                 return new PassCommand();
 
+            if (token.Value == "return")
+                return this.CompileReturnCommand();
+
             Token token2 = this.lexer.NextToken();
 
             if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
@@ -403,6 +420,14 @@
                 expression = this.CompileExpression();
 
             return new ParameterExpression(name, expression, isList);
+        }
+
+        private ICommand CompileReturnCommand()
+        {
+            if (this.TryPeekCompileEndOfCommand())
+                return new ReturnCommand(null);
+
+            return new ReturnCommand(this.CompileExpression());
         }
 
         private ICommand CompileIfCommand()

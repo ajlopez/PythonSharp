@@ -40,6 +40,9 @@
 
             this.body.Execute(environment);
 
+            if (environment.HasReturnValue())
+                return environment.GetReturnValue();
+
             return null;
         }
     }

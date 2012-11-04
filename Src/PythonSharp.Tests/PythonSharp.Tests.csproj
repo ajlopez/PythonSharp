@@ -48,6 +48,7 @@
     <Compile Include="Commands\SetCommandTests.cs" />
     <Compile Include="Commands\WhileCommandTests.cs" />
     <Compile Include="ExamplesTests.cs" />
+    <Compile Include="ExecuteTests.cs" />
     <Compile Include="Expressions\BinaryOperatorExpressionTest.cs" />
     <Compile Include="Expressions\CallExpressionTests.cs" />
     <Compile Include="Expressions\ConstantExpressionTest.cs" />
@@ -93,6 +94,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\setvar.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\printvars.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\return.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

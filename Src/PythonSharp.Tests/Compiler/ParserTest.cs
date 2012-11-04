@@ -1270,6 +1270,34 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileEmptyReturn()
+        {
+            Parser parser = new Parser("return");
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ReturnCommand));
+
+            var retcommand = (ReturnCommand)command;
+
+            Assert.IsNull(retcommand.Expression);
+        }
+
+        [TestMethod]
+        public void CompileReturnWithValue()
+        {
+            Parser parser = new Parser("return 1");
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ReturnCommand));
+
+            var retcommand = (ReturnCommand)command;
+
+            Assert.IsNotNull(retcommand.Expression);
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

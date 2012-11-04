@@ -41,5 +41,24 @@
             func.Apply(machine.Environment, new object[] { 1, 2 });
             Assert.AreEqual("1\r\n2\r\n", writer.ToString());
         }
+
+        [TestMethod]
+        public void ExecuteFunctionWithReturn()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, false) };
+            CompositeCommand body = new CompositeCommand();
+            body.AddCommand(new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add)));
+
+            Machine machine = new Machine();
+            StringWriter writer = new StringWriter();
+            machine.Output = writer;
+
+            DefinedFunction func = new DefinedFunction(parameters, body);
+
+            var result = func.Apply(machine.Environment, new object[] { 1, 2 });
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result);
+        }
     }
 }
