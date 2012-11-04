@@ -23,7 +23,7 @@
 
         public void Execute(BindingEnvironment environment)
         {
-            while (!Predicates.IsFalse(this.condition.Evaluate(environment)))
+            while (!environment.HasReturnValue() && !Predicates.IsFalse(this.condition.Evaluate(environment)))
                 this.command.Execute(environment);
         }
     }

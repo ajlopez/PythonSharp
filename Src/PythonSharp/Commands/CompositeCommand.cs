@@ -29,7 +29,11 @@
         public void Execute(BindingEnvironment environment)
         {
             foreach (ICommand command in this.commands)
+            {
                 command.Execute(environment);
+                if (environment.HasReturnValue())
+                    break;
+            }
         }
     }
 }
