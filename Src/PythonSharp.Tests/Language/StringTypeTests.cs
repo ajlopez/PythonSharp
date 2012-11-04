@@ -102,6 +102,15 @@
         }
 
         [TestMethod]
+        public void InvokeJoin()
+        {
+            var result = this.type.GetMethod("join").Apply(",", new object[] { new object[] { "1", "2", "3" } });
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("1,2,3", result);
+        }
+
+        [TestMethod]
         public void RaiseWhenSplitInvokedWithEmptySeparator()
         {
             try

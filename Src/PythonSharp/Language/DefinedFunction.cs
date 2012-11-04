@@ -11,7 +11,8 @@
     {
         private string name;
         private IList<Parameter> parameters;
-        private int nrequiredparameters;
+        private int nminparameters;
+        private int nmaxparameters;
         private int nparameters;
         private bool hasdefault;
         private ICommand body;
@@ -25,14 +26,16 @@
             if (parameters != null)
             {
                 this.nparameters = parameters.Count;
+                this.nmaxparameters = parameters.Count;
                 foreach (var parameter in parameters)
-                    if (parameter.DefaultValue == null)
-                        this.nrequiredparameters++;
-                    else
-                    {
+                {
+                    if (parameter.DefaultValue != null)
                         this.hasdefault = true;
-                        break;
-                    }
+                    if (!this.hasdefault)
+                        this.nminparameters++;
+                    if (parameter.IsList)
+                        this.nmaxparameters = Int32.MaxValue;
+                }
             }
         }
 
@@ -52,13 +55,18 @@
             if (arguments != null)
                 nargs = arguments.Count;
 
-            if (nargs < this.nrequiredparameters || nargs > this.nparameters)
-                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nrequiredparameters, this.nrequiredparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
+            if (nargs < this.nminparameters || nargs > this.nmaxparameters)
+                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nminparameters, this.nminparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
             if (this.parameters != null)
                 for (int k = 0; k < this.parameters.Count; k++)
                     if (arguments != null && arguments.Count > k)
-                        environment.SetValue(this.parameters[k].Name, arguments[k]);
+                        if (this.parameters[k].IsList)
+                            environment.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
+                        else
+                            environment.SetValue(this.parameters[k].Name, arguments[k]);
+                    else if (this.parameters[k].IsList && this.parameters[k].DefaultValue == null)
+                        environment.SetValue(this.parameters[k].Name, new List<object>());
                     else
                         environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
 
@@ -68,6 +76,11 @@
                 return environment.GetReturnValue();
 
             return null;
+        }
+
+        private static IList<object> GetSublist(IList<object> list, int from)
+        {
+            return list.Skip(from).ToList();
         }
     }
 }

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Exceptions;
+    using System.Collections;
 
     public class StringType : IType
     {
@@ -15,6 +16,7 @@
             this.methods["find"] = new NativeMethod(FindMethod);
             this.methods["replace"] = new NativeMethod(ReplaceMethod);
             this.methods["split"] = new NativeMethod(SplitMethod);
+            this.methods["join"] = new NativeMethod(JoinMethod);
         }
 
         public IMethod GetMethod(string name)
@@ -30,6 +32,23 @@
         private static string Replace(string text, string toreplace, string newtext)
         {
             return text.Replace(toreplace, newtext);
+        }
+
+        private static string Join(string sep, IList objects)
+        {
+            var result = string.Empty;
+            var nobjects = 0;
+
+            foreach (var obj in objects)
+            {
+                if (nobjects > 0)
+                    result += sep;
+
+                result += obj;
+                nobjects++;
+            }
+
+            return result;
         }
 
         private static string[] Split(string text, string separator)
@@ -66,6 +85,11 @@
         private static object SplitMethod(object target, IList<object> arguments)
         {
             return Split((string)target, (string)arguments[0]);
+        }
+
+        private static object JoinMethod(object target, IList<object> arguments)
+        {
+            return Join((string)target, (IList)arguments[0]);
         }
     }
 }
