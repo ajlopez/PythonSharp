@@ -10,6 +10,8 @@
         private BindingEnvironment parent;
         private Machine machine;
         private Dictionary<string, object> values = new Dictionary<string, object>();
+        private object returnValue;
+        private bool hasReturnValue;
 
         public BindingEnvironment()
         {
@@ -37,6 +39,22 @@
                     return this.parent.Machine;
                 return null;
             }
+        }
+
+        public bool HasReturnValue()
+        {
+            return this.hasReturnValue;
+        }
+
+        public object GetReturnValue()
+        {
+            return this.returnValue;
+        }
+
+        public void SetReturnValue(object value)
+        {
+            this.returnValue = value;
+            this.hasReturnValue = true;
         }
 
         public object GetValue(string name)

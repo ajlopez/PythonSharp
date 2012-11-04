@@ -50,6 +50,7 @@
     <Compile Include="Commands\PassCommand.cs" />
     <Compile Include="Commands\DefCommand.cs" />
     <Compile Include="Commands\ExpressionCommand.cs" />
+    <Compile Include="Commands\ReturnCommand.cs" />
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Commands\WhileCommand.cs" />
     <Compile Include="Commands\IfCommand.cs" />

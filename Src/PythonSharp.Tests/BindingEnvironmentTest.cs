@@ -17,6 +17,8 @@
             Assert.IsNotNull(environment);
             Assert.IsNull(environment.Machine);
             Assert.IsNull(environment.Parent);
+            Assert.IsFalse(environment.HasReturnValue());
+            Assert.IsNull(environment.GetReturnValue());
         }
 
         [TestMethod]
@@ -27,6 +29,17 @@
             environment.SetValue("foo", "bar");
 
             Assert.AreEqual("bar", environment.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void SetAndGetReturnValue()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetReturnValue(1);
+
+            Assert.IsTrue(environment.HasReturnValue());
+            Assert.AreEqual(1, environment.GetReturnValue());
         }
 
         [TestMethod]
