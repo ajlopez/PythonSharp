@@ -47,6 +47,7 @@
     <Compile Include="Commands\ReturnCommandTests.cs" />
     <Compile Include="Commands\SetCommandTests.cs" />
     <Compile Include="Commands\WhileCommandTests.cs" />
+    <Compile Include="EvaluateTests.cs" />
     <Compile Include="ExamplesTests.cs" />
     <Compile Include="ExecuteTests.cs" />
     <Compile Include="Expressions\BinaryOperatorExpressionTest.cs" />
