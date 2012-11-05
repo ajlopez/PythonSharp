@@ -39,7 +39,7 @@
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
-            func.Apply(machine.Environment, new object[] { 1, 2 });
+            func.Apply(machine.Environment, new object[] { 1, 2 }, null);
             Assert.AreEqual("1\r\n2\r\n", writer.ToString());
         }
 
@@ -56,7 +56,7 @@
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
-            var result = func.Apply(machine.Environment, new object[] { 1, 2 });
+            var result = func.Apply(machine.Environment, new object[] { 1, 2 }, null);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(3, result);
@@ -76,7 +76,7 @@
 
             try
             {
-                func.Apply(machine.Environment, new object[] { 1 });
+                func.Apply(machine.Environment, new object[] { 1 }, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@
 
             try
             {
-                func.Apply(machine.Environment, new object[] { });
+                func.Apply(machine.Environment, new object[] { }, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -122,7 +122,7 @@
 
             try
             {
-                func.Apply(machine.Environment, null);
+                func.Apply(machine.Environment, null, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -140,7 +140,7 @@
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
-            Assert.AreEqual(3, func.Apply(new BindingEnvironment(), null));
+            Assert.AreEqual(3, func.Apply(new BindingEnvironment(), null, null));
         }
 
         [TestMethod]
@@ -151,7 +151,7 @@
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
-            var result = func.Apply(new BindingEnvironment(), new object[] { 1, 2, 3 });
+            var result = func.Apply(new BindingEnvironment(), new object[] { 1, 2, 3 }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IList<object>));
@@ -171,7 +171,7 @@
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
-            var result = func.Apply(new BindingEnvironment(), new object[] { 1 });
+            var result = func.Apply(new BindingEnvironment(), new object[] { 1 }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IList<object>));
@@ -189,7 +189,7 @@
 
             DefinedFunction func = new DefinedFunction("foo", parameters, body);
 
-            var result = func.Apply(new BindingEnvironment(), new object[] { 1 });
+            var result = func.Apply(new BindingEnvironment(), new object[] { 1 }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IList<object>));

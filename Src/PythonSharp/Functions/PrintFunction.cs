@@ -8,7 +8,7 @@
 
     public class PrintFunction : IFunction
     {
-        public object Apply(BindingEnvironment environment, IList<object> arguments)
+        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             Machine machine = environment.Machine;
 

@@ -10,7 +10,7 @@
 
     public class LenFunction : IFunction
     {
-        public object Apply(BindingEnvironment environment, IList<object> arguments)
+        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             int nargs = arguments == null ? 0 : arguments.Count;
 

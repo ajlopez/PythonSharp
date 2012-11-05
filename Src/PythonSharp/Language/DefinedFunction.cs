@@ -49,7 +49,7 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public object Apply(BindingEnvironment env, IList<object> arguments)
+        public object Apply(BindingEnvironment env, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             Machine machine = env.Machine;
             BindingEnvironment environment = new BindingEnvironment(env);
