@@ -200,5 +200,33 @@
             Assert.AreEqual(1, list[0]);
             Assert.AreEqual(2, list[1]);
         }
+
+        [TestMethod]
+        public void EvaluateUsingNamedArgument()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
+            ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            var result = func.Apply(new BindingEnvironment(), null, new Dictionary<string, object> { { "a", 2 } });
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result);
+        }
+
+        [TestMethod]
+        public void EvaluateUsingTwoNamedArguments()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
+            ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            var result = func.Apply(new BindingEnvironment(), null, new Dictionary<string, object> { { "a", 2 }, { "b", 3 } });
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(5, result);
+        }
     }
 }

@@ -62,6 +62,13 @@
             if (nargs < this.nminparameters || nargs > this.nmaxparameters)
                 throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nminparameters, this.nminparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
+            if (namedArguments != null)
+            {
+                foreach (var namarg in namedArguments)
+                    if (!environment.HasValue(namarg.Key))
+                        environment.SetValue(namarg.Key, namarg.Value);
+            }
+
             if (this.parameters != null)
             {
                 int k;
@@ -81,7 +88,7 @@
 
                         break;
                     }
-                    else
+                    else if (namedArguments == null || !namedArguments.ContainsKey(this.parameters[k].Name))
                         environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
             }
 
