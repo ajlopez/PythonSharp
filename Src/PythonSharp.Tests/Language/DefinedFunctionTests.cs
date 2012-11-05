@@ -228,5 +228,25 @@
             Assert.IsNotNull(result);
             Assert.AreEqual(5, result);
         }
+
+        [TestMethod]
+        public void RaiseWhenMultipleValuesForKeywordArgument()
+        {
+            IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
+            ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
+
+            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+
+            try
+            {
+                func.Apply(new BindingEnvironment(), new object[] { 1 }, new Dictionary<string, object> { { "a", 2 } });
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
+                Assert.AreEqual("foo() got multiple values for keyword argument 'a'", ex.Message);
+            }
+        }
     }
 }

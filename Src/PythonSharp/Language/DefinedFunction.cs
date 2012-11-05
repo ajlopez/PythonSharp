@@ -63,11 +63,8 @@
                 throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nminparameters, this.nminparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
             if (namedArguments != null)
-            {
                 foreach (var namarg in namedArguments)
-                    if (!environment.HasValue(namarg.Key))
-                        environment.SetValue(namarg.Key, namarg.Value);
-            }
+                    environment.SetValue(namarg.Key, namarg.Value);
 
             if (this.parameters != null)
             {
@@ -75,10 +72,14 @@
 
                 for (k = 0; k < this.parameters.Count; k++)
                     if (arguments != null && arguments.Count > k)
+                    {
+                        if (namedArguments != null && namedArguments.ContainsKey(this.parameters[k].Name))
+                            throw new TypeError(string.Format("{0}() got multiple values for keyword argument '{1}'", this.name, this.parameters[k].Name));
                         if (this.parameters[k].IsList)
                             environment.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
                         else
                             environment.SetValue(this.parameters[k].Name, arguments[k]);
+                    }
                     else if (this.parameters[k].IsList)
                     {
                         if (this.parameters[k].DefaultValue == null)
