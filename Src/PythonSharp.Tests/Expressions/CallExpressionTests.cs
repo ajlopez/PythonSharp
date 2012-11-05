@@ -60,5 +60,20 @@
                 Assert.AreEqual("non-keyword arg after keyword arg", ex.Message);
             }
         }
+
+        [TestMethod]
+        public void RaiseWhenKeywordArgumentRepeated()
+        {
+            try
+            {
+                new CallExpression(new NameExpression("foo"), new IExpression[] { new NamedArgumentExpression("a", new ConstantExpression(1)), new NamedArgumentExpression("a", new ConstantExpression(1)) });
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("keyword argument repeated", ex.Message);
+            }
+        }
     }
 }

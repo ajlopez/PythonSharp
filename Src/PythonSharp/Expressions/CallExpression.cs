@@ -20,10 +20,17 @@
             if (argumentExpressions != null)
             {
                 bool hasnamed = false;
+                IList<string> names = new List<string>();
 
                 foreach (var argexpr in argumentExpressions)
                     if (argexpr is NamedArgumentExpression)
+                    {
+                        var namexpr = (NamedArgumentExpression)argexpr;
+                        if (names.Contains(namexpr.Name))
+                            throw new SyntaxError("keyword argument repeated");
+                        names.Add(namexpr.Name);
                         hasnamed = true;
+                    }
                     else if (hasnamed)
                         throw new SyntaxError("non-keyword arg after keyword arg");
             }
