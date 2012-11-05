@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Language;
+    using PythonSharp.Exceptions;
 
     public class CallExpression : IExpression
     {
@@ -15,6 +16,17 @@
         {
             this.targetExpression = targetExpression;
             this.argumentExpressions = argumentExpressions;
+
+            if (argumentExpressions != null)
+            {
+                bool hasnamed = false;
+
+                foreach (var argexpr in argumentExpressions)
+                    if (argexpr is NamedArgumentExpression)
+                        hasnamed = true;
+                    else if (hasnamed)
+                        throw new SyntaxError("non-keyword arg after keyword arg");
+            }
         }
 
         public IExpression TargetExpression { get { return this.targetExpression; } }

@@ -45,5 +45,20 @@
                 Assert.AreEqual("len() takes exactly one argument (0 given)", ex.Message);
             }
         }
+
+        [TestMethod]
+        public void RaiseWhenCallWithNonKeywordArgumentAfterKeywordOne()
+        {
+            try
+            {
+                new CallExpression(new NameExpression("foo"), new IExpression[] { new NamedArgumentExpression("a", new ConstantExpression(1)), new ConstantExpression(2) });
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("non-keyword arg after keyword arg", ex.Message);
+            }
+        }
     }
 }
