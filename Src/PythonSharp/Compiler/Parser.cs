@@ -355,6 +355,9 @@
             if (token.Value == "if")
                 return this.CompileIfCommand();
 
+            if (token.Value == "class")
+                return this.CompileClassCommand();
+
             if (token.Value == "while")
                 return this.CompileWhileCommand();
 
@@ -543,6 +546,16 @@
             ICommand body = this.CompileNestedCommandList(newindent);
 
             return new DefCommand(name, parameters, body);
+        }
+
+        private ICommand CompileClassCommand()
+        {
+            string name = this.CompileName(true).Value;
+            this.CompileToken(TokenType.Separator, ":");
+            this.CompileToken(TokenType.EndOfLine);
+            int newindent = this.lexer.NextIndent();
+            ICommand body = this.CompileNestedCommandList(newindent);
+            return new ClassCommand(name, body);
         }
 
         private void SkipEmptyLines()

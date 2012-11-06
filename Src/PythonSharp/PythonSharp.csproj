@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ClassCommand.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
     <Compile Include="Commands\PassCommand.cs" />
     <Compile Include="Commands\DefCommand.cs" />

@@ -15,6 +15,8 @@ named parameters in invocation
 + parameters with default values
 = *arg
 
+global, nonlocal (sect 9.2.1 Doc 3.3)
+
 Types
 = numbers
 	- complex

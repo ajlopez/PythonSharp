@@ -1368,6 +1368,23 @@
             Assert.IsNotNull(nexpr.Expression);
         }
 
+        [TestMethod]
+        public void CompileSimpleClassDefinition()
+        {
+            Parser parser = new Parser("class Spam:\r\n  pass");
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ClassCommand));
+
+            var clscommand = (ClassCommand)command;
+
+            Assert.AreEqual("Spam", clscommand.Name);
+            Assert.IsNotNull(clscommand.Body);
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();
