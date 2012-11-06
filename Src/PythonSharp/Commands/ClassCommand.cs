@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public class ClassCommand : ICommand
     {
@@ -22,7 +23,9 @@
 
         public void Execute(BindingEnvironment environment)
         {
-            throw new NotImplementedException();
+            BindingEnvironment env = new BindingEnvironment(environment);
+            this.body.Execute(env);
+            environment.SetValue(this.name, new DefinedClass(this.name));
         }
     }
 }
