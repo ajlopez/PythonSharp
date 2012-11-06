@@ -27,5 +27,20 @@
 
             Assert.AreEqual("Spam", dclass.Name);
         }
+
+        [TestMethod]
+        public void ExecuteClassCommandWithEmptyMethod()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            ClassCommand command = new ClassCommand("Spam", new DefCommand("foo", null, new PassCommand()));
+
+            command.Execute(environment);
+
+            var result = (DefinedClass)environment.GetValue("Spam");
+
+            Assert.AreEqual("Spam", result.Name);
+
+            Assert.IsNotNull(result.GetMethod("foo"));
+        }
     }
 }

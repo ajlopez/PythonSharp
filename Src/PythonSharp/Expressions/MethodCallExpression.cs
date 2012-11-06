@@ -29,18 +29,17 @@
         {
             object target = this.targetExpression.Evaluate(environment);
             IType type = Types.GetType(target);
-            IMethod method = type.GetMethod(this.methodName);
-            IList<object> arguments = null;
+            IFunction method = type.GetMethod(this.methodName);
+            IList<object> arguments = new List<object>();
+            arguments.Add(target);
 
             if (this.argumentExpressions != null && this.argumentExpressions.Count > 0)
             {
-                arguments = new List<object>();
-
                 foreach (var argexpr in this.argumentExpressions)
                     arguments.Add(argexpr.Evaluate(environment));
             }
 
-            return method.Apply(target, arguments);
+            return method.Apply(environment, arguments, null);
         }
     }
 }

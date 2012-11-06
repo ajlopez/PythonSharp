@@ -22,31 +22,31 @@
         [TestMethod]
         public void InvokeFind()
         {
-            Assert.AreEqual(1, this.type.GetMethod("find").Apply("foo", new object[] { "o" }));
+            Assert.AreEqual(1, this.type.GetMethod("find").Apply(null, new object[] { "foo", "o" }, null));
         }
 
         [TestMethod]
         public void InvokeSingleReplace()
         {
-            Assert.AreEqual("sXYZm", this.type.GetMethod("replace").Apply("spam", new object[] { "pa", "XYZ" }));
+            Assert.AreEqual("sXYZm", this.type.GetMethod("replace").Apply(null, new object[] { "spam", "pa", "XYZ" }, null));
         }
 
         [TestMethod]
         public void InvokeMultipleReplace()
         {
-            Assert.AreEqual("sXYZmsXYZm", this.type.GetMethod("replace").Apply("spamspam", new object[] { "pa", "XYZ" }));
+            Assert.AreEqual("sXYZmsXYZm", this.type.GetMethod("replace").Apply(null, new object[] { "spamspam", "pa", "XYZ" }, null));
         }
 
         [TestMethod]
         public void InvokeNoReplace()
         {
-            Assert.AreEqual("spam", this.type.GetMethod("replace").Apply("spam", new object[] { "po", "XYZ" }));
+            Assert.AreEqual("spam", this.type.GetMethod("replace").Apply(null, new object[] { "spam", "po", "XYZ" }, null));
         }
 
         [TestMethod]
         public void InvokeSingleSplit()
         {
-            var result = this.type.GetMethod("split").Apply("spam", new object[] { "a" });
+            var result = this.type.GetMethod("split").Apply(null, new object[] { "spam", "a" }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(string[]));
@@ -60,7 +60,7 @@
         [TestMethod]
         public void InvokeDoubleSplit()
         {
-            var result = this.type.GetMethod("split").Apply("spamspam", new object[] { "a" });
+            var result = this.type.GetMethod("split").Apply(null, new object[] { "spamspam", "a" }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(string[]));
@@ -75,7 +75,7 @@
         [TestMethod]
         public void InvokeSplitWithNull()
         {
-            var result = this.type.GetMethod("split").Apply("spam", new object[] { null });
+            var result = this.type.GetMethod("split").Apply(null, new object[] { "spam", null }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(string[]));
@@ -88,7 +88,7 @@
         [TestMethod]
         public void InvokeMultipleSplit()
         {
-            var result = this.type.GetMethod("split").Apply("aaa,bbb,ccc,ddd", new object[] { "," });
+            var result = this.type.GetMethod("split").Apply(null, new object[] { "aaa,bbb,ccc,ddd", "," }, null);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(string[]));
@@ -104,7 +104,7 @@
         [TestMethod]
         public void InvokeJoin()
         {
-            var result = this.type.GetMethod("join").Apply(",", new object[] { new object[] { "1", "2", "3" } });
+            var result = this.type.GetMethod("join").Apply(null, new object[] { ",", new object[] { "1", "2", "3" } }, null);
 
             Assert.IsNotNull(result);
             Assert.AreEqual("1,2,3", result);
@@ -115,7 +115,7 @@
         {
             try
             {
-                this.type.GetMethod("split").Apply("aaa,bbb,ccc,ddd", new object[] { string.Empty });
+                this.type.GetMethod("split").Apply(null, new object[] { "aaa,bbb,ccc,ddd", string.Empty }, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)

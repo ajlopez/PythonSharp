@@ -8,7 +8,7 @@
     public class DefinedClass : IType
     {
         private string name;
-        private IDictionary<string, IMethod> methods = new Dictionary<string, IMethod>();
+        private IDictionary<string, IFunction> methods = new Dictionary<string, IFunction>();
 
         public DefinedClass(string name)
         {
@@ -17,12 +17,12 @@
 
         public string Name { get { return this.name; } }
 
-        public void SetMethod(string name, IMethod method)
+        public void SetMethod(string name, IFunction method)
         {
             this.methods[name] = method;
         }
 
-        public IMethod GetMethod(string name)
+        public IFunction GetMethod(string name)
         {
             return this.methods[name];
         }

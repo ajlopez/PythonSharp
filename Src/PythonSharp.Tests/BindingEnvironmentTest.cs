@@ -53,6 +53,21 @@
         }
 
         [TestMethod]
+        public void GetNames()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("one", 1);
+            environment.SetValue("two", 2);
+
+            var result = environment.GetNames();
+
+            Assert.AreEqual(2, result.Count);
+            Assert.IsTrue(result.Contains("one"));
+            Assert.IsTrue(result.Contains("two"));
+        }
+
+        [TestMethod]
         public void GetNullIfUnknownName()
         {
             BindingEnvironment environment = new BindingEnvironment();

@@ -22,7 +22,7 @@
         public void SetGetMethod()
         {
             DefinedClass klass = new DefinedClass("Spam");
-            IMethod method = new NativeMethod(DummyMethod);
+            IFunction method = new NativeMethod(DummyMethod);
 
             klass.SetMethod("foo", method);
 
@@ -31,7 +31,7 @@
             Assert.AreEqual(method, result);
         }
 
-        private object DummyMethod(object target, IList<object> arguments)
+        private object DummyMethod(IList<object> arguments)
         {
             return null;
         }

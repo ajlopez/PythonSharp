@@ -7,6 +7,6 @@
 
     public interface IType
     {
-        IMethod GetMethod(string name);
+        IFunction GetMethod(string name);
     }
 }

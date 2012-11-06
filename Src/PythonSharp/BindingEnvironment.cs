@@ -78,5 +78,10 @@
         {
             return this.values.ContainsKey(name);
         }
+
+        public ICollection<string> GetNames()
+        {
+            return this.values.Keys.ToList();
+        }
     }
 }

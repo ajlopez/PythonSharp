@@ -9,7 +9,7 @@
 
     public class StringType : IType
     {
-        private IDictionary<string, IMethod> methods = new Dictionary<string, IMethod>();
+        private IDictionary<string, IFunction> methods = new Dictionary<string, IFunction>();
 
         public StringType()
         {
@@ -19,7 +19,7 @@
             this.methods["join"] = new NativeMethod(JoinMethod);
         }
 
-        public IMethod GetMethod(string name)
+        public IFunction GetMethod(string name)
         {
             return this.methods[name];
         }
@@ -72,24 +72,24 @@
             return result.ToArray();
         }
 
-        private static object FindMethod(object target, IList<object> arguments)
+        private static object FindMethod(IList<object> arguments)
         {
-            return Find((string)target, (string)arguments[0]);
+            return Find((string)arguments[0], (string)arguments[1]);
         }
 
-        private static object ReplaceMethod(object target, IList<object> arguments)
+        private static object ReplaceMethod(IList<object> arguments)
         {
-            return Replace((string)target, (string)arguments[0], (string)arguments[1]);
+            return Replace((string)arguments[0], (string)arguments[1], (string)arguments[2]);
         }
 
-        private static object SplitMethod(object target, IList<object> arguments)
+        private static object SplitMethod(IList<object> arguments)
         {
-            return Split((string)target, (string)arguments[0]);
+            return Split((string)arguments[0], (string)arguments[1]);
         }
 
-        private static object JoinMethod(object target, IList<object> arguments)
+        private static object JoinMethod(IList<object> arguments)
         {
-            return Join((string)target, (IList)arguments[0]);
+            return Join((string)arguments[0], (IList)arguments[1]);
         }
     }
 }

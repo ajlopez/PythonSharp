@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class NativeMethod : IMethod
+    public class NativeMethod : IFunction
     {
         private MethodDelegate method;
 
@@ -14,9 +14,9 @@
             this.method = method;
         }
 
-        public object Apply(object target, IList<object> arguments)
+        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            return this.method(target, arguments);
+            return this.method(arguments);
         }
     }
 }

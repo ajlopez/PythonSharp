@@ -25,7 +25,17 @@
         {
             BindingEnvironment env = new BindingEnvironment(environment);
             this.body.Execute(env);
-            environment.SetValue(this.name, new DefinedClass(this.name));
+            DefinedClass klass = new DefinedClass(this.name);
+            foreach (var name in env.GetNames())
+            {
+                var value = env.GetValue(name);
+                var deffunc = value as DefinedFunction;
+
+                if (deffunc != null)
+                    klass.SetMethod(deffunc.Name, deffunc);
+            }
+
+            environment.SetValue(this.name, klass);
         }
     }
 }
