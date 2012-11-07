@@ -37,7 +37,7 @@
 
         public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            throw new NotImplementedException();
+            return new DynamicObject(this);
         }
     }
 }

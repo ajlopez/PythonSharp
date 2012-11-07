@@ -42,6 +42,17 @@
             Assert.IsFalse(klass.HasMethod("foo"));
         }
 
+        [TestMethod]
+        public void CreateInstance()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            var result = klass.Apply(null, null, null);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+            Assert.AreEqual(((DynamicObject)result).Class, klass);
+        }
+
         private object DummyMethod(IList<object> arguments)
         {
             return null;
