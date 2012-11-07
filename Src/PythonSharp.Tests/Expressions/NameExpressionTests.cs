@@ -24,6 +24,18 @@
         }
 
         [TestMethod]
+        public void EvaluateNameWithNull()
+        {
+            NameExpression expression = new NameExpression("foo");
+
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("foo", null);
+
+            Assert.IsNull(expression.Evaluate(environment));
+        }
+
+        [TestMethod]
         public void RaiseIfNameIsUndefined()
         {
             NameExpression expression = new NameExpression("foo");
