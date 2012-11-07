@@ -11,6 +11,7 @@
     {
         private IExpression targetExpression;
         private IList<IExpression> argumentExpressions;
+        private bool hasnames;
 
         public CallExpression(IExpression targetExpression, IList<IExpression> argumentExpressions)
         {
@@ -19,7 +20,6 @@
 
             if (argumentExpressions != null)
             {
-                bool hasnamed = false;
                 IList<string> names = new List<string>();
 
                 foreach (var argexpr in argumentExpressions)
@@ -29,9 +29,9 @@
                         if (names.Contains(namexpr.Name))
                             throw new SyntaxError("keyword argument repeated");
                         names.Add(namexpr.Name);
-                        hasnamed = true;
+                        this.hasnames = true;
                     }
-                    else if (hasnamed)
+                    else if (this.hasnames)
                         throw new SyntaxError("non-keyword arg after keyword arg");
             }
         }
@@ -44,16 +44,27 @@
         {
             IFunction function = (IFunction)this.targetExpression.Evaluate(environment);
             IList<object> arguments = null;
+            IDictionary<string, object> namedArguments = null;
+
+            if (this.hasnames)
+                namedArguments = new Dictionary<string, object>();
 
             if (this.argumentExpressions != null && this.argumentExpressions.Count > 0)
             {
                 arguments = new List<object>();
 
                 foreach (var argexpr in this.argumentExpressions)
-                    arguments.Add(argexpr.Evaluate(environment));
+                {
+                    object value = argexpr.Evaluate(environment);
+
+                    if (this.hasnames && argexpr is NamedArgumentExpression)
+                        namedArguments[((NamedArgumentExpression)argexpr).Name] = value;
+                    else
+                        arguments.Add(argexpr.Evaluate(environment));
+                }
             }
 
-            return function.Apply(environment, arguments, null);
+            return function.Apply(environment, arguments, namedArguments);
         }
     }
 }

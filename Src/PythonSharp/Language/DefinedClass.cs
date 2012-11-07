@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class DefinedClass : IType
+    public class DefinedClass : IType, IFunction
     {
         private string name;
         private IDictionary<string, IFunction> methods = new Dictionary<string, IFunction>();
@@ -33,6 +33,11 @@
         public bool HasMethod(string name)
         {
             return this.methods.ContainsKey(name);
+        }
+
+        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
+        {
+            throw new NotImplementedException();
         }
     }
 }

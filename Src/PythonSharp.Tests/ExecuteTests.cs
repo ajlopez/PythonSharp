@@ -66,7 +66,7 @@
         [DeploymentItem("Examples/namedargs.py")]
         public void ExecuteNamedArgsFile()
         {
-            Assert.AreEqual("3\r\n4\r\n5\r\n", this.ExecuteFileAndPrint("namedargs.py"));
+            Assert.AreEqual("5\r\n7\r\n8\r\n", this.ExecuteFileAndPrint("namedargs.py"));
         }
 
         [TestMethod]
