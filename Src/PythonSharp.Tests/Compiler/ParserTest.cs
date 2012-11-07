@@ -703,12 +703,20 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SyntaxErrorException), "SyntaxError: invalid syntax")]
         public void RaiseIfInvalidSpacesAtStartOfLine()
         {
             Parser parser = new Parser("  a=1");
 
-            parser.CompileCommand();
+            try
+            {
+                parser.CompileCommand();
+                Assert.Fail("Expected Exception");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("unexpected indent", ex.Message);
+            }
         }
 
         [TestMethod]

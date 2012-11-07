@@ -21,7 +21,7 @@
         private TextReader reader;
         private char lastChar;
         private bool hasChar;
-        private int lastIndent;
+        private int lastIndent = -1;
         private Stack<Token> tokenStack = new Stack<Token>();
 
         public Lexer(string text)
@@ -49,10 +49,10 @@
         {
             int indent = 0;
 
-            if (this.lastIndent > 0)
+            if (this.lastIndent >= 0)
             {
                 indent = this.lastIndent;
-                this.lastIndent = 0;
+                this.lastIndent = -1;
                 return indent;
             }
 

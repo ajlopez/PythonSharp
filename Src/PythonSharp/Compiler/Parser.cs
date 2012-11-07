@@ -128,19 +128,17 @@
             {
                 if (this.indent == 0)
                     this.SkipEmptyLines();
-                else
+
+                int newindent = this.lexer.NextIndent();
+
+                if (newindent < this.indent)
                 {
-                    int newindent = this.lexer.NextIndent();
-
-                    if (newindent < this.indent)
-                    {
-                        this.lexer.PushIndent(newindent);
-                        return null;
-                    }
-
-                    if (newindent > this.indent)
-                        throw new UnexpectedTokenException("<indent>");
+                    this.lexer.PushIndent(newindent);
+                    return null;
                 }
+
+                if (newindent > this.indent)
+                    throw new SyntaxError("unexpected indent");
             }
 
             ICommand command = this.CompileSimpleCommand();
@@ -473,7 +471,14 @@
             token = this.lexer.NextToken();
 
             if (token != null && token.TokenType == TokenType.EndOfLine)
-                if (this.TryCompile(TokenType.Name, "else"))
+            {
+                int indent = this.lexer.NextIndent();
+
+                if (indent != this.indent)
+                {
+                    this.lexer.PushIndent(indent);
+                }
+                else if (this.TryCompile(TokenType.Name, "else"))
                 {
                     ICommand elsecommand;
 
@@ -500,6 +505,7 @@
                 }
                 else
                     this.lexer.PushToken(token);
+            }
 
             return new IfCommand(condition, thencommand);
         }
@@ -567,8 +573,8 @@
             {
                 newindent = this.lexer.NextIndent();
 
-                if (newindent != 0)
-                    throw new SyntaxErrorException("invalid syntax");
+                //if (newindent != 0)
+                //    throw new SyntaxErrorException("invalid syntax");
 
                 token = this.lexer.NextToken();
 
@@ -578,6 +584,7 @@
                 if (token.TokenType != TokenType.EndOfLine)
                 {
                     this.lexer.PushToken(token);
+                    this.lexer.PushIndent(newindent);
                     return;
                 }
             }

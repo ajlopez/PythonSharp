@@ -5,8 +5,9 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
 
-    public class UnexpectedTokenException : SyntaxErrorException
+    public class UnexpectedTokenException : SyntaxError
     {
         public UnexpectedTokenException(Token token)
             : base(string.Format(CultureInfo.CurrentCulture, "Unexpected '{0}'", token.Value))

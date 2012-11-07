@@ -8,6 +8,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
     using PythonSharp.Compiler;
+    using PythonSharp.Language;
 
     [TestClass]
     public class ExecuteTests
@@ -66,6 +67,21 @@
         public void ExecuteNamedArgsFile()
         {
             Assert.AreEqual("3\r\n4\r\n5\r\n", this.ExecuteFileAndPrint("namedargs.py"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/simpleclass.py")]
+        public void ExecuteSimpleClassFile()
+        {
+            this.ExecuteFile("simpleclass.py");
+            var result = this.machine.Environment.GetValue("Calculator");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IType));
+
+            var type = (IType)result;
+
+            Assert.IsNotNull(type.GetMethod("add"));
+            Assert.IsNotNull(type.GetMethod("sub"));
         }
 
         private string ExecuteAndPrint(string text)

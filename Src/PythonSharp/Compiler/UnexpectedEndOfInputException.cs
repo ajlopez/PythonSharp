@@ -5,8 +5,9 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
 
-    public class UnexpectedEndOfInputException : SyntaxErrorException
+    public class UnexpectedEndOfInputException : SyntaxError
     {
         public UnexpectedEndOfInputException()
             : base("Unexpected End of Input")
