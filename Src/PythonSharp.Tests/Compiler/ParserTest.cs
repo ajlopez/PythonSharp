@@ -1393,6 +1393,24 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileSetAttributeCommand()
+        {
+            Parser parser = new Parser("adam.name = 'Spam'");
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SetAttributeCommand));
+
+            var setcommand = (SetAttributeCommand)command;
+
+            Assert.AreEqual("name", setcommand.Name);
+            Assert.IsInstanceOfType(setcommand.Expression, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(setcommand.TargetExpression, typeof(NameExpression));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

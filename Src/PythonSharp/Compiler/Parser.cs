@@ -297,7 +297,7 @@
             return false;
         }
 
-        private ICommand CompileExpressionCommand()
+        private ExpressionCommand CompileExpressionCommand()
         {
             IExpression expr = this.CompileExpression();
 
@@ -326,7 +326,6 @@
         private ICommand CompileSimpleCommand()
         {
             Token token = this.TryCompile(TokenType.Name);
-            IExpression expr;
 
             if (token == null)
                 return this.CompileExpressionCommand();
@@ -367,20 +366,22 @@
             if (token.Value == "return")
                 return this.CompileReturnCommand();
 
-            Token token2 = this.lexer.NextToken();
-
-            if (token2 != null && token2.TokenType == TokenType.Operator && token2.Value == "=")
-            {
-                expr = this.CompileExpression();
-                return new SetCommand(token.Value, expr);
-            }
-
-            if (token2 != null)
-                this.lexer.PushToken(token2);
-
             this.lexer.PushToken(token);
 
-            return this.CompileExpressionCommand();
+            var command = this.CompileExpressionCommand();
+
+            if (!this.TryCompile(TokenType.Operator, "="))
+                return command;
+
+            var valueexpr = this.CompileExpression();
+
+            if (command.Expression is NameExpression)
+                return new SetCommand(((NameExpression)command.Expression).Name, valueexpr);
+
+            if (command.Expression is AttributeExpression)
+                return new SetAttributeCommand(((AttributeExpression)command.Expression).Expression, ((AttributeExpression)command.Expression).Name, valueexpr);
+
+            throw new SyntaxError("invalid assignment");
         }
 
         private IList<string> CompileNameList()

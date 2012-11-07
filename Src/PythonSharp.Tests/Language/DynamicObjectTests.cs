@@ -63,6 +63,21 @@
         }
 
         [TestMethod]
+        public void InvokeGetValueMethod()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            IFunction function = new NativeMethod(GetValueMethod);
+            klass.SetMethod("foo", function);
+            DynamicObject dynobj = new DynamicObject(klass);
+            dynobj.SetValue("one", 1);
+
+            var result = dynobj.InvokeMethod("foo", null, new object[] { "one" }, null);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
         public void GetUndefinedAttributeAsNull()
         {
             DefinedClass klass = new DefinedClass("Spam");
@@ -96,6 +111,11 @@
         private static object SelfMethod(IList<object> arguments)
         {
             return arguments[0];
+        }
+
+        private static object GetValueMethod(IList<object> arguments)
+        {
+            return ((IValues)arguments[0]).GetValue((string)arguments[1]);
         }
     }
 }
