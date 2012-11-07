@@ -8,6 +8,8 @@
     using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Functions;
+    using PythonSharp.Language;
+    using PythonSharp.Tests.Language;
 
     [TestClass]
     public class CallExpressionTests
@@ -74,6 +76,21 @@
                 Assert.IsInstanceOfType(ex, typeof(SyntaxError));
                 Assert.AreEqual("keyword argument repeated", ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void CallObjectMethod()
+        {
+            DefinedClass klass = DynamicObjectTests.CreateClassWithMethods("Spam");
+            DynamicObject dynobj = (DynamicObject) klass.Apply(null, null, null);
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("foo", dynobj);
+            CallExpression expression = new CallExpression(new AttributeExpression(new NameExpression("foo"), "getSelf"), null);
+
+            var result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(dynobj, result);
         }
     }
 }

@@ -11,12 +11,15 @@
     {
         private IExpression targetExpression;
         private IList<IExpression> argumentExpressions;
+        private bool isobject;
         private bool hasnames;
 
         public CallExpression(IExpression targetExpression, IList<IExpression> argumentExpressions)
         {
             this.targetExpression = targetExpression;
             this.argumentExpressions = argumentExpressions;
+
+            this.isobject = this.targetExpression is AttributeExpression;
 
             if (argumentExpressions != null)
             {
@@ -42,7 +45,6 @@
 
         public object Evaluate(BindingEnvironment environment)
         {
-            IFunction function = (IFunction)this.targetExpression.Evaluate(environment);
             IList<object> arguments = null;
             IDictionary<string, object> namedArguments = null;
 
@@ -64,6 +66,20 @@
                 }
             }
 
+            if (this.isobject)
+            {
+                var attrexpr = (AttributeExpression)this.targetExpression;
+                var obj = attrexpr.Expression.Evaluate(environment);
+
+                // TODO when is not DynamicObject the target expression is evaluated twice
+                if (obj is DynamicObject)
+                {
+                    var dynobj = (DynamicObject)obj;
+                    return dynobj.InvokeMethod(attrexpr.Name, environment, arguments, namedArguments);
+                }
+            }
+
+            IFunction function = (IFunction)this.targetExpression.Evaluate(environment);
             return function.Apply(environment, arguments, namedArguments);
         }
     }

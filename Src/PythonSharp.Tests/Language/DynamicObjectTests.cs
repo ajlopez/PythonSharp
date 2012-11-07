@@ -103,6 +103,47 @@
             Assert.IsTrue(dynobj.HasValue("one"));
         }
 
+        [TestMethod]
+        public void GetValueFromClass()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            DynamicObject dynobj = new DynamicObject(klass);
+
+            klass.SetValue("one", 1);
+            var result = dynobj.GetValue("one");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(dynobj.HasValue("one"));
+        }
+
+        [TestMethod]
+        public void RedefineValueFromClass()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            DynamicObject dynobj = new DynamicObject(klass);
+
+            klass.SetValue("one", 1);
+            dynobj.SetValue("one", 2);
+            var result = dynobj.GetValue("one");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result);
+            Assert.IsTrue(dynobj.HasValue("one"));
+            Assert.AreEqual(1, klass.GetValue("one"));
+        }
+
+        public static DefinedClass CreateClassWithMethods(string name)
+        {
+            DefinedClass klass = new DefinedClass(name);
+
+            klass.SetMethod("dummy", new NativeMethod(DummyMethod));
+            klass.SetMethod("getSelf", new NativeMethod(SelfMethod));
+            klass.SetMethod("getValue", new NativeMethod(GetValueMethod));
+
+            return klass;
+        }
+
         private static object DummyMethod(IList<object> arguments)
         {
             return null;

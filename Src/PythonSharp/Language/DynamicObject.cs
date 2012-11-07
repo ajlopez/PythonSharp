@@ -22,7 +22,7 @@
             if (this.values.ContainsKey(name))
                 return this.values[name];
 
-            return this.klass.GetMethod(name);
+            return this.klass.GetValue(name);
         }
 
         public void SetValue(string name, object value)
@@ -35,7 +35,7 @@
             if (this.values.ContainsKey(name))
                 return true;
 
-            return this.klass.GetMethod(name) != null;
+            return this.klass.HasValue(name);
         }
 
         public object InvokeMethod(string name, BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
