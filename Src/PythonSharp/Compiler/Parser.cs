@@ -126,8 +126,7 @@
         {
             if (!this.lastSemi)
             {
-                if (this.indent == 0)
-                    this.SkipEmptyLines();
+                this.SkipEmptyLines();
 
                 int newindent = this.lexer.NextIndent();
 
@@ -572,9 +571,6 @@
             while (true)
             {
                 newindent = this.lexer.NextIndent();
-
-                //if (newindent != 0)
-                //    throw new SyntaxErrorException("invalid syntax");
 
                 token = this.lexer.NextToken();
 

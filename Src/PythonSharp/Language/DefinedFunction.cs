@@ -32,11 +32,13 @@
                 {
                     if (parameter.DefaultValue != null)
                         this.hasdefault = true;
+                    
                     if (parameter.IsList)
                     {
                         this.haslist = true;
                         this.nmaxparameters = Int32.MaxValue;
                     }
+
                     if (!this.hasdefault && !this.haslist)
                         this.nminparameters++;
                 }
@@ -60,7 +62,7 @@
                 nargs = arguments.Count;
 
             if (nargs < this.nminparameters || nargs > this.nmaxparameters)
-                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nminparameters, this.nminparameters == 1 ? "" : "s", nargs, this.hasdefault ? "at least" : "exactly"));
+                throw new TypeError(string.Format("{0}() takes {4} {1} positional argument{2} ({3} given)", this.name, this.nminparameters, this.nminparameters == 1 ? string.Empty : "s", nargs, this.hasdefault ? "at least" : "exactly"));
 
             if (namedArguments != null)
                 foreach (var namarg in namedArguments)

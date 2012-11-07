@@ -82,6 +82,7 @@
     <Compile Include="Functions\PrintFunction.cs" />
     <Compile Include="Language\DefinedClass.cs" />
     <Compile Include="Language\DefinedFunction.cs" />
+    <Compile Include="Language\DynamicObject.cs" />
     <Compile Include="Language\IType.cs" />
     <Compile Include="Language\IMethod.cs" />
     <Compile Include="Language\IFunction.cs" />

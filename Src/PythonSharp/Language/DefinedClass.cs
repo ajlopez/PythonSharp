@@ -24,7 +24,15 @@
 
         public IFunction GetMethod(string name)
         {
-            return this.methods[name];
+            if (this.methods.ContainsKey(name))
+                return this.methods[name];
+
+            return null;
+        }
+
+        public bool HasMethod(string name)
+        {
+            return this.methods.ContainsKey(name);
         }
     }
 }

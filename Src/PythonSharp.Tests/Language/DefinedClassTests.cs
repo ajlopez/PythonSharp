@@ -29,6 +29,17 @@
             var result = klass.GetMethod("foo");
             Assert.IsNotNull(result);
             Assert.AreEqual(method, result);
+            Assert.IsTrue(klass.HasMethod("foo"));
+        }
+
+        [TestMethod]
+        public void GetUndefinedMethodAsNull()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+
+            var result = klass.GetMethod("foo");
+            Assert.IsNull(result);
+            Assert.IsFalse(klass.HasMethod("foo"));
         }
 
         private object DummyMethod(IList<object> arguments)

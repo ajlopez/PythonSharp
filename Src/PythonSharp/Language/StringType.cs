@@ -1,11 +1,11 @@
 ﻿namespace PythonSharp.Language
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using PythonSharp.Exceptions;
-    using System.Collections;
 
     public class StringType : IType
     {
