@@ -37,5 +37,17 @@
 
             return this.klass.GetMethod(name) != null;
         }
+
+        public object InvokeMethod(string name, BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
+        {
+            IFunction method = (IFunction) this.GetValue(name);
+            IList<object> args = new List<object>() { this };
+
+            if (arguments != null && arguments.Count > 0)
+                foreach (var arg in arguments)
+                    args.Add(arg);
+
+            return method.Apply(environment, args, namedArguments);
+        }
     }
 }

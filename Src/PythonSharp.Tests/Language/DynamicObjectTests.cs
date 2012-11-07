@@ -36,6 +36,33 @@
         }
 
         [TestMethod]
+        public void InvokeMethodDefinedInClass()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            IFunction function = new NativeMethod(DummyMethod);
+            klass.SetMethod("foo", function);
+            DynamicObject dynobj = new DynamicObject(klass);
+
+            var result = dynobj.InvokeMethod("foo", null, null, null);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void InvokeMethodThatReturnsSelf()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            IFunction function = new NativeMethod(SelfMethod);
+            klass.SetMethod("foo", function);
+            DynamicObject dynobj = new DynamicObject(klass);
+
+            var result = dynobj.InvokeMethod("foo", null, null, null);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(dynobj, result);
+        }
+
+        [TestMethod]
         public void GetUndefinedAttributeAsNull()
         {
             DefinedClass klass = new DefinedClass("Spam");
@@ -64,6 +91,11 @@
         private static object DummyMethod(IList<object> arguments)
         {
             return null;
+        }
+
+        private static object SelfMethod(IList<object> arguments)
+        {
+            return arguments[0];
         }
     }
 }
