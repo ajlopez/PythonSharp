@@ -46,6 +46,7 @@
     <Compile Include="Commands\DefCommandTests.cs" />
     <Compile Include="Commands\IfCommandTests.cs" />
     <Compile Include="Commands\ReturnCommandTests.cs" />
+    <Compile Include="Commands\SetAttributeCommandTests.cs" />
     <Compile Include="Commands\SetCommandTests.cs" />
     <Compile Include="Commands\WhileCommandTests.cs" />
     <Compile Include="EvaluateTests.cs" />

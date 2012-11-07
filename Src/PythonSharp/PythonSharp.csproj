@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Commands\ClassCommand.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\SetAttributeCommand.cs" />
     <Compile Include="Commands\PassCommand.cs" />
     <Compile Include="Commands\DefCommand.cs" />
     <Compile Include="Commands\ExpressionCommand.cs" />
