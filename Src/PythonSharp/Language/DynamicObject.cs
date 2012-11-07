@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class DynamicObject
+    public class DynamicObject : IValues
     {
         private DefinedClass klass;
         private IDictionary<string, object> values = new Dictionary<string, object>();

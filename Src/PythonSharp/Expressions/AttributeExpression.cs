@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Exceptions;
+    using PythonSharp.Language;
 
     public class AttributeExpression : IExpression
     {
@@ -23,17 +24,25 @@
 
         public object Evaluate(BindingEnvironment environment)
         {
-            // TODO it's presume the expression is a binding environmnet
-            BindingEnvironment moduleenv = (BindingEnvironment)this.expression.Evaluate(environment);
-            object value = moduleenv.GetValue(this.name);
+            IValues values = (IValues)this.expression.Evaluate(environment);
+            object value = values.GetValue(this.name);
 
             if (value != null)
                 return value;
 
-            if (environment.HasValue(this.name))
+            if (values.HasValue(this.name))
                 return value;
 
-            throw new AttributeError(string.Format("'module' object has no attribute '{0}'", this.name));
+            string typename;
+
+            if (values is BindingEnvironment)
+                typename = "module";
+            else if (values is DynamicObject)
+                typename = ((DynamicObject)values).Class.Name;
+            else
+                typename = values.GetType().Name;
+
+            throw new AttributeError(string.Format("'{1}' object has no attribute '{0}'", this.name, typename));
         }
     }
 }

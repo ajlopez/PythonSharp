@@ -86,6 +86,7 @@
     <Compile Include="Language\IType.cs" />
     <Compile Include="Language\IMethod.cs" />
     <Compile Include="Language\IFunction.cs" />
+    <Compile Include="Language\IValues.cs" />
     <Compile Include="Language\NativeMethod.cs" />
     <Compile Include="Language\Parameter.cs" />
     <Compile Include="Language\StringType.cs" />

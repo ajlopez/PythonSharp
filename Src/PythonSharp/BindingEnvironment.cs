@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
-    public class BindingEnvironment
+    public class BindingEnvironment : IValues
     {
         private BindingEnvironment parent;
         private Machine machine;
