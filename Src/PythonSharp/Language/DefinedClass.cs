@@ -7,6 +7,7 @@
 
     public class DefinedClass : IType, IFunction, IValues
     {
+        private const string constructorName = "__init__";
         private string name;
         private IDictionary<string, IFunction> methods = new Dictionary<string, IFunction>();
         private IDictionary<string, object> values = new Dictionary<string, object>();
@@ -38,7 +39,21 @@
 
         public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            return new DynamicObject(this);
+            var dynobj = new DynamicObject(this);
+
+            if (this.HasMethod(constructorName))
+            {
+                IFunction constructor = this.GetMethod(constructorName);
+                IList<object> args = new List<object>() { dynobj };
+
+                if (arguments != null && arguments.Count > 0)
+                    foreach (var arg in arguments)
+                        args.Add(arg);
+
+                constructor.Apply(environment, args, namedArguments);
+            }
+
+            return dynobj;
         }
 
         public object GetValue(string name)

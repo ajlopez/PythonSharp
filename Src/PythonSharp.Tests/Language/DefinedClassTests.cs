@@ -6,6 +6,8 @@
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Language;
+    using PythonSharp.Commands;
+    using PythonSharp.Expressions;
 
     [TestClass]
     public class DefinedClassTests
@@ -120,7 +122,27 @@
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(DynamicObject));
-            Assert.AreEqual(((DynamicObject)result).Class, klass);
+            Assert.AreEqual(klass, ((DynamicObject)result).Class);
+        }
+
+        [TestMethod]
+        public void CreateInstanceWithConstructor()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            ICommand body = new SetAttributeCommand(new NameExpression("self"), "name", new NameExpression("name"));
+            DefinedFunction constructor = new DefinedFunction("__init__", new Parameter[] { new Parameter("self", null, false), new Parameter("name", null, false) }, body);
+            klass.SetMethod(constructor.Name, constructor);
+            var result = klass.Apply(null, new object[] { "Adam" }, null);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+
+            var dynobj = (DynamicObject)result;
+            Assert.AreEqual(klass, dynobj.Class);
+            Assert.IsTrue(dynobj.HasValue("name"));
+            var name = dynobj.GetValue("name");
+            Assert.IsNotNull(name);
+            Assert.AreEqual("Adam", name);
         }
 
         private object DummyMethod(IList<object> arguments)
