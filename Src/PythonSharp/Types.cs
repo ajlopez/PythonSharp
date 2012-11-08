@@ -23,6 +23,11 @@
 
         public static IType GetType(object value)
         {
+            DynamicObject dynobj = value as DynamicObject;
+
+            if (dynobj != null)
+                return dynobj.Class;
+
             return stringType;
         }
     }
