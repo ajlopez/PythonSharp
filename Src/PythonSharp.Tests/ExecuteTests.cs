@@ -99,6 +99,13 @@
             Assert.AreEqual(4.5, dynobj.GetValue("i"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples/atoms.py")]
+        public void ExecuteAtomsFile()
+        {
+            Assert.IsTrue(this.ExecuteFileAndPrint("atoms.py").StartsWith("The mass of the second H atom is "));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.Execute(text);
