@@ -84,6 +84,21 @@
             Assert.IsNotNull(type.GetMethod("sub"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples/complex.py")]
+        public void ExecuteComplexFile()
+        {
+            this.ExecuteFile("complex.py");
+            var result = this.machine.Environment.GetValue("x");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+
+            var dynobj = (DynamicObject)result;
+
+            Assert.AreEqual(3.0, dynobj.GetValue("r"));
+            Assert.AreEqual(4.5, dynobj.GetValue("i"));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.Execute(text);

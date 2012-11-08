@@ -91,7 +91,7 @@
                 if (char.IsDigit(ch))
                     return this.NextInteger(ch);
 
-                if (char.IsLetter(ch))
+                if (char.IsLetter(ch) || ch == '_')
                     return this.NextName(ch);
 
                 if (ch == StringChar)
@@ -352,7 +352,7 @@
             {
                 ch = this.NextChar();
 
-                while (char.IsLetterOrDigit(ch))
+                while (char.IsLetterOrDigit(ch) || ch == '_')
                 {
                     name += ch;
                     ch = this.NextChar();

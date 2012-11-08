@@ -129,6 +129,24 @@
         }
 
         [TestMethod]
+        public void ParseNameWithUnderscores()
+        {
+            Lexer lexer = new Lexer("__init__");
+
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Name, token.TokenType);
+            Assert.AreEqual("__init__", token.Value);
+
+            token = lexer.NextToken();
+
+            Assert.IsNull(token);
+        }
+
+        [TestMethod]
         public void ParseNameWithSpaces()
         {
             Lexer lexer = new Lexer(" name ");
