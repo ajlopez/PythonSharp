@@ -56,7 +56,6 @@
     <Compile Include="Expressions\CallExpressionTests.cs" />
     <Compile Include="Expressions\ConstantExpressionTest.cs" />
     <Compile Include="Expressions\AttributeExpressionTests.cs" />
-    <Compile Include="Expressions\MethodCallExpressionTests.cs" />
     <Compile Include="Expressions\IndexedExpressionTests.cs" />
     <Compile Include="Expressions\ListExpressionTest.cs" />
     <Compile Include="Expressions\NamedArgumentExpressionTests.cs" />

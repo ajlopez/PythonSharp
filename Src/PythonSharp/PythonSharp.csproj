@@ -76,7 +76,6 @@
     <Compile Include="Exceptions\TypeError.cs" />
     <Compile Include="Expressions\CallExpression.cs" />
     <Compile Include="Expressions\AttributeExpression.cs" />
-    <Compile Include="Expressions\MethodCallExpression.cs" />
     <Compile Include="Expressions\NamedArgumentExpression.cs" />
     <Compile Include="Expressions\ParameterExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />

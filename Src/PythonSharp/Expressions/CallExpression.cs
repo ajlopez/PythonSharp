@@ -66,23 +66,31 @@
                 }
             }
 
+            IFunction function = null;
+
             if (this.isobject)
             {
                 var attrexpr = (AttributeExpression)this.targetExpression;
                 var obj = attrexpr.Expression.Evaluate(environment);
 
-                // TODO when is not DynamicObject the target expression is evaluated twice
                 if (obj is DynamicObject)
                 {
                     var dynobj = (DynamicObject)obj;
                     return dynobj.InvokeMethod(attrexpr.Name, environment, arguments, namedArguments);
                 }
 
-                // TODO review, obj as self ONLY if the targetExpression is not a IType/DefinedClass
-                arguments.Insert(0, obj);
+                if (obj is IType)
+                    function = ((IType)obj).GetMethod(attrexpr.Name);
+                else
+                {
+                    IType type = Types.GetType(obj);
+                    function = type.GetMethod(attrexpr.Name);
+                    arguments.Insert(0, obj);
+                }
             }
+            else
+                function = (IFunction)this.targetExpression.Evaluate(environment);
 
-            IFunction function = (IFunction)this.targetExpression.Evaluate(environment);
             return function.Apply(environment, arguments, namedArguments);
         }
     }
