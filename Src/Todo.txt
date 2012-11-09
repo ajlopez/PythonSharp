@@ -9,6 +9,13 @@
 Refactor if/else parse implementation
 elif in parser
 
++ doc string in module
++ doc string in def
+doc string in class
+
+single inheritance in class
+multiple inheritance in class
+
 + named parameters in parser
 raise exception if named parameter precedes positional parameter
 named parameters in invocation
