@@ -68,6 +68,7 @@
 
             IFunction function = null;
 
+            // TODO to skip AttributeExpression, or have a separated MethodCallExpression 
             if (this.isobject)
             {
                 var attrexpr = (AttributeExpression)this.targetExpression;
