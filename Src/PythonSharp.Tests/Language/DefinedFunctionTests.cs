@@ -248,5 +248,19 @@
                 Assert.AreEqual("foo() got multiple values for keyword argument 'a'", ex.Message);
             }
         }
+
+        [TestMethod]
+        public void ValuesInFunction()
+        {
+            ICommand body = new PassCommand();
+
+            DefinedFunction func = new DefinedFunction("foo", null, body);
+
+            func.SetValue("__doc__", "foo function");
+
+            Assert.IsFalse(func.HasValue("bar"));
+            Assert.IsTrue(func.HasValue("__doc__"));
+            Assert.AreEqual("foo function", func.GetValue("__doc__"));
+        }
     }
 }

@@ -54,6 +54,11 @@
         public void ExecuteFactorialFile()
         {
             Assert.AreEqual("1\r\n2\r\n6\r\n24\r\n", this.ExecuteFileAndPrint("factorial.py"));
+            var result = this.machine.Environment.GetValue("factorial");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedFunction));
+            var function = (DefinedFunction)result;
+            Assert.AreEqual("factorial function", function.GetValue("__doc__"));
         }
 
         [TestMethod]

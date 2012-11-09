@@ -7,18 +7,21 @@
     using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class DefCommand : ICommand
     {
         private string name;
         private IList<ParameterExpression> parameterExpressions;
         private ICommand body;
+        private string doc;
 
         public DefCommand(string name, IList<ParameterExpression> parameterExpressions, ICommand body)
         {
             this.name = name;
             this.parameterExpressions = parameterExpressions;
             this.body = body;
+            this.doc = CommandUtilities.GetDocString(this.body);
 
             if (this.parameterExpressions != null)
             {
@@ -49,7 +52,12 @@
                     parameters.Add((Parameter)parexpr.Evaluate(environment));
             }
 
-            environment.SetValue(this.name, new DefinedFunction(this.name, parameters, this.body));
+            DefinedFunction function = new DefinedFunction(this.name, parameters, this.body);
+
+            if (this.doc != null)
+                function.SetValue("__doc__", this.doc);
+
+            environment.SetValue(this.name, function);
         }
     }
 }

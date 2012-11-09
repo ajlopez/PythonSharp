@@ -7,7 +7,7 @@
     using PythonSharp.Commands;
     using PythonSharp.Exceptions;
 
-    public class DefinedFunction : IFunction
+    public class DefinedFunction : IFunction, IValues
     {
         private string name;
         private IList<Parameter> parameters;
@@ -17,6 +17,8 @@
         private bool hasdefault;
         private bool haslist;
         private ICommand body;
+        // TODO use something lighter:
+        private BindingEnvironment values = new BindingEnvironment();
 
         public DefinedFunction(string name, IList<Parameter> parameters, ICommand body)
         {
@@ -105,6 +107,21 @@
         private static IList<object> GetSublist(IList<object> list, int from)
         {
             return list.Skip(from).ToList();
+        }
+
+        public object GetValue(string name)
+        {
+            return this.values.GetValue(name);
+        }
+
+        public void SetValue(string name, object value)
+        {
+            this.values.SetValue(name, value);
+        }
+
+        public bool HasValue(string name)
+        {
+            return this.values.HasValue(name);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿def factorial(n):
+    "factorial function"
     result = 1
     while n>1:
         result = result * n
