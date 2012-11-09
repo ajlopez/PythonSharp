@@ -47,6 +47,11 @@
 
             Assert.IsNotNull(var);
             Assert.AreEqual(1, var);
+
+            object doc = setvarenv.GetValue("__doc__");
+
+            Assert.IsNotNull(doc);
+            Assert.AreEqual("setvar module", doc);
         }
 
         [TestMethod]

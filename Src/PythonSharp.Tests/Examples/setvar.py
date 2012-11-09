@@ -1,1 +1,2 @@
-﻿a = 1
+﻿"setvar module"
+a = 1

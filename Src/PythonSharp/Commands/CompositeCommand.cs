@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Expressions;
 
     public class CompositeCommand : ICommand
     {
@@ -34,6 +35,33 @@
                 if (environment.HasReturnValue())
                     break;
             }
+        }
+
+        public string GetDocString()
+        {
+            if (this.commands == null || this.commands.Count == 0)
+                return null;
+
+            var first = this.commands[0];
+
+            if (!(first is ExpressionCommand))
+                return null;
+
+            var exprcmd = (ExpressionCommand)first;
+
+            if (!(exprcmd.Expression is ConstantExpression))
+                return null;
+
+            var consexpr = (ConstantExpression)exprcmd.Expression;
+
+            if (consexpr.Value == null || !(consexpr.Value is string))
+                return null;
+
+            var str = (string)consexpr.Value;
+
+            this.commands.RemoveAt(0);
+
+            return str;
         }
     }
 }

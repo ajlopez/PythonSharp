@@ -24,12 +24,16 @@
         {
             Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
             ICommand command = parser.CompileCommandList();
+            string doc = CommandUtilities.GetDocString(command);
 
             BindingEnvironment modenv = new BindingEnvironment(environment.Machine);
 
             command.Execute(modenv);
 
             environment.SetValue(this.modname, modenv);
+
+            if (doc != null)
+                modenv.SetValue("__doc__", doc);
         }
     }
 }
