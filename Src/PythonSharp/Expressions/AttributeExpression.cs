@@ -24,7 +24,15 @@
 
         public object Evaluate(BindingEnvironment environment)
         {
-            IValues values = (IValues)this.expression.Evaluate(environment);
+            var result = this.expression.Evaluate(environment);
+            IValues values = result as IValues;
+
+            if (values == null)
+            {
+                IType type = Types.GetType(result);
+                return type.GetMethod(this.name);
+            }
+
             object value = values.GetValue(this.name);
 
             if (value != null)

@@ -1,6 +1,7 @@
 ﻿namespace PythonSharp.Tests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -104,6 +105,13 @@
         public void ExecuteAtomsFile()
         {
             Assert.IsTrue(this.ExecuteFileAndPrint("atoms.py").StartsWith("The mass of the second H atom is "));
+            var atom1 = this.machine.Environment.GetValue("oAtom");
+            Assert.IsNotNull(atom1);
+            Assert.IsInstanceOfType(atom1, typeof(DynamicObject));
+            var dynatom1 = (DynamicObject)atom1;
+            Assert.AreEqual("O", dynatom1.GetValue("symbol"));
+            Assert.AreEqual(15.9994, dynatom1.GetValue("mass"));
+            Assert.IsInstanceOfType(dynatom1.GetValue("position"), typeof(ArrayList));
         }
 
         private string ExecuteAndPrint(string text)

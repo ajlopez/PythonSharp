@@ -1014,12 +1014,12 @@
             IExpression expression = parser.CompileExpression();
 
             Assert.IsNotNull(expression);
-            Assert.IsInstanceOfType(expression, typeof(MethodCallExpression));
+            Assert.IsInstanceOfType(expression, typeof(CallExpression));
 
-            MethodCallExpression mcexpression = (MethodCallExpression)expression;
+            CallExpression mcexpression = (CallExpression)expression;
             Assert.IsNotNull(mcexpression.TargetExpression);
-            Assert.IsInstanceOfType(mcexpression.TargetExpression, typeof(NameExpression));
-            Assert.AreEqual("find", mcexpression.MethodName);
+            Assert.IsInstanceOfType(mcexpression.TargetExpression, typeof(AttributeExpression));
+            Assert.AreEqual("find", ((AttributeExpression)mcexpression.TargetExpression).Name);
             Assert.IsNotNull(mcexpression.ArgumentExpressions);
             Assert.AreEqual(1, mcexpression.ArgumentExpressions.Count);
             Assert.IsInstanceOfType(mcexpression.ArgumentExpressions[0], typeof(ConstantExpression));

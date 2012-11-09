@@ -735,12 +735,6 @@
                 IList<IExpression> expressions = this.CompileArgumentExpressionList();
                 this.CompileToken(TokenType.Separator, ")");
 
-                if (term is AttributeExpression) 
-                {
-                    AttributeExpression attrexpr = (AttributeExpression)term;
-                    return new MethodCallExpression(attrexpr.Expression, attrexpr.Name, expressions);
-                }
-
                 return new CallExpression(term, expressions);
             }
 

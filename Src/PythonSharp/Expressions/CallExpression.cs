@@ -77,6 +77,9 @@
                     var dynobj = (DynamicObject)obj;
                     return dynobj.InvokeMethod(attrexpr.Name, environment, arguments, namedArguments);
                 }
+
+                // TODO review, obj as self ONLY if the targetExpression is not a IType/DefinedClass
+                arguments.Insert(0, obj);
             }
 
             IFunction function = (IFunction)this.targetExpression.Evaluate(environment);

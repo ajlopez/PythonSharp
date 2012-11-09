@@ -6,6 +6,7 @@
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Language;
+    using PythonSharp.Exceptions;
 
     [TestClass]
     public class DynamicObjectTests
@@ -75,6 +76,38 @@
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void RedefineMethodAsObjectValue()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            IFunction function = new NativeMethod(GetValueMethod);
+            klass.SetMethod("foo", function);
+            DynamicObject dynobj = new DynamicObject(klass);
+            dynobj.SetValue("foo", 1);
+            Assert.AreEqual(1, dynobj.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void RaiseWhenThereIsAValueInsteadOfAMethod()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            IFunction function = new NativeMethod(GetValueMethod);
+            klass.SetMethod("foo", function);
+            DynamicObject dynobj = new DynamicObject(klass);
+            dynobj.SetValue("foo", 1);
+
+            try
+            {
+                dynobj.InvokeMethod("foo", null, new object[] { "one" }, null);
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
+                Assert.AreEqual("'int' object is not callable", ex.Message);
+            }
         }
 
         [TestMethod]

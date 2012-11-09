@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Exceptions;
 
     public class DynamicObject : IValues
     {
@@ -40,7 +41,12 @@
 
         public object InvokeMethod(string name, BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            IFunction method = (IFunction) this.GetValue(name);
+            var value = this.GetValue(name);
+            IFunction method = value as IFunction;
+
+            if (method == null)
+                throw new TypeError(string.Format("'{0}' object is not callable", Types.GetTypeName(value)));
+
             IList<object> args = new List<object>() { this };
 
             if (arguments != null && arguments.Count > 0)
