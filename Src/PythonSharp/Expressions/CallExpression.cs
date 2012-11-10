@@ -7,6 +7,7 @@
     using PythonSharp.Exceptions;
     using PythonSharp.Language;
     using PythonSharp.Utilities;
+    using PythonSharp.Utilities.TypeUtilities;
 
     public class CallExpression : IExpression
     {
@@ -97,7 +98,16 @@
                 }
             }
             else
-                function = (IFunction)this.targetExpression.Evaluate(context);
+            {
+                var value = this.targetExpression.Evaluate(context);
+                function = value as IFunction;
+
+                if (function == null)
+                {
+                    Type type = (Type)value;
+                    return Activator.CreateInstance(type, arguments == null ? null : arguments.ToArray());
+                }
+            }
 
             return function.Apply(context, arguments, namedArguments);
         }

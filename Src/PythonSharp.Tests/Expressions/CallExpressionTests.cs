@@ -121,5 +121,22 @@
             Assert.IsNotNull(result);
             Assert.AreEqual(calculator.Add(1, 2), result);
         }
+
+        [TestMethod]
+        public void CallNativeType()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("FileInfo", typeof(System.IO.FileInfo));
+            CallExpression expression = new CallExpression(new NameExpression("FileInfo"), new IExpression[] { new ConstantExpression("unknown.txt") });
+
+            var result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(System.IO.FileInfo));
+
+            var fileinfo = (System.IO.FileInfo)result;
+
+            Assert.AreEqual("unknown.txt", fileinfo.Name);
+        }
     }
 }
