@@ -62,6 +62,19 @@
             throw new InvalidOperationException(string.Format("Unknown type '{0}'", name));
         }
 
+        public static ICollection<Type> GetTypesByNamespace(string @namespace)
+        {
+            IList<Type> types = new List<Type>();
+
+            LoadReferencedAssemblies();
+
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+                foreach (var type in assembly.GetTypes().Where(tp => tp.Namespace == @namespace))
+                    types.Add(type);
+
+            return types;
+        }
+
         public static bool IsNamespace(string name)
         {
             return GetNamespaces().Contains(name);

@@ -69,6 +69,22 @@
         }
 
         [TestMethod]
+        public void GetTypesByNamespace()
+        {
+            var types = TypeUtilities.GetTypesByNamespace("System.IO");
+
+            Assert.IsNotNull(types);
+
+            Assert.IsTrue(types.Contains(typeof(System.IO.File)));
+            Assert.IsTrue(types.Contains(typeof(System.IO.Directory)));
+            Assert.IsTrue(types.Contains(typeof(System.IO.FileInfo)));
+            Assert.IsTrue(types.Contains(typeof(System.IO.DirectoryInfo)));
+
+            Assert.IsFalse(types.Contains(typeof(System.String)));
+            Assert.IsFalse(types.Contains(typeof(System.Data.DataSet)));
+        }
+
+        [TestMethod]
         public void GetValueFromType()
         {
             Assert.IsFalse((bool)TypeUtilities.InvokeTypeMember(typeof(System.IO.File), "Exists", new object[] { "unknown.txt" }));
