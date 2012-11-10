@@ -10,6 +10,7 @@
     using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using PythonSharp.Tests.Classes;
 
     [TestClass]
     public class AttributeExpressionTests
@@ -31,6 +32,21 @@
             Assert.AreEqual("bar", result);
             Assert.IsNotNull(expression.Expression);
             Assert.AreEqual("foo", expression.Name);
+        }
+
+        [TestMethod]
+        public void EvaluateAttributeExpressionOnNativeObjectProperty()
+        {
+            AttributeExpression expression = new AttributeExpression(new NameExpression("adam"), "FirstName");
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("adam", new Person() { FirstName = "Adam" });
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string));
+            Assert.AreEqual("Adam", result);
         }
 
         [TestMethod]

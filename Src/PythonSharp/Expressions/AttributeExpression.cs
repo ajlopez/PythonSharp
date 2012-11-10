@@ -6,6 +6,7 @@
     using System.Text;
     using PythonSharp.Exceptions;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class AttributeExpression : IExpression
     {
@@ -30,7 +31,11 @@
             if (values == null)
             {
                 IType type = Types.GetType(result);
-                return type.GetMethod(this.name);
+
+                if (type != null)
+                    return type.GetMethod(this.name);
+
+                return ObjectUtilities.GetValue(result, this.name);
             }
 
             object value = values.GetValue(this.name);
