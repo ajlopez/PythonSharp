@@ -9,6 +9,8 @@
     {
         public event Action<int, int> MyEvent;
 
+        public static int Value = 3;
+
         public int Add(int x, int y)
         {
             if (MyEvent != null)

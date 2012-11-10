@@ -22,6 +22,7 @@
             Assert.IsNotNull(machine.Output);
             Assert.IsNotNull(machine.Environment.GlobalContext);
             Assert.AreEqual(machine.Environment, machine.Environment.GlobalContext);
+            Assert.AreEqual(machine, machine.Environment.GetValue("__machine__"));
         }
 
         [TestMethod]

@@ -8,7 +8,6 @@
     using PythonSharp.Expressions;
     using PythonSharp.Language;
     using PythonSharp.Utilities;
-    using PythonSharp.Utilities.TypeUtilities;
 
     public class ImportFromCommand : ICommand
     {

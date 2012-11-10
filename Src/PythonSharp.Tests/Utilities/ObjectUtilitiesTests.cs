@@ -8,6 +8,7 @@
     using PythonSharp.Language;
     using PythonSharp.Tests.Classes;
     using PythonSharp.Utilities;
+    using System.Windows.Forms;
 
     [TestClass]
     public class ObjectUtilitiesTests
@@ -157,6 +158,18 @@
             ObjectUtilities.SetValue(obj, "FirstName", "Adam");
 
             Assert.AreEqual("Adam", obj.GetValue("FirstName"));
+        }
+
+        [TestMethod]
+        public void AddHandlerToForm()
+        {
+            Form form = new Form();
+            ObjectUtilities.AddHandler(form, "MouseClick", new NativeMethod(this.DummyFunction), null);
+        }
+
+        private object DummyFunction(IList<object> arguments)
+        {
+            return null;
         }
     }
 }

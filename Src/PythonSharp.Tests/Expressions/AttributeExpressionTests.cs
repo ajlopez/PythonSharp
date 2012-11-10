@@ -50,6 +50,20 @@
         }
 
         [TestMethod]
+        public void EvaluateAttributeExpressionOnClassProperty()
+        {
+            AttributeExpression expression = new AttributeExpression(new NameExpression("Calculator"), "Value");
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("Calculator", typeof(Calculator));
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result);
+        }
+
+        [TestMethod]
         public void RaiseWhenEvaluateAttributeExpression()
         {
             AttributeExpression expression = new AttributeExpression(new NameExpression("module"), "spam");

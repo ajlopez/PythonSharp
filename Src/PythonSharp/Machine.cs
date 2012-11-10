@@ -17,6 +17,7 @@
             this.environment = new BindingEnvironment();
             this.environment.SetValue("len", new LenFunction());
             this.environment.SetValue("print", new PrintFunction(this));
+            this.environment.SetValue("__machine__", this);
         }
 
         public BindingEnvironment Environment

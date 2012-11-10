@@ -7,7 +7,6 @@
     using PythonSharp.Exceptions;
     using PythonSharp.Language;
     using PythonSharp.Utilities;
-    using PythonSharp.Utilities.TypeUtilities;
 
     public class CallExpression : IExpression
     {

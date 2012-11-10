@@ -1,4 +1,4 @@
-﻿namespace PythonSharp.Utilities.TypeUtilities
+﻿namespace PythonSharp.Utilities
 {
     using System;
     using System.Collections.Generic;

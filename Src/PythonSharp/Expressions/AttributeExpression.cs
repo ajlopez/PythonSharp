@@ -35,6 +35,9 @@
                 if (type != null)
                     return type.GetMethod(this.name);
 
+                if (result is Type)
+                    return TypeUtilities.InvokeTypeMember((Type)result, this.name, null);
+
                 return ObjectUtilities.GetValue(result, this.name);
             }
 
