@@ -27,8 +27,8 @@
         public void Execute(IContext context)
         {
             BindingEnvironment env = new BindingEnvironment(context);
-            this.body.Execute(env);
-            DefinedClass klass = new DefinedClass(this.name);
+            DefinedClass klass = new DefinedClass(this.name, context);
+            this.body.Execute(klass);
             foreach (var name in env.GetNames())
             {
                 var value = env.GetValue(name);

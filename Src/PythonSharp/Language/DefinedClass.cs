@@ -5,18 +5,27 @@
     using System.Linq;
     using System.Text;
 
-    public class DefinedClass : IType, IFunction, IValues
+    public class DefinedClass : IType, IFunction, IContext
     {
         private const string constructorName = "__init__";
         private string name;
+        private IContext global;
         private IDictionary<string, object> values = new Dictionary<string, object>();
 
         public DefinedClass(string name)
+            : this(name, null)
+        {
+        }
+
+        public DefinedClass(string name, IContext global)
         {
             this.name = name;
+            this.global = global;
         }
 
         public string Name { get { return this.name; } }
+
+        public IContext GlobalContext { get { return this.global; } }
 
         public void SetMethod(string name, IFunction method)
         {
