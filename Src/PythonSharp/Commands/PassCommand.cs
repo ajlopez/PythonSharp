@@ -5,10 +5,11 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class PassCommand : ICommand
     {
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
         }
     }

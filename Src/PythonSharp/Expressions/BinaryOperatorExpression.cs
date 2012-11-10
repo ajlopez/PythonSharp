@@ -15,13 +15,13 @@
             this.@operator = oper;
         }
 
-        public override object Evaluate(BindingEnvironment environment)
+        public override object Evaluate(IContext context)
         {
             object leftvalue;
             object rightvalue;
 
-            leftvalue = this.Left.Evaluate(environment);
-            rightvalue = this.Right.Evaluate(environment);
+            leftvalue = this.Left.Evaluate(context);
+            rightvalue = this.Right.Evaluate(context);
 
             switch (this.@operator)
             {

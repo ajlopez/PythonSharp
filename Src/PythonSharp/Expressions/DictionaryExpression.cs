@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public class DictionaryExpression : IExpression
     {
@@ -24,7 +25,7 @@
             this.valueExpressions.Add(valueExpression);
         }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
             IDictionary dictionary = new Hashtable();
 
@@ -32,8 +33,8 @@
 
             foreach (IExpression keyExpression in this.keyExpressions)
             {
-                object key = keyExpression.Evaluate(environment);
-                object value = this.valueExpressions[n].Evaluate(environment);
+                object key = keyExpression.Evaluate(context);
+                object value = this.valueExpressions[n].Evaluate(context);
                 dictionary[key] = value;
                 n++;
             }

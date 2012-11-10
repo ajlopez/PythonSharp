@@ -41,7 +41,7 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
             IList<Parameter> parameters = null;
 
@@ -49,14 +49,14 @@
             {
                 parameters = new List<Parameter>();
                 foreach (var parexpr in this.parameterExpressions)
-                    parameters.Add((Parameter)parexpr.Evaluate(environment));
+                    parameters.Add((Parameter)parexpr.Evaluate(context));
             }
 
             DefinedFunction function = new DefinedFunction(this.name, parameters, this.body);
 
             function.SetValue("__doc__", this.doc);
 
-            environment.SetValue(this.name, function);
+            context.SetValue(this.name, function);
         }
     }
 }

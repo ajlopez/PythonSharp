@@ -22,9 +22,9 @@
 
         public string Name { get { return this.name; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
-            var result = this.expression.Evaluate(environment);
+            var result = this.expression.Evaluate(context);
             IValues values = result as IValues;
 
             if (values == null)

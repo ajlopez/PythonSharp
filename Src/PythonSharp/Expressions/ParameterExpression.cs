@@ -25,12 +25,12 @@
 
         public bool IsList { get { return this.isList; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
             object defaultValue = null;
 
             if (this.defaultExpression != null)
-                defaultValue = this.defaultExpression.Evaluate(environment);
+                defaultValue = this.defaultExpression.Evaluate(context);
 
             return new Parameter(this.name, defaultValue, this.isList);
         }

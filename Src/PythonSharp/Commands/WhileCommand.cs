@@ -5,6 +5,7 @@
     using System.Text;
 
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class WhileCommand : ICommand
     {
@@ -21,10 +22,17 @@
 
         public ICommand Command { get { return this.command; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
-            while (!environment.HasReturnValue() && !Predicates.IsFalse(this.condition.Evaluate(environment)))
-                this.command.Execute(environment);
+            BindingEnvironment environment = context as BindingEnvironment;
+
+            while (!Predicates.IsFalse(this.condition.Evaluate(context)))
+            {
+                if (environment != null && environment.HasReturnValue())
+                    return;
+
+                this.command.Execute(context);
+            }
         }
     }
 }

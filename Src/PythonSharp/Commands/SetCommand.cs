@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class SetCommand : ICommand
     {
@@ -27,9 +28,9 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
-            environment.SetValue(this.target, this.expression.Evaluate(environment));
+            context.SetValue(this.target, this.expression.Evaluate(context));
         }
     }
 }

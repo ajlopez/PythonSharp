@@ -43,7 +43,7 @@
 
         public IList<IExpression> ArgumentExpressions { get { return this.argumentExpressions; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
             IList<object> arguments = null;
             IDictionary<string, object> namedArguments = null;
@@ -57,12 +57,12 @@
 
                 foreach (var argexpr in this.argumentExpressions)
                 {
-                    object value = argexpr.Evaluate(environment);
+                    object value = argexpr.Evaluate(context);
 
                     if (this.hasnames && argexpr is NamedArgumentExpression)
                         namedArguments[((NamedArgumentExpression)argexpr).Name] = value;
                     else
-                        arguments.Add(argexpr.Evaluate(environment));
+                        arguments.Add(argexpr.Evaluate(context));
                 }
             }
 
@@ -72,12 +72,12 @@
             if (this.isobject)
             {
                 var attrexpr = (AttributeExpression)this.targetExpression;
-                var obj = attrexpr.Expression.Evaluate(environment);
+                var obj = attrexpr.Expression.Evaluate(context);
 
                 if (obj is DynamicObject)
                 {
                     var dynobj = (DynamicObject)obj;
-                    return dynobj.InvokeMethod(attrexpr.Name, environment, arguments, namedArguments);
+                    return dynobj.InvokeMethod(attrexpr.Name, context, arguments, namedArguments);
                 }
 
                 if (obj is IType)
@@ -90,9 +90,9 @@
                 }
             }
             else
-                function = (IFunction)this.targetExpression.Evaluate(environment);
+                function = (IFunction)this.targetExpression.Evaluate(context);
 
-            return function.Apply(environment, arguments, namedArguments);
+            return function.Apply(context, arguments, namedArguments);
         }
     }
 }

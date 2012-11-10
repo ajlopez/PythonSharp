@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class CompositeCommand : ICommand
     {
@@ -27,12 +28,14 @@
             this.commands.Add(command);
         }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
+            BindingEnvironment environment = context as BindingEnvironment;
+
             foreach (ICommand command in this.commands)
             {
-                command.Execute(environment);
-                if (environment.HasReturnValue())
+                command.Execute(context);
+                if (environment != null && environment.HasReturnValue())
                     break;
             }
         }

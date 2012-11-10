@@ -21,10 +21,10 @@
 
         public SliceExpression SliceExpression { get { return this.sliceExpression; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
-            object target = this.targetExpression.Evaluate(environment);
-            Slice slice = (Slice)this.sliceExpression.Evaluate(environment);
+            object target = this.targetExpression.Evaluate(context);
+            Slice slice = (Slice)this.sliceExpression.Evaluate(context);
             int begin = slice.Begin ?? 0;
             int end;
 

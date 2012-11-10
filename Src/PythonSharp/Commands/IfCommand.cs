@@ -5,6 +5,7 @@
     using System.Text;
 
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class IfCommand : ICommand
     {
@@ -30,15 +31,15 @@
 
         public ICommand ElseCommand { get { return this.elsecmd; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
-            bool isfalse = Predicates.IsFalse(this.condition.Evaluate(environment));
+            bool isfalse = Predicates.IsFalse(this.condition.Evaluate(context));
 
             if (!isfalse)
-                this.thencmd.Execute(environment);
+                this.thencmd.Execute(context);
             else
                 if (this.elsecmd != null)
-                    this.elsecmd.Execute(environment);
+                    this.elsecmd.Execute(context);
         }
     }
 }

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public abstract class BinaryExpression : IExpression
     {
@@ -25,6 +26,6 @@
 
         public IExpression Right { get { return this.right; } }
 
-        public abstract object Evaluate(BindingEnvironment environment);
+        public abstract object Evaluate(IContext context);
     }
 }

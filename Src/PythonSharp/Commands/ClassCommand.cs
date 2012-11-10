@@ -24,9 +24,9 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
-            BindingEnvironment env = new BindingEnvironment(environment);
+            BindingEnvironment env = new BindingEnvironment(context);
             this.body.Execute(env);
             DefinedClass klass = new DefinedClass(this.name);
             foreach (var name in env.GetNames())
@@ -40,7 +40,7 @@
 
             klass.SetValue("__doc__", doc);
 
-            environment.SetValue(this.name, klass);
+            context.SetValue(this.name, klass);
         }
     }
 }

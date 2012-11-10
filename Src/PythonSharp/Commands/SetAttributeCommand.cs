@@ -26,10 +26,10 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
-            IValues values = (IValues) this.targetExpression.Evaluate(environment);
-            values.SetValue(this.name, this.expression.Evaluate(environment));
+            IValues values = (IValues) this.targetExpression.Evaluate(context);
+            values.SetValue(this.name, this.expression.Evaluate(context));
         }
     }
 }

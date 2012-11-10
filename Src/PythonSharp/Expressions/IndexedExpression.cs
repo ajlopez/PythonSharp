@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public class IndexedExpression : IExpression
     {
@@ -20,10 +21,10 @@
 
         public IExpression IndexExpression { get { return this.sliceExpression; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
-            object target = this.targetExpression.Evaluate(environment);
-            object index = this.sliceExpression.Evaluate(environment);
+            object target = this.targetExpression.Evaluate(context);
+            object index = this.sliceExpression.Evaluate(context);
 
             if (target is string)
                 return ((string)target)[(int)index].ToString();

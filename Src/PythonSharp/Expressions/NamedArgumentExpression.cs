@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public class NamedArgumentExpression : IExpression
     {
@@ -20,9 +21,9 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
-            return this.expression.Evaluate(environment);
+            return this.expression.Evaluate(context);
         }
     }
 }

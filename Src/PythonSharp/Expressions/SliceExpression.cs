@@ -21,9 +21,9 @@
 
         public IExpression EndExpression { get { return this.endExpression; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
-            return new Slice(this.beginExpression == null ? null : (int?)this.beginExpression.Evaluate(environment), this.endExpression == null ? null : (int?)this.endExpression.Evaluate(environment));
+            return new Slice(this.beginExpression == null ? null : (int?)this.beginExpression.Evaluate(context), this.endExpression == null ? null : (int?)this.endExpression.Evaluate(context));
         }
     }
 }

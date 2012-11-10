@@ -8,6 +8,7 @@
     using PythonSharp.Compiler;
     using PythonSharp.Expressions;
     using PythonSharp.Utilities;
+    using PythonSharp.Language;
 
     public class ImportFromCommand : ICommand
     {
@@ -24,17 +25,17 @@
 
         public ICollection<string> Names { get { return this.names; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IContext context)
         {
             Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
             ICommand command = parser.CompileCommandList();
 
-            BindingEnvironment modenv = new BindingEnvironment(environment.GlobalContext);
+            BindingEnvironment modenv = new BindingEnvironment(context.GlobalContext);
 
             command.Execute(modenv);
 
             foreach (string name in this.names)
-                environment.SetValue(name, modenv.GetValue(name));
+                context.SetValue(name, modenv.GetValue(name));
         }
     }
 }

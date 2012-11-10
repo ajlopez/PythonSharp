@@ -42,7 +42,7 @@
             return false;
         }
 
-        public object InvokeMethod(string name, BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
+        public object InvokeMethod(string name, IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             var value = this.GetValue(name);
             IFunction method = value as IFunction;
@@ -56,7 +56,7 @@
                 foreach (var arg in arguments)
                     args.Add(arg);
 
-            return method.Apply(environment, args, namedArguments);
+            return method.Apply(context, args, namedArguments);
         }
 
         public ICollection<string> GetNames()

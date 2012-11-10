@@ -1,7 +1,9 @@
 ﻿namespace PythonSharp.Commands
 {
+    using PythonSharp.Language;
+
     public interface ICommand
     {
-        void Execute(BindingEnvironment environment);
+        void Execute(IContext context);
     }
 }

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public class ConstantExpression : IExpression
     {
@@ -15,7 +16,7 @@
 
         public object Value { get { return this.value; } }
 
-        public object Evaluate(BindingEnvironment env)
+        public object Evaluate(IContext context)
         {
             return this.value;
         }

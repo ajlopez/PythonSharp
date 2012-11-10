@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Exceptions;
+    using PythonSharp.Language;
 
     public class NameExpression : IExpression
     {
@@ -17,14 +18,14 @@
 
         public string Name { get { return this.name; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IContext context)
         {
-            object value = environment.GetValue(this.name);
+            object value = context.GetValue(this.name);
 
             if (value != null)
                 return value;
 
-            if (environment.HasValue(this.name))
+            if (context.HasValue(this.name))
                 return value;
 
             throw new NameError(string.Format("name '{0}' is not defined", this.name));
