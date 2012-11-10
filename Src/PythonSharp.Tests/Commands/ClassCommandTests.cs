@@ -26,6 +26,22 @@
             var dclass = (DefinedClass)result;
 
             Assert.AreEqual("Spam", dclass.Name);
+            Assert.IsNull(dclass.GetValue("__doc__"));
+            Assert.IsTrue(dclass.HasValue("__doc__"));
+        }
+        [TestMethod]
+        public void CreateSimpleClassWithEmptyDocString()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            ClassCommand command = new ClassCommand("Spam", new PassCommand());
+
+            command.Execute(environment);
+
+            var result = environment.GetValue("Spam");
+            var dclass = (DefinedClass)result;
+
+            Assert.IsNull(dclass.GetValue("__doc__"));
+            Assert.IsTrue(dclass.HasValue("__doc__"));
         }
 
         [TestMethod]

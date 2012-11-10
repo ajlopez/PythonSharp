@@ -38,8 +38,7 @@
                     klass.SetMethod(deffunc.Name, deffunc);
             }
 
-            if (this.doc != null)
-                klass.SetValue("__doc__", doc);
+            klass.SetValue("__doc__", doc);
 
             environment.SetValue(this.name, klass);
         }

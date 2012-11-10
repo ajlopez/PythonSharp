@@ -32,8 +32,7 @@
 
             environment.SetValue(this.modname, modenv);
 
-            if (doc != null)
-                modenv.SetValue("__doc__", doc);
+            modenv.SetValue("__doc__", doc);
         }
     }
 }

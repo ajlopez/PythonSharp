@@ -54,8 +54,7 @@
 
             DefinedFunction function = new DefinedFunction(this.name, parameters, this.body);
 
-            if (this.doc != null)
-                function.SetValue("__doc__", this.doc);
+            function.SetValue("__doc__", this.doc);
 
             environment.SetValue(this.name, function);
         }

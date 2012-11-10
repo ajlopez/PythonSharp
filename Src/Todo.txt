@@ -11,7 +11,16 @@ elif in parser
 
 + doc string in module
 + doc string in def
-doc string in class
++ doc string in class
+doc string as null when undefined
+
+TypeName for functions: function
+TypeName for lists: list
+
+Constanst: __doc__
+
+for loop
+loop variants
 
 single inheritance in class
 multiple inheritance in class

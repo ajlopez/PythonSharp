@@ -8,6 +8,7 @@
     using PythonSharp;
     using PythonSharp.Commands;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     [TestClass]
     public class CommandTest
@@ -66,6 +67,22 @@
 
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/setvars.py")]
+        public void ImportModuleWithEmptyDocString()
+        {
+            ImportCommand importcmd = new ImportCommand("setvars");
+
+            Machine machine = new Machine();
+
+            importcmd.Execute(machine.Environment);
+
+            var setvar = (IValues)machine.Environment.GetValue("setvars");
+
+            Assert.IsNull(setvar.GetValue("__doc__"));
+            Assert.IsTrue(setvar.HasValue("__doc__"));
         }
     }
 }

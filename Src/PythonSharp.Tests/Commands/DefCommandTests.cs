@@ -49,6 +49,22 @@
         }
 
         [TestMethod]
+        public void CreateFunctionsWithEmptyDocString()
+        {
+            DefCommand command = new DefCommand("foo", null, new PassCommand());
+
+            Machine machine = new Machine();
+
+            command.Execute(machine.Environment);
+
+            var func = machine.Environment.GetValue("foo");
+            var dfunc = (DefinedFunction)func;
+
+            Assert.IsNull(dfunc.GetValue("__doc__"));
+            Assert.IsTrue(dfunc.HasValue("__doc__"));
+        }
+
+        [TestMethod]
         public void RaiseWhenNonDefaultArgumentFollowsDefaultArgument()
         {
             IList<ParameterExpression> parameters = new ParameterExpression[] { new ParameterExpression("a", new ConstantExpression(1), false), new ParameterExpression("b", null, false) };
