@@ -142,6 +142,57 @@
             throw new InvalidOperationException("Invalid number of subindices");
         }
 
+        public static void AddHandler(object obj, string eventname, IFunction function, IContext context)
+        {
+            var type = obj.GetType();
+            var @event = type.GetEvent(eventname);
+            var invoke = @event.EventHandlerType.GetMethod("Invoke");
+            var parameters = invoke.GetParameters();
+            int npars = parameters.Count();
+            Type[] types = new Type[npars + 1];
+            Type wrappertype = null;
+            Type[] partypes = new Type[npars + 2];
+            Type rettype = invoke.ReturnParameter.ParameterType;
+            bool isaction = rettype.FullName == "System.Void";
+
+            if (isaction)
+                rettype = typeof(int);
+
+            switch (npars)
+            {
+                case 0:
+                    partypes[0] = rettype;
+                    partypes[1] = @event.EventHandlerType;
+                    wrappertype = typeof(FunctionWrapper<,>).MakeGenericType(partypes);
+                    break;
+                case 1:
+                    partypes[0] = parameters.ElementAt(0).ParameterType;
+                    partypes[1] = rettype;
+                    partypes[2] = @event.EventHandlerType;
+                    wrappertype = typeof(FunctionWrapper<,,>).MakeGenericType(partypes);
+                    break;
+                case 2:
+                    partypes[0] = parameters.ElementAt(0).ParameterType;
+                    partypes[1] = parameters.ElementAt(1).ParameterType;
+                    partypes[2] = rettype;
+                    partypes[3] = @event.EventHandlerType;
+                    wrappertype = typeof(FunctionWrapper<,,,>).MakeGenericType(partypes);
+                    break;
+                case 3:
+                    partypes[0] = parameters.ElementAt(0).ParameterType;
+                    partypes[1] = parameters.ElementAt(1).ParameterType;
+                    partypes[2] = parameters.ElementAt(2).ParameterType;
+                    partypes[3] = rettype;
+                    partypes[4] = @event.EventHandlerType;
+                    wrappertype = typeof(FunctionWrapper<,,,,>).MakeGenericType(partypes);
+                    break;
+            }
+
+            object wrapper = Activator.CreateInstance(wrappertype, function, context);
+
+            @event.AddEventHandler(obj, (Delegate)GetValue(wrapper, isaction ? "CreateActionDelegate" : "CreateFunctionDelegate", null));
+        }
+
         private static object GetIndexedValue(System.Array array, object[] indexes)
         {
             switch (indexes.Length)

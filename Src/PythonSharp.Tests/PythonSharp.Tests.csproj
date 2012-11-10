@@ -70,6 +70,7 @@
     <Compile Include="Language\DefinedClassTests.cs" />
     <Compile Include="Language\DefinedFunctionTests.cs" />
     <Compile Include="Language\DynamicObjectTests.cs" />
+    <Compile Include="Language\FunctionWrapperTests.cs" />
     <Compile Include="Language\ModuleTests.cs" />
     <Compile Include="Language\StringTypeTests.cs" />
     <Compile Include="NumbersTests.cs" />
