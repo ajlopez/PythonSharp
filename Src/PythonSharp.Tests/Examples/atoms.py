@@ -1,4 +1,5 @@
 ﻿class Atom:
+  "Atom class"
   def __init__(self, symbol, mass, position):
     self.symbol = symbol
     self.mass = mass

@@ -5,16 +5,19 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class ClassCommand : ICommand
     {
         private string name;
         private ICommand body;
+        private string doc;
 
         public ClassCommand(string name, ICommand body)
         {
             this.name = name;
             this.body = body;
+            this.doc = CommandUtilities.GetDocString(this.body);
         }
 
         public string Name { get { return this.name; } }
@@ -34,6 +37,9 @@
                 if (deffunc != null)
                     klass.SetMethod(deffunc.Name, deffunc);
             }
+
+            if (this.doc != null)
+                klass.SetValue("__doc__", doc);
 
             environment.SetValue(this.name, klass);
         }

@@ -110,6 +110,12 @@
         public void ExecuteAtomsFile()
         {
             Assert.IsTrue(this.ExecuteFileAndPrint("atoms.py").StartsWith("The mass of the second H atom is "));
+
+            var atom = this.machine.Environment.GetValue("Atom");
+            Assert.IsNotNull(atom);
+            Assert.IsInstanceOfType(atom, typeof(DefinedClass));
+            Assert.AreEqual("Atom class", ((DefinedClass)atom).GetValue("__doc__"));
+
             var atom1 = this.machine.Environment.GetValue("oAtom");
             Assert.IsNotNull(atom1);
             Assert.IsInstanceOfType(atom1, typeof(DynamicObject));
