@@ -7,6 +7,7 @@
     using System.Text;
     using PythonSharp.Language;
 
+    // Based on AjSharp AjLanguage.ObjectUtilities
     public class ObjectUtilities
     {
         public static void SetValue(object obj, string name, object value)

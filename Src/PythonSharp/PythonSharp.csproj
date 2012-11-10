@@ -115,6 +115,7 @@
     <Compile Include="Types.cs" />
     <Compile Include="Utilities\CommandUtilities.cs" />
     <Compile Include="Utilities\ObjectUtilities.cs" />
+    <Compile Include="Utilities\TypeUtilities.cs" />
     <Compile Include="Utilities\ValueUtilities.cs" />
     <Compile Include="Utilities\ModuleUtilities.cs" />
   </ItemGroup>
