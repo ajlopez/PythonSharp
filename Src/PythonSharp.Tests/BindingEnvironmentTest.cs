@@ -15,7 +15,8 @@
             BindingEnvironment environment = new BindingEnvironment();
 
             Assert.IsNotNull(environment);
-            Assert.IsNull(environment.Machine);
+            Assert.IsNotNull(environment.GlobalContext);
+            Assert.AreEqual(environment, environment.GlobalContext);
             Assert.IsNull(environment.Parent);
             Assert.IsFalse(environment.HasReturnValue());
             Assert.IsNull(environment.GetReturnValue());
@@ -86,23 +87,23 @@
         }
 
         [TestMethod]
-        public void GetMachine()
+        public void GetGlobalContext()
         {
             Machine machine = new Machine();
-            BindingEnvironment environment = new BindingEnvironment(machine);
+            BindingEnvironment environment = new BindingEnvironment(machine.Environment);
 
-            Assert.AreEqual(machine, environment.Machine);
+            Assert.AreEqual(machine.Environment, environment.GlobalContext);
         }
 
         [TestMethod]
-        public void GetMachineFromParent()
+        public void GetGlobalEnvironmentFromParent()
         {
             Machine machine = new Machine();
-            BindingEnvironment parent = new BindingEnvironment(machine);
+            BindingEnvironment parent = new BindingEnvironment(machine.Environment);
             parent.SetValue("one", 1);
             BindingEnvironment environment = new BindingEnvironment(parent);
 
-            Assert.AreEqual(machine, environment.Machine);
+            Assert.AreEqual(machine.Environment, environment.GlobalContext);
         }
     }
 }

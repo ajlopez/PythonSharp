@@ -8,23 +8,28 @@
 
     public class PrintFunction : IFunction
     {
-        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
-        {
-            Machine machine = environment.Machine;
+        private Machine machine;
 
+        public PrintFunction(Machine machine)
+        {
+            this.machine = machine;
+        }
+
+        public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
+        {
             if (arguments != null)
             {
                 int narg = 0;
                 foreach (var argument in arguments)
                 {
                     if (narg != 0)
-                        machine.Output.Write(' ');
-                    machine.Output.Write(argument.ToString());
+                        this.machine.Output.Write(' ');
+                    this.machine.Output.Write(argument.ToString());
                     narg++;
                 }
             }
 
-            machine.Output.WriteLine();
+            this.machine.Output.WriteLine();
 
             return null;
         }

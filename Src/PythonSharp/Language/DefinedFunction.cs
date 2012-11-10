@@ -53,9 +53,9 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public object Apply(BindingEnvironment env, IList<object> arguments, IDictionary<string, object> namedArguments)
+        public object Apply(IContext ctx, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            BindingEnvironment environment = new BindingEnvironment(env);
+            BindingEnvironment context = new BindingEnvironment(ctx);
 
             int nargs = 0;
 
@@ -67,7 +67,7 @@
 
             if (namedArguments != null)
                 foreach (var namarg in namedArguments)
-                    environment.SetValue(namarg.Key, namarg.Value);
+                    context.SetValue(namarg.Key, namarg.Value);
 
             if (this.parameters != null)
             {
@@ -79,27 +79,27 @@
                         if (namedArguments != null && namedArguments.ContainsKey(this.parameters[k].Name))
                             throw new TypeError(string.Format("{0}() got multiple values for keyword argument '{1}'", this.name, this.parameters[k].Name));
                         if (this.parameters[k].IsList)
-                            environment.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
+                            context.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
                         else
-                            environment.SetValue(this.parameters[k].Name, arguments[k]);
+                            context.SetValue(this.parameters[k].Name, arguments[k]);
                     }
                     else if (this.parameters[k].IsList)
                     {
                         if (this.parameters[k].DefaultValue == null)
-                            environment.SetValue(this.parameters[k].Name, new List<object>());
+                            context.SetValue(this.parameters[k].Name, new List<object>());
                         else
-                            environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
+                            context.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
 
                         break;
                     }
                     else if (namedArguments == null || !namedArguments.ContainsKey(this.parameters[k].Name))
-                        environment.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
+                        context.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
             }
 
-            this.body.Execute(environment);
+            this.body.Execute(context);
 
-            if (environment.HasReturnValue())
-                return environment.GetReturnValue();
+            if (context.HasReturnValue())
+                return context.GetReturnValue();
 
             return null;
         }

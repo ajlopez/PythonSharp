@@ -39,7 +39,7 @@
             return this.values.ContainsKey(name) && this.values[name] is IFunction;
         }
 
-        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
+        public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             var dynobj = new DynamicObject(this);
 
@@ -52,7 +52,7 @@
                     foreach (var arg in arguments)
                         args.Add(arg);
 
-                constructor.Apply(environment, args, namedArguments);
+                constructor.Apply(context, args, namedArguments);
             }
 
             return dynobj;

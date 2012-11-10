@@ -29,7 +29,7 @@
             Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
             ICommand command = parser.CompileCommandList();
 
-            BindingEnvironment modenv = new BindingEnvironment(environment.Machine);
+            BindingEnvironment modenv = new BindingEnvironment(environment.GlobalContext);
 
             command.Execute(modenv);
 

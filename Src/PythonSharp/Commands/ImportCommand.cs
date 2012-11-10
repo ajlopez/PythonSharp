@@ -26,7 +26,7 @@
             ICommand command = parser.CompileCommandList();
             string doc = CommandUtilities.GetDocString(command);
 
-            BindingEnvironment modenv = new BindingEnvironment(environment.Machine);
+            BindingEnvironment modenv = new BindingEnvironment(environment.GlobalContext);
 
             command.Execute(modenv);
 

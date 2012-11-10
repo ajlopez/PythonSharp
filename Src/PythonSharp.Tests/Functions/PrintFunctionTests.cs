@@ -14,8 +14,8 @@
         [TestMethod]
         public void EvaluatePrintFunction()
         {
-            var print = new PrintFunction();
             Machine machine = new Machine();
+            var print = new PrintFunction(machine);
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
@@ -28,8 +28,8 @@
         [TestMethod]
         public void EvaluatePrintFunctionWithTwoValues()
         {
-            var print = new PrintFunction();
             Machine machine = new Machine();
+            var print = new PrintFunction(machine);
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 

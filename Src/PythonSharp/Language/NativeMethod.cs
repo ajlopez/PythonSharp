@@ -16,7 +16,7 @@
             this.method = method;
         }
 
-        public object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
+        public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             return this.method(arguments);
         }

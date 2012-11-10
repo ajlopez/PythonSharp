@@ -6,10 +6,9 @@
     using System.Text;
     using PythonSharp.Language;
 
-    public class BindingEnvironment : IValues
+    public class BindingEnvironment : IContext
     {
-        private BindingEnvironment parent;
-        private Machine machine;
+        private IContext parent;
         private Dictionary<string, object> values = new Dictionary<string, object>();
         private object returnValue;
         private bool hasReturnValue;
@@ -18,27 +17,21 @@
         {
         }
 
-        public BindingEnvironment(Machine machine)
-        {
-            this.machine = machine;
-        }
-
-        public BindingEnvironment(BindingEnvironment parent)
+        public BindingEnvironment(IContext parent)
         {
             this.parent = parent;
         }
 
-        public BindingEnvironment Parent { get { return this.parent; } }
+        public IContext Parent { get { return this.parent; } }
 
-        public Machine Machine
+        public IContext GlobalContext
         {
             get
             {
-                if (this.machine != null)
-                    return this.machine;
-                if (this.parent != null)
-                    return this.parent.Machine;
-                return null;
+                if (this.parent == null)
+                    return this;
+
+                return this.parent.GlobalContext;
             }
         }
 

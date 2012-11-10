@@ -20,8 +20,8 @@
             Assert.IsNotNull(machine.Environment);
             Assert.IsNotNull(machine.Input);
             Assert.IsNotNull(machine.Output);
-            Assert.IsNotNull(machine.Environment.Machine);
-            Assert.AreEqual(machine, machine.Environment.Machine);
+            Assert.IsNotNull(machine.Environment.GlobalContext);
+            Assert.AreEqual(machine.Environment, machine.Environment.GlobalContext);
         }
 
         [TestMethod]

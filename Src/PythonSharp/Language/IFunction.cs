@@ -7,6 +7,6 @@
 
     public interface IFunction
     {
-        object Apply(BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments);
+        object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments);
     }
 }
