@@ -9,6 +9,8 @@
     {
         private MethodDelegate method;
 
+        public delegate object MethodDelegate(IList<object> arguments);
+
         public NativeMethod(MethodDelegate method)
         {
             this.method = method;

@@ -39,7 +39,7 @@ http://docs.python.org/3.3/library/site.html#module-site
 path 
 Importing this module will append site-specific paths to the module search path and add a few builtins, unless -S was used....
 
-Constanst: __doc__
+Constanst: __doc__ __init__
 
 for loop
 loop variants

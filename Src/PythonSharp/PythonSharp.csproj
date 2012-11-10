@@ -83,8 +83,8 @@
     <Compile Include="Language\DefinedClass.cs" />
     <Compile Include="Language\DefinedFunction.cs" />
     <Compile Include="Language\DynamicObject.cs" />
+    <Compile Include="Language\IContext.cs" />
     <Compile Include="Language\IType.cs" />
-    <Compile Include="Language\IMethod.cs" />
     <Compile Include="Language\IFunction.cs" />
     <Compile Include="Language\IValues.cs" />
     <Compile Include="Language\NativeMethod.cs" />

@@ -5,10 +5,8 @@
     using System.Linq;
     using System.Text;
 
-    public delegate object MethodDelegate(IList<object> arguments);
-
-    public interface IMethod
+    public interface IContext : IValues
     {
-        object Apply(IList<object> arguments);
+        IContext GlobalContext { get; }
     }
 }
