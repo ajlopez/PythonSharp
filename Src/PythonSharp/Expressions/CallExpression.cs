@@ -90,6 +90,9 @@
 
                     if (type == null)
                     {
+                        if (obj is Type)
+                            return TypeUtilities.InvokeTypeMember((Type)obj, attrexpr.Name, arguments);
+
                         return ObjectUtilities.GetValue(obj, attrexpr.Name, arguments);
                     }
 

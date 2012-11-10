@@ -138,5 +138,19 @@
 
             Assert.AreEqual("unknown.txt", fileinfo.Name);
         }
+
+        [TestMethod]
+        public void CallNativeTypeStaticMethod()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("File", typeof(System.IO.File));
+            CallExpression expression = new CallExpression(new AttributeExpression(new NameExpression("File"), "Exists"), new IExpression[] { new ConstantExpression("unknown.txt") });
+
+            var result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(bool));
+            Assert.AreEqual(false, result);
+        }
     }
 }

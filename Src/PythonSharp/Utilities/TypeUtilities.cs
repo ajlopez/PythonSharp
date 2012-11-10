@@ -80,9 +80,9 @@
             return GetNamespaces().Contains(name);
         }
 
-        public static object InvokeTypeMember(Type type, string name, object[] parameters)
+        public static object InvokeTypeMember(Type type, string name, IList<object> parameters)
         {
-            return type.InvokeMember(name, System.Reflection.BindingFlags.FlattenHierarchy | System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static, null, null, parameters);
+            return type.InvokeMember(name, System.Reflection.BindingFlags.FlattenHierarchy | System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static, null, null, parameters == null ? null : parameters.ToArray());
         }
 
         private static ICollection<string> GetNamespaces()
