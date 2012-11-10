@@ -148,5 +148,15 @@
 
             Assert.AreEqual("Adam", person.FirstName);
         }
+
+        [TestMethod]
+        public void SetValueInDynamicObject()
+        {
+            DynamicObject obj = new DynamicObject(null);
+
+            ObjectUtilities.SetValue(obj, "FirstName", "Adam");
+
+            Assert.AreEqual("Adam", obj.GetValue("FirstName"));
+        }
     }
 }
