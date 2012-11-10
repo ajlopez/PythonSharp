@@ -84,6 +84,7 @@
     <Compile Include="Language\DefinedFunction.cs" />
     <Compile Include="Language\DynamicObject.cs" />
     <Compile Include="Language\IContext.cs" />
+    <Compile Include="Language\IObject.cs" />
     <Compile Include="Language\IType.cs" />
     <Compile Include="Language\IFunction.cs" />
     <Compile Include="Language\IValues.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Compiler\TokenType.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="Utilities\CommandUtilities.cs" />
+    <Compile Include="Utilities\ObjectUtilities.cs" />
     <Compile Include="Utilities\ValueUtilities.cs" />
     <Compile Include="Utilities\ModuleUtilities.cs" />
   </ItemGroup>
