@@ -15,7 +15,10 @@
         public void TypeName()
         {
             Assert.AreEqual("NoneType", Types.GetTypeName(null));
-            Assert.AreEqual("int", Types.GetTypeName(1));
+            Assert.AreEqual("int", Types.GetTypeName(123));
+            Assert.AreEqual("string", Types.GetTypeName("spam"));
+            Assert.AreEqual("function", Types.GetTypeName(new DefinedFunction("spam",null,null)));
+            Assert.AreEqual("list", Types.GetTypeName(new object[] { 1, 2 }));
             Assert.AreEqual("TypeError", Types.GetTypeName(new TypeError(string.Empty)));
         }
 

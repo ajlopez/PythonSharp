@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Language;
+    using System.Collections;
 
     public static class Types
     {
@@ -17,6 +18,15 @@
 
             if (value is int)
                 return "int";
+
+            if (value is string)
+                return "string";
+
+            if (value is IFunction)
+                return "function";
+
+            if (value is IList)
+                return "list";
 
             return value.GetType().Name;
         }
