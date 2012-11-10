@@ -9,6 +9,7 @@
     using PythonSharp.Expressions;
     using PythonSharp.Functions;
     using PythonSharp.Language;
+    using PythonSharp.Tests.Classes;
     using PythonSharp.Tests.Language;
 
     [TestClass]
@@ -91,6 +92,34 @@
 
             Assert.IsNotNull(result);
             Assert.AreEqual(dynobj, result);
+        }
+
+        [TestMethod]
+        public void CallNativeObjectMethodWithoutArguments()
+        {
+            Person person = new Person() { FirstName = "Adam", LastName = "Doe" };
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("adam", person);
+            CallExpression expression = new CallExpression(new AttributeExpression(new NameExpression("adam"), "GetName"), null);
+
+            var result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(person.GetName(), result);
+        }
+
+        [TestMethod]
+        public void CallNativeObjectMethodWithArguments()
+        {
+            Calculator calculator = new Calculator();
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("calculator", calculator);
+            CallExpression expression = new CallExpression(new AttributeExpression(new NameExpression("calculator"), "Add"), new IExpression[] { new ConstantExpression(1), new ConstantExpression(2) });
+
+            var result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(calculator.Add(1, 2), result);
         }
     }
 }

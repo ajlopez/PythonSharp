@@ -6,6 +6,7 @@
     using System.Text;
     using PythonSharp.Exceptions;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class CallExpression : IExpression
     {
@@ -85,6 +86,12 @@
                 else
                 {
                     IType type = Types.GetType(obj);
+
+                    if (type == null)
+                    {
+                        return ObjectUtilities.GetValue(obj, attrexpr.Name, arguments);
+                    }
+
                     function = type.GetMethod(attrexpr.Name);
                     arguments.Insert(0, obj);
                 }

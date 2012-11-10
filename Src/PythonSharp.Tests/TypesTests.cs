@@ -7,6 +7,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Exceptions;
     using PythonSharp.Language;
+    using PythonSharp.Tests.Classes;
 
     [TestClass]
     public class TypesTests
@@ -32,6 +33,16 @@
 
             Assert.IsNotNull(result);
             Assert.AreEqual(klass, result);
+        }
+
+        [TestMethod]
+        public void GetNativeObjectObjectTypeAsNull()
+        {
+            Person person = new Person();
+
+            var result = Types.GetType(person);
+
+            Assert.IsNull(result);
         }
     }
 }

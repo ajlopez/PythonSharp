@@ -33,12 +33,15 @@
 
         public static IType GetType(object value)
         {
+            if (value is string)
+                return stringType;
+
             DynamicObject dynobj = value as DynamicObject;
 
             if (dynobj != null)
                 return dynobj.Class;
 
-            return stringType;
+            return null;
         }
     }
 }

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Calculator.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Commands\ClassCommandTests.cs" />
     <Compile Include="Commands\CompositeCommandTests.cs" />
