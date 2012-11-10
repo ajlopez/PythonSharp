@@ -55,5 +55,10 @@
 
             return method.Apply(environment, args, namedArguments);
         }
+
+        public ICollection<string> GetNames()
+        {
+            return this.values.Keys.ToList();
+        }
     }
 }

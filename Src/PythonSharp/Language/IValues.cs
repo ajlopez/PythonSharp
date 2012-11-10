@@ -12,5 +12,7 @@
         void SetValue(string name, object value);
 
         bool HasValue(string name);
+
+        ICollection<string> GetNames();
     }
 }

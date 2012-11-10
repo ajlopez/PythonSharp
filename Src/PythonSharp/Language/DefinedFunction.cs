@@ -123,5 +123,10 @@
         {
             return this.values.HasValue(name);
         }
+
+        public ICollection<string> GetNames()
+        {
+            return this.values.GetNames();
+        }
     }
 }
