@@ -11,22 +11,8 @@
     using PythonSharp.Language;
 
     [TestClass]
-    public class CommandTest
+    public class ImportCommandTest
     {
-        [TestMethod]
-        public void CreateSetCommand()
-        {
-            IExpression expression = new ConstantExpression("bar");
-            SetCommand command = new SetCommand("foo", expression);
-
-            Assert.IsNotNull(command);
-            Assert.IsNotNull(command.Target);
-            Assert.IsNotNull(command.Expression);
-
-            Assert.AreEqual("foo", command.Target);
-            Assert.AreEqual(expression, command.Expression);
-        }
-
         [TestMethod]
         [DeploymentItem("Examples/setvar.py")]
         public void ExecuteImportCommand()
