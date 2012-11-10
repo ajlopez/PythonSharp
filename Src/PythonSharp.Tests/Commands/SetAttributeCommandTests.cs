@@ -1,13 +1,14 @@
 ﻿namespace PythonSharp.Tests.Commands
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PythonSharp.Language;
     using PythonSharp.Commands;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
+    using PythonSharp.Tests.Classes;
 
     [TestClass]
     public class SetAttributeCommandTests
@@ -26,6 +27,20 @@
 
             Assert.IsTrue(dynobj.HasValue("one"));
             Assert.AreEqual(1, dynobj.GetValue("one"));
+        }
+
+        [TestMethod]
+        public void SetAttributeInNativeObject()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            Person adam = new Person();
+            environment.SetValue("adam", adam);
+
+            SetAttributeCommand command = new SetAttributeCommand(new NameExpression("adam"), "FirstName", new ConstantExpression("Adam"));
+
+            command.Execute(environment);
+
+            Assert.AreEqual("Adam", adam.FirstName);
         }
     }
 }

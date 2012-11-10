@@ -6,6 +6,7 @@
     using System.Text;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class SetAttributeCommand : ICommand
     {
@@ -28,8 +29,15 @@
 
         public void Execute(IContext context)
         {
-            IValues values = (IValues) this.targetExpression.Evaluate(context);
-            values.SetValue(this.name, this.expression.Evaluate(context));
+            var target = this.targetExpression.Evaluate(context);
+            var value = this.expression.Evaluate(context);
+
+            IValues values = target as IValues;
+
+            if (values != null)
+                values.SetValue(this.name, value);
+
+            ObjectUtilities.SetValue(target, this.name, value);
         }
     }
 }
