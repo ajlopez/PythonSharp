@@ -41,7 +41,7 @@
                 if (arguments == null)
                     return ((IObject)obj).GetValue(name);
 
-                return ((IObject)obj).Invoke(name, arguments);
+                return ((IObject)obj).Invoke(name, null, arguments, null);
             }
 
             if (obj is IValues && (arguments == null || arguments.Count == 0))

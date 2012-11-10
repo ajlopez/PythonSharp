@@ -5,8 +5,9 @@
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PythonSharp.Utilities;
     using PythonSharp.Language;
+    using PythonSharp.Tests.Classes;
+    using PythonSharp.Utilities;
 
     [TestClass]
     public class ObjectUtilitiesTests
@@ -136,6 +137,16 @@
             Assert.AreEqual(1, dictionary["one"]);
             Assert.AreEqual(2, dictionary["two"]);
             Assert.AreEqual(3, dictionary["three"]);
+        }
+
+        [TestMethod]
+        public void SetValue()
+        {
+            Person person = new Person();
+
+            ObjectUtilities.SetValue(person, "FirstName", "Adam");
+
+            Assert.AreEqual("Adam", person.FirstName);
         }
     }
 }

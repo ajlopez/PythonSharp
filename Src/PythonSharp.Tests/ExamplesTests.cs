@@ -8,6 +8,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
     using PythonSharp.Compiler;
+    using PythonSharp.Language;
 
     [TestClass]
     public class ExamplesTests
@@ -59,9 +60,9 @@
             object mod = machine.Environment.GetValue("setvar");
 
             Assert.IsNotNull(mod);
-            Assert.IsInstanceOfType(mod, typeof(BindingEnvironment));
+            Assert.IsInstanceOfType(mod, typeof(IValues));
 
-            BindingEnvironment modenv = (BindingEnvironment)mod;
+            IValues modenv = (IValues)mod;
 
             Assert.AreEqual(1, modenv.GetValue("a"));
         }

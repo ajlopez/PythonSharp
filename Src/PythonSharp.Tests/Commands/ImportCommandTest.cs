@@ -26,9 +26,9 @@
             object setvar = machine.Environment.GetValue("setvar");
 
             Assert.IsNotNull(setvar);
-            Assert.IsInstanceOfType(setvar, typeof(BindingEnvironment));
+            Assert.IsInstanceOfType(setvar, typeof(IValues));
 
-            BindingEnvironment setvarenv = (BindingEnvironment)setvar;
+            IValues setvarenv = (IValues)setvar;
 
             object var = setvarenv.GetValue("a");
 

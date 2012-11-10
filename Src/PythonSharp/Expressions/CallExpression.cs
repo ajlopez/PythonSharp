@@ -77,7 +77,7 @@
                 if (obj is DynamicObject)
                 {
                     var dynobj = (DynamicObject)obj;
-                    return dynobj.InvokeMethod(attrexpr.Name, context, arguments, namedArguments);
+                    return dynobj.Invoke(attrexpr.Name, context, arguments, namedArguments);
                 }
 
                 if (obj is IType)

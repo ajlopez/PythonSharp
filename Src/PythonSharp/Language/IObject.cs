@@ -7,6 +7,6 @@
 
     public interface IObject : IValues
     {
-        object Invoke(string name, IList<object> arguments);
+        object Invoke(string name, IContext context, IList<object> arguments, IDictionary<string, object> namedArguments);
     }
 }

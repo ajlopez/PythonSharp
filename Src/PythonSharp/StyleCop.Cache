@@ -623,9 +623,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <project key="1538393221">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>06/24/2012 16:47:27</timestamp>
@@ -633,6 +630,18 @@
     </settings>
     <timestamp>11/07/2012 06:22:33</timestamp>
     <milliseconds>790</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="1538393221">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Module.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>06/24/2012 16:47:27</timestamp>
+      <milliseconds>142</milliseconds>
+    </settings>
+    <timestamp>11/10/2012 13:30:48</timestamp>
+    <milliseconds>12</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

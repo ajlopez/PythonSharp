@@ -6,7 +6,7 @@
     using System.Text;
     using PythonSharp.Exceptions;
 
-    public class DynamicObject : IValues
+    public class DynamicObject : IObject
     {
         private DefinedClass klass;
         private IDictionary<string, object> values = new Dictionary<string, object>();
@@ -42,7 +42,7 @@
             return false;
         }
 
-        public object InvokeMethod(string name, IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
+        public object Invoke(string name, IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
             var value = this.GetValue(name);
             IFunction method = value as IFunction;

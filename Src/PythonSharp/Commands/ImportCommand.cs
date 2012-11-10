@@ -27,13 +27,13 @@
             ICommand command = parser.CompileCommandList();
             string doc = CommandUtilities.GetDocString(command);
 
-            BindingEnvironment modenv = new BindingEnvironment(context.GlobalContext);
+            Module module = new Module(context.GlobalContext);
 
-            command.Execute(modenv);
+            command.Execute(module);
 
-            context.SetValue(this.modname, modenv);
+            context.SetValue(this.modname, module);
 
-            modenv.SetValue("__doc__", doc);
+            module.SetValue("__doc__", doc);
         }
     }
 }

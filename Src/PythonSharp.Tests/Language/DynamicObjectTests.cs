@@ -44,7 +44,7 @@
             klass.SetMethod("foo", function);
             DynamicObject dynobj = new DynamicObject(klass);
 
-            var result = dynobj.InvokeMethod("foo", null, null, null);
+            var result = dynobj.Invoke("foo", null, null, null);
 
             Assert.IsNull(result);
         }
@@ -57,7 +57,7 @@
             klass.SetMethod("foo", function);
             DynamicObject dynobj = new DynamicObject(klass);
 
-            var result = dynobj.InvokeMethod("foo", null, null, null);
+            var result = dynobj.Invoke("foo", null, null, null);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(dynobj, result);
@@ -72,7 +72,7 @@
             DynamicObject dynobj = new DynamicObject(klass);
             dynobj.SetValue("one", 1);
 
-            var result = dynobj.InvokeMethod("foo", null, new object[] { "one" }, null);
+            var result = dynobj.Invoke("foo", null, new object[] { "one" }, null);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result);
@@ -100,7 +100,7 @@
 
             try
             {
-                dynobj.InvokeMethod("foo", null, new object[] { "one" }, null);
+                dynobj.Invoke("foo", null, new object[] { "one" }, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
