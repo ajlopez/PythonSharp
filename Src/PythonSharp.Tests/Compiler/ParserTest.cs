@@ -695,6 +695,23 @@
         }
 
         [TestMethod]
+        public void CompileImportAllFromCommand()
+        {
+            Parser parser = new Parser("from module import *");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ImportFromCommand));
+
+            ImportFromCommand impcmd = (ImportFromCommand)command;
+
+            Assert.AreEqual("module", impcmd.ModuleName);
+
+            Assert.IsNull(impcmd.Names);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExpectedTokenException))]
         public void RaiseIfCompileImportFromCommandWithNoImportWord()
         {

@@ -9,6 +9,7 @@
     using PythonSharp.Commands;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using System;
 
     [TestClass]
     public class ImportCommandTest
@@ -69,6 +70,38 @@
 
             Assert.IsNull(setvar.GetValue("__doc__"));
             Assert.IsTrue(setvar.HasValue("__doc__"));
+        }
+
+        [TestMethod]
+        public void ImportFileTypeFromSystemIONamespace()
+        {
+            ImportFromCommand importcmd = new ImportFromCommand("System.IO", new string[] { "File" });
+
+            Machine machine = new Machine();
+
+            importcmd.Execute(machine.Environment);
+
+            var result = machine.Environment.GetValue("File");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Type));
+        }
+
+        [TestMethod]
+        public void ImportSystemIONamespace()
+        {
+            ImportFromCommand importcmd = new ImportFromCommand("System.IO");
+
+            Machine machine = new Machine();
+
+            importcmd.Execute(machine.Environment);
+
+            var result = machine.Environment.GetValue("File");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Type));
+
+            Assert.IsNotNull(machine.Environment.GetValue("FileInfo"));
+            Assert.IsNotNull(machine.Environment.GetValue("Directory"));
+            Assert.IsNotNull(machine.Environment.GetValue("DirectoryInfo"));
         }
     }
 }

@@ -343,6 +343,9 @@
 
                 this.CompileName("import");
 
+                if (this.TryCompile(TokenType.Operator, "*"))
+                    return new ImportFromCommand(name.Value);
+
                 IList<string> names = this.CompileNameList();
 
                 return new ImportFromCommand(name.Value, names);

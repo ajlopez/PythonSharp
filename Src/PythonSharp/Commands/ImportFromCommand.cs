@@ -4,16 +4,21 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-
     using PythonSharp.Compiler;
     using PythonSharp.Expressions;
-    using PythonSharp.Utilities;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
+    using PythonSharp.Utilities.TypeUtilities;
 
     public class ImportFromCommand : ICommand
     {
         private string modname;
         private IList<string> names;
+
+        public ImportFromCommand(string name)
+            : this(name, null)
+        {
+        }
 
         public ImportFromCommand(string name, IList<string> names)
         {
@@ -27,15 +32,33 @@
 
         public void Execute(IContext context)
         {
-            Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
-            ICommand command = parser.CompileCommandList();
+            Module module = null;
 
-            BindingEnvironment modenv = new BindingEnvironment(context.GlobalContext);
+            if (TypeUtilities.IsNamespace(this.modname))
+            {
+                var types = TypeUtilities.GetTypesByNamespace(this.modname);
 
-            command.Execute(modenv);
+                module = new Module(context.GlobalContext);
 
-            foreach (string name in this.names)
-                context.SetValue(name, modenv.GetValue(name));
+                foreach (var type in types)
+                    module.SetValue(type.Name, type);
+            }
+            else
+            {
+                Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
+                ICommand command = parser.CompileCommandList();
+
+                module = new Module(context.GlobalContext);
+
+                command.Execute(module);
+            }
+
+            if (this.names != null)
+                foreach (string name in this.names)
+                    context.SetValue(name, module.GetValue(name));
+            else
+                foreach (string name in module.GetNames())
+                    context.SetValue(name, module.GetValue(name));
         }
     }
 }
