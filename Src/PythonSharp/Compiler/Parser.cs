@@ -339,16 +339,19 @@
 
             if (token.Value == "from")
             {
-                Token name = this.CompileName(true);
+                string name = this.CompileName(true).Value;
+
+                while (this.TryCompile(TokenType.Operator, "."))
+                    name += "." + this.CompileName(true).Value;
 
                 this.CompileName("import");
 
                 if (this.TryCompile(TokenType.Operator, "*"))
-                    return new ImportFromCommand(name.Value);
+                    return new ImportFromCommand(name);
 
                 IList<string> names = this.CompileNameList();
 
-                return new ImportFromCommand(name.Value, names);
+                return new ImportFromCommand(name, names);
             }
 
             if (token.Value == "if")

@@ -712,6 +712,23 @@
         }
 
         [TestMethod]
+        public void CompileImportCompositeName()
+        {
+            Parser parser = new Parser("from System.IO import *");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ImportFromCommand));
+
+            ImportFromCommand impcmd = (ImportFromCommand)command;
+
+            Assert.AreEqual("System.IO", impcmd.ModuleName);
+
+            Assert.IsNull(impcmd.Names);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExpectedTokenException))]
         public void RaiseIfCompileImportFromCommandWithNoImportWord()
         {
