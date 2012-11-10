@@ -36,7 +36,10 @@
             if (this.values.ContainsKey(name))
                 return true;
 
-            return this.klass.HasValue(name);
+            if (this.klass != null)
+                return this.klass.HasValue(name);
+
+            return false;
         }
 
         public object InvokeMethod(string name, BindingEnvironment environment, IList<object> arguments, IDictionary<string, object> namedArguments)
