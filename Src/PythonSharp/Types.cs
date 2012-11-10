@@ -20,7 +20,7 @@
                 return "int";
 
             if (value is string)
-                return "string";
+                return "str";
 
             if (value is IFunction)
                 return "function";

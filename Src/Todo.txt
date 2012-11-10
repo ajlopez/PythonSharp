@@ -17,6 +17,28 @@ elif in parser
 + TypeName for functions: function
 + TypeName for lists: list
 
+r'...' string
+b'...' byte array?
+truth value
+or, not, and
+bit operations
+see http://docs.python.org/3.3/library/stdtypes.html
+
+see http://docs.python.org/3.3/library/functions.html
+instances are callable if their class has a __call__() method.
+classmethod(function)
+Return a class method for function.
+It can be called either on the class (such as C.f()) or on an instance (such as C().f()).
+
+http://docs.python.org/3.3/reference/datamodel.html#types
+
+http://docs.python.org/3.3/library/constants.html
+
+see
+http://docs.python.org/3.3/library/site.html#module-site
+path 
+Importing this module will append site-specific paths to the module search path and add a few builtins, unless -S was used....
+
 Constanst: __doc__
 
 for loop
