@@ -88,6 +88,10 @@
 
             Assert.IsNotNull(type.GetMethod("add"));
             Assert.IsNotNull(type.GetMethod("sub"));
+
+            Assert.IsInstanceOfType(result, typeof(IContext));
+
+            Assert.AreEqual(3.14159, ((IContext)result).GetValue("pi"));
         }
 
         [TestMethod]
