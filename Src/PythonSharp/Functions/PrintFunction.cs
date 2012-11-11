@@ -18,19 +18,25 @@
 
         public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
+            string separator = (namedArguments != null && namedArguments.ContainsKey("sep")) ? (string) namedArguments["sep"] : " ";
+            string end = (namedArguments != null && namedArguments.ContainsKey("end")) ? (string)namedArguments["end"] : null;
+
             if (arguments != null)
             {
                 int narg = 0;
                 foreach (var argument in arguments)
                 {
                     if (narg != 0)
-                        this.machine.Output.Write(' ');
+                        this.machine.Output.Write(separator);
                     this.machine.Output.Write(ValueUtilities.AsPrintString(argument));
                     narg++;
                 }
             }
 
-            this.machine.Output.WriteLine();
+            if (end != null)
+                this.machine.Output.Write(end);
+            else
+                this.machine.Output.WriteLine();
 
             return null;
         }

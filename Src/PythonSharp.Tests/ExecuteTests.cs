@@ -37,6 +37,24 @@
         }
 
         [TestMethod]
+        public void ExecutePrintWithSeparator()
+        {
+            Assert.AreEqual("1,2,3\r\n", this.ExecuteAndPrint("print(1,2,3,sep=',')"));
+        }
+
+        [TestMethod]
+        public void ExecutePrintWithEmptyEnd()
+        {
+            Assert.AreEqual("1,2,3", this.ExecuteAndPrint("print(1,2,3,sep=',',end='')"));
+        }
+
+        [TestMethod]
+        public void ExecutePrintWithNoneEnd()
+        {
+            Assert.AreEqual("1,2,3\r\n", this.ExecuteAndPrint("print(1,2,3,sep=',',end=None)"));
+        }
+
+        [TestMethod]
         public void ExecuteTwoSimplePrints()
         {
             Assert.AreEqual("1\r\n2\r\n", this.ExecuteAndPrint("print(1);print(2)"));
