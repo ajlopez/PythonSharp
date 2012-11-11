@@ -47,6 +47,21 @@
         }
 
         [TestMethod]
+        public void EvaluateSimpleRange()
+        {
+            var result = this.Evaluate("range(2,5)");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Range));
+
+            var range = (Range)result;
+
+            Assert.AreEqual(2, range.From);
+            Assert.AreEqual(5, range.To);
+            Assert.AreEqual(1, range.Step);
+        }
+
+        [TestMethod]
         public void EvaluateMethodCall()
         {
             DefinedClass klass = new DefinedClass("Spam");
