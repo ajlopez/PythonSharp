@@ -145,8 +145,6 @@
             if (command == null)
                 return null;
 
-            this.CompileEndOfCommand();
-
             return command;
         }
 
@@ -180,8 +178,6 @@
 
                 for (ICommand command = this.CompileCommand(); command != null; command = this.CompileCommand())
                     commands.Add(command);
-
-                this.lexer.PushToken(endOfLineToken);
 
                 if (commands.Count == 0)
                     return null;
@@ -327,12 +323,20 @@
         {
             Token token = this.TryCompile(TokenType.Name);
 
+            ICommand command;
+
             if (token == null)
-                return this.CompileExpressionCommand();
+            {
+                command = this.CompileExpressionCommand();
+                this.CompileEndOfCommand();
+                return command;
+            }
 
             if (token.Value == "import")
             {
                 Token name = this.CompileName(true);
+
+                this.CompileEndOfCommand();
 
                 return new ImportCommand(name.Value);
             }
@@ -351,6 +355,8 @@
 
                 IList<string> names = this.CompileNameList();
 
+                this.CompileEndOfCommand();
+
                 return new ImportFromCommand(name, names);
             }
 
@@ -367,25 +373,39 @@
                 return this.CompileDefCommand();
 
             if (token.Value == "pass")
+            {
+                this.CompileEndOfCommand();
                 return new PassCommand();
+            }
 
             if (token.Value == "return")
                 return this.CompileReturnCommand();
 
             this.lexer.PushToken(token);
 
-            var command = this.CompileExpressionCommand();
+            var exprcommand = this.CompileExpressionCommand();
 
             if (!this.TryCompile(TokenType.Operator, "="))
-                return command;
+            {
+                this.CompileEndOfCommand();
+                return exprcommand;
+            }
 
             var valueexpr = this.CompileExpression();
 
-            if (command.Expression is NameExpression)
-                return new SetCommand(((NameExpression)command.Expression).Name, valueexpr);
+            if (exprcommand.Expression is NameExpression)
+            {
+                command = new SetCommand(((NameExpression)exprcommand.Expression).Name, valueexpr);
+                this.CompileEndOfCommand();
+                return command;
+            }
 
-            if (command.Expression is AttributeExpression)
-                return new SetAttributeCommand(((AttributeExpression)command.Expression).Expression, ((AttributeExpression)command.Expression).Name, valueexpr);
+            if (exprcommand.Expression is AttributeExpression)
+            {
+                command = new SetAttributeCommand(((AttributeExpression)exprcommand.Expression).Expression, ((AttributeExpression)exprcommand.Expression).Name, valueexpr);
+                this.CompileEndOfCommand();
+                return command;
+            }
 
             throw new SyntaxError("invalid assignment");
         }
@@ -445,9 +465,14 @@
         private ICommand CompileReturnCommand()
         {
             if (this.TryPeekCompileEndOfCommand())
+            {
+                this.CompileEndOfCommand();
                 return new ReturnCommand(null);
+            }
 
-            return new ReturnCommand(this.CompileExpression());
+            ICommand command = new ReturnCommand(this.CompileExpression());
+            this.CompileEndOfCommand();
+            return command;
         }
 
         private ICommand CompileSuite()
@@ -479,24 +504,17 @@
 
             thencommand = this.CompileSuite();
 
-            Token token = this.lexer.NextToken();
+            int indent = this.lexer.NextIndent();
 
-            if (token != null && token.TokenType == TokenType.EndOfLine)
+            if (indent != this.indent)
             {
-                int indent = this.lexer.NextIndent();
+                this.lexer.PushIndent(indent);
+            }
+            else if (this.TryCompile(TokenType.Name, "else"))
+            {
+                ICommand elsecommand = this.CompileSuite();
 
-                if (indent != this.indent)
-                {
-                    this.lexer.PushIndent(indent);
-                }
-                else if (this.TryCompile(TokenType.Name, "else"))
-                {
-                    ICommand elsecommand = this.CompileSuite();
-
-                    return new IfCommand(condition, thencommand, elsecommand);
-                }
-                else
-                    this.lexer.PushToken(token);
+                return new IfCommand(condition, thencommand, elsecommand);
             }
 
             return new IfCommand(condition, thencommand);
