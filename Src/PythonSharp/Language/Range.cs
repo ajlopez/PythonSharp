@@ -33,6 +33,12 @@
             this.step = step;
         }
 
+        public int From { get { return this.from; } }
+
+        public int To { get { return this.to; } }
+
+        public int Step { get { return this.step; } }
+
         public IEnumerator GetEnumerator()
         {
             if (this.step < 0)

@@ -69,6 +69,7 @@
     <Compile Include="Expressions\SliceExpressionTests.cs" />
     <Compile Include="Functions\LenFunctionTests.cs" />
     <Compile Include="Functions\PrintFunctionTests.cs" />
+    <Compile Include="Functions\RangeFunctionTests.cs" />
     <Compile Include="Language\DefinedClassTests.cs" />
     <Compile Include="Language\DefinedFunctionTests.cs" />
     <Compile Include="Language\DynamicObjectTests.cs" />
