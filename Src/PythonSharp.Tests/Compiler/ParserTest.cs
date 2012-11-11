@@ -1522,6 +1522,40 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileSimpleForCommand()
+        {
+            Parser parser = new Parser("for a in [1,2,3]: b = b +a");
+
+            var command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ForCommand));
+
+            var forcmd = (ForCommand)command;
+            Assert.IsNotNull(forcmd.Command);
+            Assert.IsInstanceOfType(forcmd.Command, typeof(SetCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileSimpleForMultilineCommand()
+        {
+            Parser parser = new Parser("for a in [1,2,3]:\r\n  print(a)");
+
+            var command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ForCommand));
+
+            var forcmd = (ForCommand)command;
+            Assert.IsNotNull(forcmd.Command);
+            Assert.IsInstanceOfType(forcmd.Command, typeof(ExpressionCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

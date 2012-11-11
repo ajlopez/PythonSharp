@@ -154,6 +154,18 @@
             Assert.IsInstanceOfType(dynatom1.GetValue("position"), typeof(IList));
         }
 
+        [TestMethod]
+        public void ExecuteSimpleFor()
+        {
+            Assert.AreEqual("1 2 3 ", this.ExecuteAndPrint("for k in [1,2,3]: print(k, end=' ')"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleMultilineFor()
+        {
+            Assert.AreEqual("1 2 3 ", this.ExecuteAndPrint("for k in [1,2,3]:\r\n  print(k, end=' ')"));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.machine.Output = new StringWriter();

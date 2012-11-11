@@ -335,6 +335,9 @@
             if (token.Value == "class")
                 return this.CompileClassCommand();
 
+            if (token.Value == "for")
+                return this.CompileForCommand();
+
             if (token.Value == "while")
                 return this.CompileWhileCommand();
 
@@ -464,6 +467,16 @@
                 int newindent = this.lexer.NextIndent();
                 return this.CompileNestedCommandList(newindent);
             }
+        }
+
+        private ICommand CompileForCommand()
+        {
+            string name = this.CompileName(true).Value;
+            this.CompileToken(TokenType.Name, "in");
+            IExpression expression = this.CompileExpression();
+            ICommand command = this.CompileSuite();
+
+            return new ForCommand(name, expression, command);
         }
 
         private ICommand CompileIfCommand()
