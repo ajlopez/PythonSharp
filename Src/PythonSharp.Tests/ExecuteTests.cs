@@ -161,9 +161,33 @@
         }
 
         [TestMethod]
-        public void ExecuteSimpleMultilineFor()
+        public void ExecuteTwoSimpleFor()
+        {
+            Assert.AreEqual("1 2 3 1 2 3 ", this.ExecuteAndPrint("for k in [1,2,3]: print(k, end=' ')\r\nfor k in [1,2,3]: print(k, end=' ')"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleOneLineFor()
         {
             Assert.AreEqual("1 2 3 ", this.ExecuteAndPrint("for k in [1,2,3]:\r\n  print(k, end=' ')"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleTwoLinesFor()
+        {
+            Assert.AreEqual("1 1 2 2 3 3 ", this.ExecuteAndPrint("for k in [1,2,3]:\r\n  print(k, end=' ')\r\n  print(k, end=' ')"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleTwoLinesAndBlankLineFor()
+        {
+            Assert.AreEqual("1 1 2 2 3 3 ", this.ExecuteAndPrint("for k in [1,2,3]:\r\n  print(k, end=' ')\r\n\r\n  print(k, end=' ')"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleTwoLinesForAndOneLine()
+        {
+            Assert.AreEqual("1 1 2 2 3 3 4 ", this.ExecuteAndPrint("for k in [1,2,3]:\r\n  print(k, end=' ')\r\n  print(k, end=' ')\r\nprint(4, end=' ')"));
         }
 
         private string ExecuteAndPrint(string text)

@@ -132,10 +132,15 @@
 
         public ICommand CompileCommandList()
         {
+            bool lastSemi = this.lastSemi;
             List<ICommand> commands = new List<ICommand>();
 
             for (ICommand command = this.CompileCommand(); command != null; command = this.CompileCommand())
+            {
                 commands.Add(command);
+                if (lastSemi && !this.lastSemi)
+                    break;
+            }
 
             if (commands.Count == 0)
                 return null;
