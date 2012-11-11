@@ -1,12 +1,13 @@
 ﻿namespace PythonSharp.Tests.Language
 {
     using System;
-    using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Exceptions;
     using PythonSharp.Language;
-    using System.Collections;
 
     [TestClass]
     public class RangeTests
@@ -83,6 +84,21 @@
 
             Assert.IsNotNull(list);
             Assert.AreEqual(0, list.Count);
+        }
+
+        [TestMethod]
+        public void RaiseIsStepIsZero()
+        {
+            try
+            {
+                new Range(1, 2, 0);
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(ValueError));
+                Assert.AreEqual("range() arg 3 must not be zero", ex.Message);
+            }
         }
     }
 }

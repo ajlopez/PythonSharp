@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Collections;
+    using PythonSharp.Exceptions;
 
     public class Range : IEnumerable
     {
@@ -24,6 +25,9 @@
 
         public Range(int from, int to, int step)
         {
+            if (step == 0)
+                throw new ValueError("range() arg 3 must not be zero");
+
             this.from = from;
             this.to = to;
             this.step = step;
