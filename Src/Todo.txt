@@ -7,7 +7,7 @@
 + from ... import
 
 while with else
-for
++ for
 for with else
 range builtin function
 

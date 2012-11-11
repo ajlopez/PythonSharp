@@ -95,5 +95,10 @@
         {
             return IsFixnum(obj) || IsRealnum(obj);
         }
+
+        public static object Negate(object obj)
+        {
+            return Operators.NegateObject(obj);
+        }
     }
 }

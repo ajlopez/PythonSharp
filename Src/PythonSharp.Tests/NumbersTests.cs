@@ -83,5 +83,14 @@
             Assert.AreEqual(0, Numbers.Remainder(-3, 3));
             Assert.AreEqual(-1, Numbers.Remainder(-4, 3));
         }
+
+        [TestMethod]
+        public void Negate()
+        {
+            Assert.AreEqual(-1, Numbers.Negate(1));
+            Assert.AreEqual(0, Numbers.Negate(0));
+            Assert.AreEqual(1, Numbers.Negate(-1));
+            Assert.AreEqual(-2.5, Numbers.Negate(2.5));
+        }
     }
 }

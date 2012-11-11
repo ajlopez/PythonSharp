@@ -1556,6 +1556,17 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileNegateExpression()
+        {
+            Parser parser = new Parser("-3");
+
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NegateExpression));
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

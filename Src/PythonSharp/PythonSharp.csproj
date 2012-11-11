@@ -78,6 +78,7 @@
     <Compile Include="Expressions\CallExpression.cs" />
     <Compile Include="Expressions\AttributeExpression.cs" />
     <Compile Include="Expressions\NamedArgumentExpression.cs" />
+    <Compile Include="Expressions\NegateExpression.cs" />
     <Compile Include="Expressions\ParameterExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />
     <Compile Include="Functions\PrintFunction.cs" />

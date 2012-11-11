@@ -765,6 +765,10 @@
                     return new ConstantExpression(System.Convert.ToBoolean(token.Value));
                 case TokenType.Name:
                     return this.MakeName(token.Value);
+                case TokenType.Operator:
+                    if (token.Value == "-")
+                        return new NegateExpression(this.CompileTerm());
+                    break;
                 case TokenType.Separator:
                     if (token.Value == "(")
                     {
