@@ -28,7 +28,8 @@ elif in parser
 
 r'...' string
 b'...' byte array?
-truth value
++ truth value
+truth value for dynobjs with __bool__() __len__()
 or, not, and
 bit operations
 see http://docs.python.org/3.3/library/stdtypes.html

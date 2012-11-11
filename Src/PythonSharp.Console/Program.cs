@@ -32,31 +32,10 @@
                     if (command is ExpressionCommand)
                     {
                         IExpression expr = ((ExpressionCommand)command).Expression;
+                        var value = expr.Evaluate(machine.Environment);
 
-                        if (expr is ListExpression)
-                        {
-                            IList list = (IList)expr.Evaluate(machine.Environment);
-                            Console.Write("(");
-                            var nvalue = 0;
-
-                            foreach (var value in list)
-                            {
-                                if (nvalue > 0)
-                                    Console.Write(", ");
-
-                                Console.Write(ValueUtilities.AsString(value));
-
-                                nvalue++;
-                            }
-
-                            Console.WriteLine(")");
-                        }
-                        else
-                        {
-                            object value = expr.Evaluate(machine.Environment);
-                            if (value != null)
-                                Console.WriteLine(ValueUtilities.AsString(expr.Evaluate(machine.Environment)));
-                        }
+                        if (value != null)
+                            Console.WriteLine(ValueUtilities.AsPrintString(value));
                     }
                     else
                         command.Execute(machine.Environment);

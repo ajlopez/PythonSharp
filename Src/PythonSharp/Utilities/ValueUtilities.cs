@@ -5,6 +5,8 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Collections;
+    using System.Collections.ObjectModel;
 
     public static class ValueUtilities
     {
@@ -38,6 +40,39 @@
         {
             if (value == null)
                 return "None";
+
+            if (value is string)
+                return (string)value;
+
+            if (value is IList)
+            {
+                bool istuple = value is ReadOnlyCollection<object>;
+                StringBuilder builder = new StringBuilder();
+
+                if (istuple)
+                    builder.Append("(");
+                else
+                    builder.Append("[");
+
+                int nitems = 0;
+
+                foreach (var item in (IList)value)
+                {
+                    if (nitems > 0)
+                        builder.Append(", ");
+
+                    builder.Append(AsString(item));
+
+                    nitems++;
+                }
+
+                if (istuple)
+                    builder.Append(")");
+                else
+                    builder.Append("]");
+
+                return builder.ToString();
+            }
 
             return value.ToString();
         }
