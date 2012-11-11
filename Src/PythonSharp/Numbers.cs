@@ -30,7 +30,7 @@
 
         public static object Divide(object obj1, object obj2)
         {
-            if (IsFixnum(obj1) && IsFixnum(obj2))
+            if (IsFixnum(obj1) && IsFixnum(obj2) && (int) Operators.ModObject(obj1, obj2) == 0)
                 return Operators.IntDivideObject(obj1, obj2);
 
             return Operators.DivideObject(obj1, obj2);

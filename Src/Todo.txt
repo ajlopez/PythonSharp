@@ -12,6 +12,7 @@ for multi set
 multi set
 for with else
 + range builtin function
++ print sequence
 
 4/5 should return 0.8
 

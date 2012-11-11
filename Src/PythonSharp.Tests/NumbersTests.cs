@@ -72,9 +72,15 @@
         [TestMethod]
         public void Divide()
         {
-            Assert.AreEqual(0, Numbers.Divide(1, 2));
             Assert.AreEqual(2, Numbers.Divide(4, 2));
             Assert.AreEqual(4 / 3.0, Numbers.Divide(4, 3.0));
+        }
+
+        [TestMethod]
+        public void NonExactDivide()
+        {
+            Assert.AreEqual(0.5, Numbers.Divide(1, 2));
+            Assert.AreEqual(0.8, Numbers.Divide(4, 5));
         }
 
         [TestMethod]

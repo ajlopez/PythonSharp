@@ -74,6 +74,18 @@
         }
 
         [TestMethod]
+        public void EvaluateDivideToFloatExpression()
+        {
+            BinaryExpression expression = new BinaryOperatorExpression(new ConstantExpression(4), new ConstantExpression(5), BinaryOperator.Divide);
+
+            Assert.IsNotNull(expression);
+            Assert.IsNotNull(expression.Left);
+            Assert.IsNotNull(expression.Right);
+
+            Assert.AreEqual(0.8, expression.Evaluate(new BindingEnvironment()));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void RaiseIfLeftIsNull()
         {
