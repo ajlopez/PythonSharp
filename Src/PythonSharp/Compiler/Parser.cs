@@ -805,6 +805,10 @@
         {
             if (name == "None")
                 return new ConstantExpression(null);
+            if (name == "True")
+                return new ConstantExpression(true);
+            if (name == "False")
+                return new ConstantExpression(false);
 
             return new NameExpression(name);
         }

@@ -982,6 +982,34 @@
         }
 
         [TestMethod]
+        public void CompileTrueAsBooleanConstantExpression()
+        {
+            Parser parser = new Parser("True");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+
+            ConstantExpression cexpr = (ConstantExpression)expression;
+
+            Assert.AreEqual(true, cexpr.Value);
+        }
+
+        [TestMethod]
+        public void CompileFalseAsBooleanConstantExpression()
+        {
+            Parser parser = new Parser("False");
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+
+            ConstantExpression cexpr = (ConstantExpression)expression;
+
+            Assert.AreEqual(false, cexpr.Value);
+        }
+
+        [TestMethod]
         public void CompileIndexedExpression()
         {
             Parser parser = new Parser("'spam'[1]");

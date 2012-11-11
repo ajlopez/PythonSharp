@@ -20,13 +20,20 @@
         public void Setup()
         {
             this.machine = new Machine();
-            this.machine.Output = new StringWriter();
         }
 
         [TestMethod]
         public void ExecuteSimplePrint()
         {
             Assert.AreEqual("1\r\n", this.ExecuteAndPrint("print(1)"));
+        }
+
+        [TestMethod]
+        public void ExecutePrintConstants()
+        {
+            Assert.AreEqual("None\r\n", this.ExecuteAndPrint("print(None)"));
+            Assert.AreEqual("True\r\n", this.ExecuteAndPrint("print(True)"));
+            Assert.AreEqual("False\r\n", this.ExecuteAndPrint("print(False)"));
         }
 
         [TestMethod]
@@ -131,12 +138,14 @@
 
         private string ExecuteAndPrint(string text)
         {
+            this.machine.Output = new StringWriter();
             this.Execute(text);
             return this.machine.Output.ToString();
         }
 
         private string ExecuteFileAndPrint(string filename)
         {
+            this.machine.Output = new StringWriter();
             this.ExecuteFile(filename);
             return this.machine.Output.ToString();
         }

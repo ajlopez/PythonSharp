@@ -59,6 +59,13 @@
         }
 
         [TestMethod]
+        public void BooleansAsPrintString()
+        {
+            Assert.AreEqual("True", ValueUtilities.AsPrintString(true));
+            Assert.AreEqual("False", ValueUtilities.AsPrintString(false));
+        }
+
+        [TestMethod]
         public void IntegerAsPrintString()
         {
             Assert.AreEqual("1", ValueUtilities.AsPrintString(1));
