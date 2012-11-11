@@ -450,11 +450,8 @@
             return new ReturnCommand(this.CompileExpression());
         }
 
-        private ICommand CompileIfCommand()
+        private ICommand CompileSuite()
         {
-            IExpression condition = this.CompileExpression();
-            ICommand thencommand;
-
             this.CompileToken(TokenType.Separator, ":");
 
             Token token = this.lexer.NextToken();
@@ -466,15 +463,23 @@
             {
                 this.lexer.PushToken(token);
                 this.lastSemi = true;
-                thencommand = this.CompileCommandList();
+                return this.CompileCommandList();
             }
             else
             {
                 int newindent = this.lexer.NextIndent();
-                thencommand = this.CompileNestedCommandList(newindent);
+                return this.CompileNestedCommandList(newindent);
             }
+        }
 
-            token = this.lexer.NextToken();
+        private ICommand CompileIfCommand()
+        {
+            IExpression condition = this.CompileExpression();
+            ICommand thencommand;
+
+            thencommand = this.CompileSuite();
+
+            Token token = this.lexer.NextToken();
 
             if (token != null && token.TokenType == TokenType.EndOfLine)
             {
@@ -486,26 +491,7 @@
                 }
                 else if (this.TryCompile(TokenType.Name, "else"))
                 {
-                    ICommand elsecommand;
-
-                    this.CompileToken(TokenType.Separator, ":");
-
-                    token = this.lexer.NextToken();
-
-                    if (token == null)
-                        throw new UnexpectedEndOfInputException();
-
-                    if (token.TokenType != TokenType.EndOfLine)
-                    {
-                        this.lexer.PushToken(token);
-                        this.lastSemi = true;
-                        elsecommand = this.CompileCommandList();
-                    }
-                    else
-                    {
-                        int newindent = this.lexer.NextIndent();
-                        elsecommand = this.CompileNestedCommandList(newindent);
-                    }
+                    ICommand elsecommand = this.CompileSuite();
 
                     return new IfCommand(condition, thencommand, elsecommand);
                 }
@@ -519,26 +505,7 @@
         private ICommand CompileWhileCommand()
         {
             IExpression condition = this.CompileExpression();
-            ICommand command;
-
-            this.CompileToken(TokenType.Separator, ":");
-
-            Token token = this.lexer.NextToken();
-
-            if (token == null)
-                throw new UnexpectedEndOfInputException();
-
-            if (token.TokenType != TokenType.EndOfLine)
-            {
-                this.lexer.PushToken(token);
-                this.lastSemi = true;
-                command = this.CompileCommandList();
-            }
-            else
-            {
-                int newindent = this.lexer.NextIndent();
-                command = this.CompileNestedCommandList(newindent);
-            }
+            ICommand command = this.CompileSuite();
 
             return new WhileCommand(condition, command);
         }
@@ -551,11 +518,7 @@
             IList<ParameterExpression> parameters = this.CompileParameterExpressionList();
             this.CompileToken(TokenType.Separator, ")");
 
-            this.CompileToken(TokenType.Separator, ":");
-            this.CompileToken(TokenType.EndOfLine);
-
-            int newindent = this.lexer.NextIndent();
-            ICommand body = this.CompileNestedCommandList(newindent);
+            ICommand body = this.CompileSuite();
 
             return new DefCommand(name, parameters, body);
         }
@@ -563,10 +526,7 @@
         private ICommand CompileClassCommand()
         {
             string name = this.CompileName(true).Value;
-            this.CompileToken(TokenType.Separator, ":");
-            this.CompileToken(TokenType.EndOfLine);
-            int newindent = this.lexer.NextIndent();
-            ICommand body = this.CompileNestedCommandList(newindent);
+            ICommand body = this.CompileSuite();
             return new ClassCommand(name, body);
         }
 
