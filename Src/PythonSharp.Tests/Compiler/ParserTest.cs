@@ -716,6 +716,21 @@
         }
 
         [TestMethod]
+        public void CompileImportCommandWithDottedName()
+        {
+            Parser parser = new Parser("import PythonSharp.Language");
+
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ImportCommand));
+
+            ImportCommand impcmd = (ImportCommand)command;
+
+            Assert.AreEqual("PythonSharp.Language", impcmd.ModuleName);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(NameExpectedException))]
         public void RaiseIfCompileImportCommandWithoutModuleName()
         {

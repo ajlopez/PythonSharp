@@ -261,8 +261,6 @@
                 return;
             }
 
-            this.lexer.PushToken(token);
-
             throw new UnexpectedTokenException(token);
         }
 
@@ -308,11 +306,14 @@
 
             if (token.Value == "import")
             {
-                Token name = this.CompileName(true);
+                string name = this.CompileName(true).Value;
+
+                while (this.TryCompile(TokenType.Operator, "."))
+                    name += "." + this.CompileName(true).Value;
 
                 this.CompileEndOfCommand();
 
-                return new ImportCommand(name.Value);
+                return new ImportCommand(name);
             }
 
             if (token.Value == "from")

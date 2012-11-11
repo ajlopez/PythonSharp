@@ -18,7 +18,7 @@
 
         public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            string separator = (namedArguments != null && namedArguments.ContainsKey("sep")) ? (string) namedArguments["sep"] : " ";
+            string separator = (namedArguments != null && namedArguments.ContainsKey("sep")) ? (string)namedArguments["sep"] : " ";
             string end = (namedArguments != null && namedArguments.ContainsKey("end")) ? (string)namedArguments["end"] : null;
 
             if (arguments != null)

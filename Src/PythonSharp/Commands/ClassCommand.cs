@@ -38,7 +38,7 @@
                     klass.SetMethod(deffunc.Name, deffunc);
             }
 
-            klass.SetValue("__doc__", doc);
+            klass.SetValue("__doc__", this.doc);
 
             context.SetValue(this.name, klass);
         }

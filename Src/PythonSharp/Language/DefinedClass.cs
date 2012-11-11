@@ -7,7 +7,7 @@
 
     public class DefinedClass : IType, IFunction, IContext
     {
-        private const string constructorName = "__init__";
+        private const string ConstructorName = "__init__";
         private string name;
         private IContext global;
         private IDictionary<string, object> values = new Dictionary<string, object>();
@@ -52,9 +52,9 @@
         {
             var dynobj = new DynamicObject(this);
 
-            if (this.HasMethod(constructorName))
+            if (this.HasMethod(ConstructorName))
             {
-                IFunction constructor = this.GetMethod(constructorName);
+                IFunction constructor = this.GetMethod(ConstructorName);
                 IList<object> args = new List<object>() { dynobj };
 
                 if (arguments != null && arguments.Count > 0)

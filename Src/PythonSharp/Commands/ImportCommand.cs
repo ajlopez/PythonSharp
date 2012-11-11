@@ -4,11 +4,10 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-
     using PythonSharp.Compiler;
     using PythonSharp.Expressions;
-    using PythonSharp.Utilities;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class ImportCommand : ICommand
     {

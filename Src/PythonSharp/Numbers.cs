@@ -30,7 +30,7 @@
 
         public static object Divide(object obj1, object obj2)
         {
-            if (IsFixnum(obj1) && IsFixnum(obj2) && (int) Operators.ModObject(obj1, obj2) == 0)
+            if (IsFixnum(obj1) && IsFixnum(obj2) && (int)Operators.ModObject(obj1, obj2) == 0)
                 return Operators.IntDivideObject(obj1, obj2);
 
             return Operators.DivideObject(obj1, obj2);
@@ -107,7 +107,7 @@
             if (!IsFixnum(obj))
                 throw new TypeError(string.Format("'{0}' object cannot be interpreted as an integer", Types.GetTypeName(obj)));
 
-            return (int) obj;
+            return (int)obj;
         }
     }
 }

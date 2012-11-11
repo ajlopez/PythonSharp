@@ -9,12 +9,12 @@
     {
         private MethodDelegate method;
 
-        public delegate object MethodDelegate(IList<object> arguments);
-
         public NativeMethod(MethodDelegate method)
         {
             this.method = method;
         }
+
+        public delegate object MethodDelegate(IList<object> arguments);
 
         public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
         {

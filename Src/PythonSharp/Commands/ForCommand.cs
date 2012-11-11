@@ -1,13 +1,12 @@
 ﻿namespace PythonSharp.Commands
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
-    using System.Collections;
-    using PythonSharp.Exceptions;
 
     public class ForCommand : ICommand
     {

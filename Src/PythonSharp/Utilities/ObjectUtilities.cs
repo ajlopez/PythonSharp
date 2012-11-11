@@ -82,7 +82,7 @@
             if (obj is DynamicObject && indexes != null && indexes.Length == 1)
                 return ((DynamicObject)obj).GetValue((string)indexes[0]);
 
-            return GetValue(obj, "", indexes); 
+            return GetValue(obj, string.Empty, indexes); 
         }
 
         public static void SetIndexedValue(object obj, object[] indexes, object value)

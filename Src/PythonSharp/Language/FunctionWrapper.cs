@@ -96,7 +96,7 @@
 
         public TR DoFunction(T1 t1, T2 t2)
         {
-            return (TR) this.Function.Apply(this.Context, new object[] { t1, t2 }, null);
+            return (TR)this.Function.Apply(this.Context, new object[] { t1, t2 }, null);
         }
 
         public void DoAction(T1 t1, T2 t2)

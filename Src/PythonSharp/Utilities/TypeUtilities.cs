@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Reflection;
     using System.Text;
-    using PythonSharp.Language;
     using PythonSharp.Exceptions;
+    using PythonSharp.Language;
 
     // Based on AjSharp AjLanguage.TypeUtilities
     public class TypeUtilities
