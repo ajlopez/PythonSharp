@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Compiler;
+    using PythonSharp.Exceptions;
     using PythonSharp.Utilities;
 
     [TestClass]
@@ -99,6 +101,33 @@
         public void GetValueFromEnum()
         {
             Assert.AreEqual(System.UriKind.RelativeOrAbsolute, TypeUtilities.InvokeTypeMember(typeof(System.UriKind), "RelativeOrAbsolute", null));
+        }
+
+        [TestMethod]
+        public void ParseTokenTypeValues()
+        {
+            Type type = typeof(TokenType);
+
+            Assert.AreEqual(TokenType.Name, TypeUtilities.ParseEnumValue(type, "Name"));
+            Assert.AreEqual(TokenType.Integer, TypeUtilities.ParseEnumValue(type, "Integer"));
+            Assert.AreEqual(TokenType.Boolean, TypeUtilities.ParseEnumValue(type, "Boolean"));
+        }
+
+        [TestMethod]
+        public void RaiseWhenUnknownEnumValue()
+        {
+            Type type = typeof(TokenType);
+
+            try
+            {
+                TypeUtilities.ParseEnumValue(type, "Spam");
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(ValueError));
+                Assert.AreEqual("'Spam' is not a valid value of 'TokenType'", ex.Message);
+            }
         }
     }
 }

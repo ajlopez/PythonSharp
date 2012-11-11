@@ -6,6 +6,7 @@
     using System.Reflection;
     using System.Text;
     using PythonSharp.Language;
+    using PythonSharp.Exceptions;
 
     // Based on AjSharp AjLanguage.TypeUtilities
     public class TypeUtilities
@@ -83,6 +84,20 @@
         public static object InvokeTypeMember(Type type, string name, IList<object> parameters)
         {
             return type.InvokeMember(name, System.Reflection.BindingFlags.FlattenHierarchy | System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static, null, null, parameters == null ? null : parameters.ToArray());
+        }
+
+        public static object ParseEnumValue(Type type, string name)
+        {
+            FieldInfo[] fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+            for (int i = 0, count = fields.Length; i < count; i++)
+            {
+                FieldInfo fi = fields[i];
+                if (fi.Name == name)
+                    return fi.GetValue(null);
+            }
+
+            throw new ValueError(string.Format("'{0}' is not a valid value of '{1}'", name, type.Name));
         }
 
         private static ICollection<string> GetNamespaces()
