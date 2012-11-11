@@ -6,6 +6,7 @@
     using System.Text;
 
     using Microsoft.VisualBasic.CompilerServices;
+    using PythonSharp.Exceptions;
 
     public static class Numbers
     {
@@ -99,6 +100,14 @@
         public static object Negate(object obj)
         {
             return Operators.NegateObject(obj);
+        }
+
+        public static int ToInteger(object obj)
+        {
+            if (!IsFixnum(obj))
+                throw new TypeError(string.Format("'{0}' object cannot be interpreted as an integer", Types.GetTypeName(obj)));
+
+            return (int) obj;
         }
     }
 }

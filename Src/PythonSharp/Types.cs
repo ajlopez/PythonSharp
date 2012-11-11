@@ -19,6 +19,9 @@
             if (value is int)
                 return "int";
 
+            if (value is double)
+                return "float";
+
             if (value is string)
                 return "str";
 

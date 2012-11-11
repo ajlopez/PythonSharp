@@ -96,5 +96,22 @@
                 Assert.AreEqual("range expected at most 3 arguments, got 4", ex.Message);
             }
         }
+
+        [TestMethod]
+        public void RaiseIfSomeParameterIsFloat()
+        {
+            RangeFunction function = new RangeFunction();
+
+            try
+            {
+                function.Apply(null, new object[] { 1.0, 2, 3 }, null);
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TypeError));
+                Assert.AreEqual("'float' object cannot be interpreted as an integer", ex.Message);
+            }
+        }
     }
 }

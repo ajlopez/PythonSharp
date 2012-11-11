@@ -34,6 +34,8 @@
             Assert.IsTrue(Numbers.IsFixnum(2L));
             Assert.IsTrue(Numbers.IsFixnum((short)3));
 
+            Assert.IsFalse(Numbers.IsFixnum(1.0));
+            Assert.IsFalse(Numbers.IsFixnum(2.5));
             Assert.IsFalse(Numbers.IsFixnum(null));
             Assert.IsFalse(Numbers.IsFixnum("foo"));
         }
