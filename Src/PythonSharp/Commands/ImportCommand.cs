@@ -12,25 +12,61 @@
     public class ImportCommand : ICommand
     {
         private string modname;
+        private string[] names;
 
         public ImportCommand(string modname)
         {
             this.modname = modname;
+            this.names = modname.Split('.');
         }
 
         public string ModuleName { get { return this.modname; } }
 
         public void Execute(IContext context)
         {
-            Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
-            ICommand command = parser.CompileCommandList();
-            string doc = CommandUtilities.GetDocString(command);
+            Module module = null;
+            string doc = null;
 
-            Module module = new Module(context.GlobalContext);
+            if (TypeUtilities.IsNamespace(this.modname))
+            {
+                var types = TypeUtilities.GetTypesByNamespace(this.modname);
 
-            command.Execute(module);
+                module = new Module(context.GlobalContext);
 
-            context.SetValue(this.modname, module);
+                foreach (var type in types)
+                    module.SetValue(type.Name, type);
+            }
+            else
+            {
+                Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
+                ICommand command = parser.CompileCommandList();
+                doc = CommandUtilities.GetDocString(command);
+
+                module = new Module(context.GlobalContext);
+
+                command.Execute(module);
+            }
+
+            IValues values = context;
+            int nname = 0;
+
+            foreach (var name in this.names)
+            {
+                string normname = name.Trim();
+
+                if (nname == this.names.Length - 1)
+                    values.SetValue(normname, module);
+                else if (!values.HasValue(normname))
+                {
+                    var mod = new Module(context.GlobalContext);
+                    values.SetValue(normname, mod);
+                    values = mod;
+                }
+                else
+                    values = (IValues)values.GetValue(normname);
+
+                nname++;
+            }
 
             module.SetValue("__doc__", doc);
         }

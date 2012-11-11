@@ -87,7 +87,7 @@
         }
 
         [TestMethod]
-        public void ImportSystemIONamespace()
+        public void ImportFromSystemIONamespace()
         {
             ImportFromCommand importcmd = new ImportFromCommand("System.IO");
 
@@ -102,6 +102,30 @@
             Assert.IsNotNull(machine.Environment.GetValue("FileInfo"));
             Assert.IsNotNull(machine.Environment.GetValue("Directory"));
             Assert.IsNotNull(machine.Environment.GetValue("DirectoryInfo"));
+        }
+
+        [TestMethod]
+        public void ImportSystemIONamespace()
+        {
+            ImportCommand importcmd = new ImportCommand("System.IO");
+
+            Machine machine = new Machine();
+
+            importcmd.Execute(machine.Environment);
+
+            var result = machine.Environment.GetValue("System");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Module));
+
+            var ioresult = ((Module)result).GetValue("IO");
+            Assert.IsNotNull(ioresult);
+            Assert.IsInstanceOfType(ioresult, typeof(Module));
+
+            var module = (Module)ioresult;
+
+            Assert.IsNotNull(module.GetValue("FileInfo"));
+            Assert.IsNotNull(module.GetValue("Directory"));
+            Assert.IsNotNull(module.GetValue("DirectoryInfo"));
         }
     }
 }
