@@ -1,6 +1,7 @@
 ﻿namespace PythonSharp.Tests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -17,6 +18,17 @@
             Assert.IsTrue(Predicates.IsFalse(0));
             Assert.IsTrue(Predicates.IsFalse(0.0));
             Assert.IsTrue(Predicates.IsFalse(string.Empty));
+        }
+
+        [TestMethod]
+        public void SequencesAsBooleans()
+        {
+            Assert.IsTrue(Predicates.IsFalse(string.Empty));
+            Assert.IsTrue(Predicates.IsFalse(new ArrayList()));
+            Assert.IsTrue(Predicates.IsFalse(new List<object>() { }));
+
+            Assert.IsFalse(Predicates.IsFalse(" "));
+            Assert.IsFalse(Predicates.IsFalse(new List<object>() { 1 }));
         }
 
         [TestMethod]

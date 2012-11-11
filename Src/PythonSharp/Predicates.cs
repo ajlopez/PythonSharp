@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Collections;
 
     public static class Predicates
     {
@@ -23,6 +24,9 @@
 
             if (obj is string && string.IsNullOrEmpty((string)obj))
                 return true;
+
+            if (obj is IEnumerable)
+                return !((IEnumerable)obj).GetEnumerator().MoveNext();
 
             return false;
         }

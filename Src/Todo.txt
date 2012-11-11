@@ -8,6 +8,8 @@
 
 while with else
 + for
+for multi set
+multi set
 for with else
 + range builtin function
 
@@ -48,7 +50,7 @@ Importing this module will append site-specific paths to the module search path 
 
 Constanst: __doc__ __init__
 
-for loop
++ for loop
 loop variants
 
 single inheritance in class
