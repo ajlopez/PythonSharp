@@ -66,30 +66,12 @@
 
         public IExpression CompileList()
         {
-            ListExpression listExpression = new ListExpression();
+            var list = this.CompileExpressionList();
 
-            Token token = this.lexer.NextToken();
+            if (list == null)
+                return new ListExpression(new List<IExpression>());
 
-            while (token != null && token.Value != "]")
-            {
-                if (listExpression.Expressions.Count != 0)
-                {
-                    if (token.Value != ",")
-                        throw new ExpectedTokenException(",");
-                }
-                else
-                    this.lexer.PushToken(token);
-
-                IExpression expression = this.CompileExpression();
-                listExpression.Add(expression);
-
-                token = this.lexer.NextToken();
-            }
-
-            if (token != null)
-                this.lexer.PushToken(token);
-
-            return listExpression;
+            return new ListExpression(list);
         }
 
         public IExpression CompileDictionary()
@@ -295,28 +277,15 @@
 
         private ExpressionCommand CompileExpressionCommand()
         {
-            IExpression expr = this.CompileExpression();
+            var list = this.CompileExpressionList();
 
-            if (expr == null)
+            if (list == null)
                 return null;
 
-            ListExpression lexpr = null;
+            if (list.Count == 1)
+                return new ExpressionCommand(list[0]);
 
-            while (this.TryCompile(TokenType.Separator, ","))
-            {
-                if (lexpr == null)
-                {
-                    lexpr = new ListExpression();
-                    lexpr.Add(expr);
-                }
-
-                lexpr.Add(this.CompileExpression());
-            }
-
-            if (lexpr != null)
-                return new ExpressionCommand(lexpr);
-
-            return new ExpressionCommand(expr);
+            return new ExpressionCommand(new ListExpression(list, true));
         }
 
         private ICommand CompileSimpleCommand()
@@ -781,15 +750,20 @@
                 case TokenType.Separator:
                     if (token.Value == "(")
                     {
-                        IExpression expression = this.CompileExpression();
+                        var list = this.CompileExpressionList();
                         this.CompileToken(TokenType.Separator, ")");
-                        return expression;
+
+                        if (list.Count == 1)
+                            return list[0];
+
+                        return new ListExpression(list, true);
                     }
 
                     if (token.Value == "[")
                     {
                         IExpression expression = this.CompileList();
                         this.CompileToken(TokenType.Separator, "]");
+
                         return expression;
                     }
 

@@ -126,7 +126,7 @@
             var dynatom1 = (DynamicObject)atom1;
             Assert.AreEqual("O", dynatom1.GetValue("symbol"));
             Assert.AreEqual(15.9994, dynatom1.GetValue("mass"));
-            Assert.IsInstanceOfType(dynatom1.GetValue("position"), typeof(ArrayList));
+            Assert.IsInstanceOfType(dynatom1.GetValue("position"), typeof(IList));
         }
 
         private string ExecuteAndPrint(string text)

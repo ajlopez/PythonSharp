@@ -179,6 +179,34 @@
             ExpressionCommand exprcommand = (ExpressionCommand)command;
             Assert.IsNotNull(exprcommand.Expression);
             Assert.IsInstanceOfType(exprcommand.Expression, typeof(ListExpression));
+            Assert.IsTrue(((ListExpression)exprcommand.Expression).IsReadOnly);
+        }
+
+        [TestMethod]
+        public void CompileSimpleExpressionInParenthesis()
+        {
+            Parser parser = new Parser("(1)");
+
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void CompileListExpressionInParenthesis()
+        {
+            Parser parser = new Parser("(1, 2)");
+
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
+
+            var lexpr = (ListExpression)expression;
+
+            Assert.IsTrue(lexpr.IsReadOnly);
+            Assert.AreEqual(2, lexpr.Expressions.Count);
         }
 
         [TestMethod]
@@ -230,7 +258,7 @@
         }
 
         [TestMethod]
-        public void CompileAndEvaluateListExpression()
+        public void CompileAndEvaluateArrayAsListExpression()
         {
             Parser parser = new Parser("[1,2,'spam']");
 
@@ -238,6 +266,7 @@
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ListExpression));
+            Assert.IsFalse(((ListExpression)expression).IsReadOnly);
 
             object result = expression.Evaluate(new BindingEnvironment());
 
@@ -261,6 +290,7 @@
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ListExpression));
+            Assert.IsFalse(((ListExpression)expression).IsReadOnly);
 
             object result = expression.Evaluate(new BindingEnvironment());
 
@@ -294,6 +324,7 @@
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ListExpression));
+            Assert.IsFalse(((ListExpression)expression).IsReadOnly);
 
             object result = expression.Evaluate(environment);
 
@@ -322,6 +353,7 @@
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ListExpression));
+            Assert.IsFalse(((ListExpression)expression).IsReadOnly);
 
             object result = expression.Evaluate(environment);
 
@@ -349,6 +381,7 @@
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ListExpression));
+            Assert.IsFalse(((ListExpression)expression).IsReadOnly);
 
             object result = expression.Evaluate(environment);
 

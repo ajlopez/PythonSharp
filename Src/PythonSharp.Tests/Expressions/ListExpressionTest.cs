@@ -9,6 +9,7 @@
     using PythonSharp;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using System.Collections.ObjectModel;
 
     [TestClass]
     public class ListExpressionTest
@@ -16,7 +17,7 @@
         [TestMethod]
         public void CreateListExpression()
         {
-            ListExpression expression = new ListExpression();
+            ListExpression expression = new ListExpression(new IExpression[] {});
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Expressions);
@@ -24,12 +25,9 @@
         }
 
         [TestMethod]
-        public void EvaluateListExpression()
+        public void EvaluateReadOnlyListExpression()
         {
-            ListExpression expression = new ListExpression();
-
-            expression.Add(new ConstantExpression(1));
-            expression.Add(new ConstantExpression("foo"));
+            ListExpression expression = new ListExpression(new List<IExpression>() { new ConstantExpression(1), new ConstantExpression("foo") }, true);
 
             Assert.IsNotNull(expression.Expressions);
             Assert.AreEqual(2, expression.Expressions.Count);
@@ -44,6 +42,8 @@
             Assert.AreEqual(2, list.Count);
             Assert.AreEqual(1, list[0]);
             Assert.AreEqual("foo", list[1]);
+
+            Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<object>));
         }
     }
 }
