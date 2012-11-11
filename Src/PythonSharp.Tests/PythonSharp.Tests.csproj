@@ -74,6 +74,7 @@
     <Compile Include="Language\DynamicObjectTests.cs" />
     <Compile Include="Language\FunctionWrapperTests.cs" />
     <Compile Include="Language\ModuleTests.cs" />
+    <Compile Include="Language\RangeTests.cs" />
     <Compile Include="Language\StringTypeTests.cs" />
     <Compile Include="NumbersTests.cs" />
     <Compile Include="Compiler\ParserTest.cs" />

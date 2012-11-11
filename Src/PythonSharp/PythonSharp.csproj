@@ -93,6 +93,7 @@
     <Compile Include="Language\Module.cs" />
     <Compile Include="Language\NativeMethod.cs" />
     <Compile Include="Language\Parameter.cs" />
+    <Compile Include="Language\Range.cs" />
     <Compile Include="Language\StringType.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
