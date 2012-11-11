@@ -11,7 +11,7 @@
         public static string AsString(object value)
         {
             if (value == null)
-                return null;
+                return "None";
 
             if (value is string)
             {

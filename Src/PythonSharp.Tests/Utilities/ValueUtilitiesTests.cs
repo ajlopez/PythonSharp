@@ -11,12 +11,6 @@
     public class ValueUtilitiesTests
     {
         [TestMethod]
-        public void NullAsString()
-        {
-            Assert.IsNull(ValueUtilities.AsString(null));
-        }
-
-        [TestMethod]
         public void IntegerAsString()
         {
             Assert.AreEqual("1", ValueUtilities.AsString(1));
@@ -50,6 +44,12 @@
         public void StringWithQuoteAndDoubleQuoteAsString()
         {
             Assert.AreEqual("'hello\"\\'world'", ValueUtilities.AsString("hello\"'world"));
+        }
+
+        [TestMethod]
+        public void NoneAsString()
+        {
+            Assert.AreEqual("None", ValueUtilities.AsString(null));
         }
     }
 }
