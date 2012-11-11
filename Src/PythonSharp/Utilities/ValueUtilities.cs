@@ -11,7 +11,7 @@
         public static string AsString(object value)
         {
             if (value == null)
-                return "None";
+                return null;
 
             if (value is string)
             {
@@ -30,6 +30,14 @@
 
                 return string.Format("'{0}'", text);
             }
+
+            return value.ToString();
+        }
+
+        public static string AsPrintString(object value)
+        {
+            if (value == null)
+                return "None";
 
             return value.ToString();
         }

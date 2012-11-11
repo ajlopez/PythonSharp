@@ -11,6 +11,12 @@
     public class ValueUtilitiesTests
     {
         [TestMethod]
+        public void NullAsString()
+        {
+            Assert.IsNull(ValueUtilities.AsString(null));
+        }
+
+        [TestMethod]
         public void IntegerAsString()
         {
             Assert.AreEqual("1", ValueUtilities.AsString(1));
@@ -47,9 +53,21 @@
         }
 
         [TestMethod]
-        public void NoneAsString()
+        public void NoneAsPrintString()
         {
-            Assert.AreEqual("None", ValueUtilities.AsString(null));
+            Assert.AreEqual("None", ValueUtilities.AsPrintString(null));
+        }
+
+        [TestMethod]
+        public void IntegerAsPrintString()
+        {
+            Assert.AreEqual("1", ValueUtilities.AsPrintString(1));
+        }
+
+        [TestMethod]
+        public void StringAsPrintString()
+        {
+            Assert.AreEqual("spam", ValueUtilities.AsPrintString("spam"));
         }
     }
 }
