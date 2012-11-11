@@ -210,6 +210,22 @@
         }
 
         [TestMethod]
+        public void CompileEmptyTupleExpression()
+        {
+            Parser parser = new Parser("()");
+
+            IExpression expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ListExpression));
+
+            var lexpr = (ListExpression)expression;
+
+            Assert.IsTrue(lexpr.IsReadOnly);
+            Assert.AreEqual(0, lexpr.Expressions.Count);
+        }
+
+        [TestMethod]
         public void CompileAndEvaluateSubtractExpression()
         {
             Parser parser = new Parser("1-2");

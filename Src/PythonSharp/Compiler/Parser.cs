@@ -753,6 +753,9 @@
                         var list = this.CompileExpressionList();
                         this.CompileToken(TokenType.Separator, ")");
 
+                        if (list == null)
+                            return new ListExpression(new List<IExpression>(), true);
+
                         if (list.Count == 1)
                             return list[0];
 
