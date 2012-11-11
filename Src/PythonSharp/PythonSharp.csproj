@@ -80,6 +80,7 @@
     <Compile Include="Expressions\BooleanExpression.cs" />
     <Compile Include="Expressions\NamedArgumentExpression.cs" />
     <Compile Include="Expressions\NegateExpression.cs" />
+    <Compile Include="Expressions\NotExpression.cs" />
     <Compile Include="Expressions\ParameterExpression.cs" />
     <Compile Include="Functions\LenFunction.cs" />
     <Compile Include="Functions\PrintFunction.cs" />

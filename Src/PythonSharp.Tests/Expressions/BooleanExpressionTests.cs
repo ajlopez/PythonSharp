@@ -12,6 +12,19 @@
     public class BooleanExpressionTests
     {
         [TestMethod]
+        public void CreateBooleanExpression()
+        {
+            IExpression trueexpr = new ConstantExpression(true);
+            IExpression falseexpr = new ConstantExpression(false);
+            BooleanExpression expression = new BooleanExpression(trueexpr, falseexpr, BooleanOperator.Or);
+
+            Assert.AreEqual(trueexpr, expression.Left);
+            Assert.AreEqual(falseexpr, expression.Right);
+
+            Assert.AreEqual(BooleanOperator.Or, expression.Operation);
+        }
+
+        [TestMethod]
         public void EvaluateOr()
         {
             IExpression trueexpr = new ConstantExpression(true);
