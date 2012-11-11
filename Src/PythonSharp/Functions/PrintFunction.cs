@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class PrintFunction : IFunction
     {
@@ -24,7 +25,7 @@
                 {
                     if (narg != 0)
                         this.machine.Output.Write(' ');
-                    this.machine.Output.Write(argument.ToString());
+                    this.machine.Output.Write(ValueUtilities.AsPrintString(argument));
                     narg++;
                 }
             }
