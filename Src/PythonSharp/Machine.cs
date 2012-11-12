@@ -20,6 +20,7 @@
             this.environment.SetValue("range", new RangeFunction());
             this.environment.SetValue("eval", new EvalFunction());
             this.environment.SetValue("exec", new ExecFunction());
+            this.environment.SetValue("dir", new DirFunction());
             this.environment.SetValue("__machine__", this);
         }
 

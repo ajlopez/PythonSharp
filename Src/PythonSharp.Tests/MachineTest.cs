@@ -40,6 +40,8 @@
             Assert.IsInstanceOfType(machine.Environment.GetValue("eval"), typeof(EvalFunction));
             Assert.IsNotNull(machine.Environment.GetValue("exec"));
             Assert.IsInstanceOfType(machine.Environment.GetValue("exec"), typeof(ExecFunction));
+            Assert.IsNotNull(machine.Environment.GetValue("dir"));
+            Assert.IsInstanceOfType(machine.Environment.GetValue("dir"), typeof(DirFunction));
         }
     }
 }
