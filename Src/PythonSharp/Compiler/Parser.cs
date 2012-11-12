@@ -42,7 +42,7 @@
 
         public IExpression CompileExpression()
         {
-            IExpression expression = this.CompileBinaryLevel0Expression();
+            IExpression expression = this.CompileOrExpression();
 
             return expression;
         }
@@ -601,6 +601,40 @@
                 this.lexer.PushToken(token);
 
             return expression;
+        }
+
+        private IExpression CompileOrExpression()
+        {
+            IExpression expression = this.CompileAndExpression();
+
+            if (expression == null)
+                return null;
+
+            while (this.TryCompile(TokenType.Name, "or"))
+                expression = new BooleanExpression(expression, this.CompileAndExpression(), BooleanOperator.Or);
+
+            return expression;
+        }
+
+        private IExpression CompileAndExpression()
+        {
+            IExpression expression = this.CompileNotExpression();
+
+            if (expression == null)
+                return null;
+
+            while (this.TryCompile(TokenType.Name, "and"))
+                expression = new BooleanExpression(expression, this.CompileNotExpression(), BooleanOperator.And);
+
+            return expression;
+        }
+
+        private IExpression CompileNotExpression()
+        {
+            if (this.TryCompile(TokenType.Name, "not"))
+                return new NotExpression(this.CompileNotExpression());
+
+            return CompileBinaryLevel0Expression();
         }
 
         private IExpression CompileBinaryLevel0Expression()

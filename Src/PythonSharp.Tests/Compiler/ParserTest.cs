@@ -1582,6 +1582,72 @@
             Assert.IsInstanceOfType(expression, typeof(NegateExpression));
         }
 
+        [TestMethod]
+        public void CompileNotExpression()
+        {
+            Parser parser = new Parser("not 3");
+
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NotExpression));
+
+            var notexpression = (NotExpression)expression;
+            Assert.IsInstanceOfType(notexpression.Expression, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void CompileAndExpression()
+        {
+            Parser parser = new Parser("2 and 3");
+
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BooleanExpression));
+
+            var booleanexpression = (BooleanExpression)expression;
+            Assert.AreEqual(BooleanOperator.And, booleanexpression.Operation);
+            Assert.IsInstanceOfType(booleanexpression.Left, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(booleanexpression.Right, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void CompileOrExpression()
+        {
+            Parser parser = new Parser("2 or 3");
+
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BooleanExpression));
+
+            var booleanexpression = (BooleanExpression)expression;
+            Assert.AreEqual(BooleanOperator.Or, booleanexpression.Operation);
+            Assert.IsInstanceOfType(booleanexpression.Left, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(booleanexpression.Right, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void CompileBooleanExpression()
+        {
+            Parser parser = new Parser("2 and 4 or not 3");
+
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(BooleanExpression));
+
+            var booleanexpression = (BooleanExpression)expression;
+            Assert.AreEqual(BooleanOperator.Or, booleanexpression.Operation);
+            Assert.IsInstanceOfType(booleanexpression.Left, typeof(BooleanExpression));
+            Assert.IsInstanceOfType(booleanexpression.Right, typeof(NotExpression));
+
+            var leftexpression = (BooleanExpression)booleanexpression.Left;
+
+            Assert.AreEqual(BooleanOperator.And, leftexpression.Operation);
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();
