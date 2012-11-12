@@ -14,6 +14,17 @@ for with else
 + range builtin function
 + print sequence
 
+int review
+float review
+complex
+
+iterator types 
+http://docs.python.org/3.3/library/stdtypes.html#iterator-types
+http://docs.python.org/3.3/library/stdtypes.html#sequence-types-list-tuple-range
+
+locals() ver la salida en el interprete
+globals()
+
 + 4/5 should return 0.8
 
 = Refactor if/else parse implementation
