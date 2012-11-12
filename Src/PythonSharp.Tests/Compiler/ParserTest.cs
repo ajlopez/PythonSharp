@@ -10,9 +10,9 @@
     using PythonSharp;
     using PythonSharp.Commands;
     using PythonSharp.Compiler;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
-    using PythonSharp.Exceptions;
 
     [TestClass]
     public class ParserTest

@@ -1,5 +1,6 @@
 ﻿namespace PythonSharp.Tests.Commands
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -9,7 +10,6 @@
     using PythonSharp.Commands;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
-    using System;
 
     [TestClass]
     public class ImportCommandTest

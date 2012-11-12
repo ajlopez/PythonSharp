@@ -1,16 +1,27 @@
 ﻿namespace PythonSharp.Tests.Language
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PythonSharp.Language;
     using PythonSharp.Exceptions;
+    using PythonSharp.Language;
 
     [TestClass]
     public class DynamicObjectTests
     {
+        public static DefinedClass CreateClassWithMethods(string name)
+        {
+            DefinedClass klass = new DefinedClass(name);
+
+            klass.SetMethod("dummy", new NativeMethod(DummyMethod));
+            klass.SetMethod("getSelf", new NativeMethod(SelfMethod));
+            klass.SetMethod("getValue", new NativeMethod(GetValueMethod));
+
+            return klass;
+        }
+
         [TestMethod]
         public void NewDynamicObject()
         {
@@ -164,17 +175,6 @@
             Assert.AreEqual(2, result);
             Assert.IsTrue(dynobj.HasValue("one"));
             Assert.AreEqual(1, klass.GetValue("one"));
-        }
-
-        public static DefinedClass CreateClassWithMethods(string name)
-        {
-            DefinedClass klass = new DefinedClass(name);
-
-            klass.SetMethod("dummy", new NativeMethod(DummyMethod));
-            klass.SetMethod("getSelf", new NativeMethod(SelfMethod));
-            klass.SetMethod("getValue", new NativeMethod(GetValueMethod));
-
-            return klass;
         }
 
         private static object DummyMethod(IList<object> arguments)

@@ -19,7 +19,7 @@
             Assert.AreEqual("int", Types.GetTypeName(123));
             Assert.AreEqual("str", Types.GetTypeName("spam"));
             Assert.AreEqual("float", Types.GetTypeName(1.2));
-            Assert.AreEqual("function", Types.GetTypeName(new DefinedFunction("spam",null,null)));
+            Assert.AreEqual("function", Types.GetTypeName(new DefinedFunction("spam", null, null)));
             Assert.AreEqual("list", Types.GetTypeName(new object[] { 1, 2 }));
             Assert.AreEqual("TypeError", Types.GetTypeName(new TypeError(string.Empty)));
         }

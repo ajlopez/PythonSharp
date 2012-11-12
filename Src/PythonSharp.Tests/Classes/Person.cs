@@ -9,11 +9,11 @@
 
     public class Person
     {
+        public event MyEvent NameEvent;
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public event MyEvent NameEvent;
 
         public string GetName()
         {

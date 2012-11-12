@@ -83,7 +83,7 @@
         public void CallObjectMethod()
         {
             DefinedClass klass = DynamicObjectTests.CreateClassWithMethods("Spam");
-            DynamicObject dynobj = (DynamicObject) klass.Apply(null, null, null);
+            DynamicObject dynobj = (DynamicObject)klass.Apply(null, null, null);
             BindingEnvironment environment = new BindingEnvironment();
             environment.SetValue("foo", dynobj);
             CallExpression expression = new CallExpression(new AttributeExpression(new NameExpression("foo"), "getSelf"), null);

@@ -5,9 +5,9 @@
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Exceptions;
     using PythonSharp.Functions;
     using PythonSharp.Language;
-    using PythonSharp.Exceptions;
 
     [TestClass]
     public class RangeFunctionTests

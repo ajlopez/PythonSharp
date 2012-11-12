@@ -5,9 +5,9 @@
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PythonSharp.Language;
     using PythonSharp.Commands;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     [TestClass]
     public class DefinedClassTests
@@ -46,7 +46,7 @@
         public void SetGetMethod()
         {
             DefinedClass klass = new DefinedClass("Spam");
-            IFunction method = new NativeMethod(DummyMethod);
+            IFunction method = new NativeMethod(this.DummyMethod);
 
             klass.SetMethod("foo", method);
 
@@ -61,7 +61,7 @@
         public void ReplaceMethodWithAttribute()
         {
             DefinedClass klass = new DefinedClass("Spam");
-            IFunction method = new NativeMethod(DummyMethod);
+            IFunction method = new NativeMethod(this.DummyMethod);
 
             klass.SetMethod("foo", method);
             klass.SetValue("foo", 1);
@@ -77,7 +77,7 @@
         public void DefineMethodUsingSetValue()
         {
             DefinedClass klass = new DefinedClass("Spam");
-            IFunction method = new NativeMethod(DummyMethod);
+            IFunction method = new NativeMethod(this.DummyMethod);
 
             klass.SetValue("foo", method);
 
@@ -92,7 +92,7 @@
         public void RedefineAttributeAsMethodUsingSetValue()
         {
             DefinedClass klass = new DefinedClass("Spam");
-            IFunction method = new NativeMethod(DummyMethod);
+            IFunction method = new NativeMethod(this.DummyMethod);
 
             klass.SetValue("foo", 1);
             klass.SetValue("foo", method);

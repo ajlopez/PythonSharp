@@ -36,7 +36,6 @@
             Assert.AreEqual(1, listener.X);
             Assert.AreEqual(2, listener.Y);
 
-            //Type type = typeof(FunctionWrapper<,,>);
             MethodInfo invoke = typeof(Calculator).GetEvent("MyEvent").EventHandlerType.GetMethod("Invoke");
             MethodInfo add = typeof(Calculator).GetEvent("MyEvent").GetAddMethod();
             Assert.IsNotNull(add);
@@ -87,7 +86,7 @@
             Assert.AreEqual("Adam", listener.Name);
         }
 
-        class Adder : IFunction
+        internal class Adder : IFunction
         {
             public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
             {
@@ -95,7 +94,7 @@
             }
         }
 
-        class Listener : IFunction
+        internal class Listener : IFunction
         {
             public int X { get; set; }
 
@@ -109,7 +108,7 @@
             }
         }
 
-        class NameListener : IFunction
+        internal class NameListener : IFunction
         {
             public int Length { get; set; }
 

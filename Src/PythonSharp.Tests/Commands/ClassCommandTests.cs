@@ -29,6 +29,7 @@
             Assert.IsNull(dclass.GetValue("__doc__"));
             Assert.IsTrue(dclass.HasValue("__doc__"));
         }
+
         [TestMethod]
         public void CreateSimpleClassWithEmptyDocString()
         {

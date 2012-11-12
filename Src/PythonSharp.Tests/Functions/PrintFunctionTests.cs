@@ -1,12 +1,12 @@
 ﻿namespace PythonSharp.Tests.Functions
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Functions;
-    using System.IO;
 
     [TestClass]
     public class PrintFunctionTests

@@ -1,12 +1,12 @@
 ﻿namespace PythonSharp.Tests.Functions
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PythonSharp.Functions;
     using PythonSharp.Exceptions;
+    using PythonSharp.Functions;
 
     [TestClass]
     public class EvalFunctionTests
@@ -22,7 +22,7 @@
         [TestMethod]
         public void EvalSimpleText()
         {
-            Assert.AreEqual(0, eval.Apply(null, new object[] { "0" }, null));
+            Assert.AreEqual(0, this.eval.Apply(null, new object[] { "0" }, null));
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@
         {
             try
             {
-                eval.Apply(null, null, null);
+                this.eval.Apply(null, null, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@
         {
             try
             {
-                eval.Apply(null, new object[] { 0 }, null);
+                this.eval.Apply(null, new object[] { 0 }, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)

@@ -3,13 +3,13 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
-    using System.Collections.ObjectModel;
 
     [TestClass]
     public class ListExpressionTest
@@ -17,7 +17,7 @@
         [TestMethod]
         public void CreateListExpression()
         {
-            ListExpression expression = new ListExpression(new IExpression[] {});
+            ListExpression expression = new ListExpression(new IExpression[] { });
 
             Assert.IsNotNull(expression);
             Assert.IsNotNull(expression.Expressions);

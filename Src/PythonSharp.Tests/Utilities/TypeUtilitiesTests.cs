@@ -81,7 +81,7 @@
             Assert.IsTrue(types.Contains(typeof(System.IO.FileInfo)));
             Assert.IsTrue(types.Contains(typeof(System.IO.DirectoryInfo)));
 
-            Assert.IsFalse(types.Contains(typeof(System.String)));
+            Assert.IsFalse(types.Contains(typeof(string)));
             Assert.IsFalse(types.Contains(typeof(System.Data.DataSet)));
         }
 

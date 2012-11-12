@@ -82,14 +82,14 @@
         public void EmptyListsAsString()
         {
             Assert.AreEqual("[]", ValueUtilities.AsPrintString(new ArrayList()));
-            Assert.AreEqual("[]", ValueUtilities.AsPrintString(new List<object>() {}));
+            Assert.AreEqual("[]", ValueUtilities.AsPrintString(new List<object>() { }));
             Assert.AreEqual("()", ValueUtilities.AsPrintString(new List<object>().AsReadOnly()));
         }
 
         [TestMethod]
         public void ListsAsString()
         {
-            Assert.AreEqual("[1, 2, 3]", ValueUtilities.AsPrintString(new ArrayList() {1, 2, 3 }));
+            Assert.AreEqual("[1, 2, 3]", ValueUtilities.AsPrintString(new ArrayList() { 1, 2, 3 }));
             Assert.AreEqual("['a', 'b', 'c']", ValueUtilities.AsPrintString(new List<object>() { "a", "b", "c" }));
             Assert.AreEqual("(1, 2, 'c')", ValueUtilities.AsPrintString((new List<object>() { 1, 2, "c" }).AsReadOnly()));
         }

@@ -6,9 +6,9 @@
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
-    using PythonSharp.Exceptions;
 
     [TestClass]
     public class ForCommandTests
