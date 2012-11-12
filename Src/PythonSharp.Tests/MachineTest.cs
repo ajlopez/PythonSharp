@@ -36,6 +36,10 @@
             Assert.IsInstanceOfType(machine.Environment.GetValue("print"), typeof(PrintFunction));
             Assert.IsNotNull(machine.Environment.GetValue("range"));
             Assert.IsInstanceOfType(machine.Environment.GetValue("range"), typeof(RangeFunction));
+            Assert.IsNotNull(machine.Environment.GetValue("eval"));
+            Assert.IsInstanceOfType(machine.Environment.GetValue("eval"), typeof(EvalFunction));
+            Assert.IsNotNull(machine.Environment.GetValue("exec"));
+            Assert.IsInstanceOfType(machine.Environment.GetValue("exec"), typeof(ExecFunction));
         }
     }
 }

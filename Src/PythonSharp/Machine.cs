@@ -18,6 +18,8 @@
             this.environment.SetValue("len", new LenFunction());
             this.environment.SetValue("print", new PrintFunction(this));
             this.environment.SetValue("range", new RangeFunction());
+            this.environment.SetValue("eval", new EvalFunction());
+            this.environment.SetValue("exec", new ExecFunction());
             this.environment.SetValue("__machine__", this);
         }
 

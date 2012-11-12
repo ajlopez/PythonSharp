@@ -9,20 +9,35 @@
     using PythonSharp.Exceptions;
 
     [TestClass]
-    public class EvalFunctionTests
+    public class ExecFunctionTests
     {
-        private EvalFunction eval;
+        private ExecFunction exec;
 
         [TestInitialize]
         public void Setup()
         {
-            this.eval = new EvalFunction();
+            this.exec = new ExecFunction();
         }
 
         [TestMethod]
-        public void EvalSimpleText()
+        public void ExecSimpleText()
         {
-            Assert.AreEqual(0, eval.Apply(null, new object[] { "0" }, null));
+            BindingEnvironment environment = new BindingEnvironment();
+
+            exec.Apply(environment, new object[] { "a = 1" }, null);
+
+            Assert.AreEqual(1, environment.GetValue("a"));
+        }
+
+        [TestMethod]
+        public void ExecCommandList()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            exec.Apply(environment, new object[] { "a = 1; b = 2" }, null);
+
+            Assert.AreEqual(1, environment.GetValue("a"));
+            Assert.AreEqual(2, environment.GetValue("b"));
         }
 
         [TestMethod]
@@ -30,13 +45,13 @@
         {
             try
             {
-                eval.Apply(null, null, null);
+                exec.Apply(null, null, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
             {
                 Assert.IsInstanceOfType(ex, typeof(TypeError));
-                Assert.AreEqual("eval expected at least 1 arguments, got 0", ex.Message);
+                Assert.AreEqual("exec expected at least 1 arguments, got 0", ex.Message);
             }
         }
 
@@ -45,13 +60,13 @@
         {
             try
             {
-                eval.Apply(null, new object[] { 0 }, null);
+                exec.Apply(null, new object[] { 0 }, null);
                 Assert.Fail("Exception expected");
             }
             catch (Exception ex)
             {
                 Assert.IsInstanceOfType(ex, typeof(TypeError));
-                Assert.AreEqual("eval() arg 1 must be a string, bytes or code object", ex.Message);
+                Assert.AreEqual("exec() arg 1 must be a string, bytes or code object", ex.Message);
             }
         }
     }

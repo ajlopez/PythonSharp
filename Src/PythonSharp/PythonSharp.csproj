@@ -82,6 +82,7 @@
     <Compile Include="Expressions\NegateExpression.cs" />
     <Compile Include="Expressions\NotExpression.cs" />
     <Compile Include="Expressions\ParameterExpression.cs" />
+    <Compile Include="Functions\ExecFunction.cs" />
     <Compile Include="Functions\EvalFunction.cs" />
     <Compile Include="Functions\LenFunction.cs" />
     <Compile Include="Functions\PrintFunction.cs" />
