@@ -10,7 +10,6 @@
     public class BooleanExpression : BinaryExpression
     {
         private BooleanOperator operation;
-        private IExpression expression;
 
         public BooleanExpression(IExpression left, IExpression right, BooleanOperator operation)
             : base(left, right)

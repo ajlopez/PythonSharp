@@ -641,7 +641,7 @@
             if (this.TryCompile(TokenType.Name, "not"))
                 return new NotExpression(this.CompileNotExpression());
 
-            return CompileBinaryLevel0Expression();
+            return this.CompileBinaryLevel0Expression();
         }
 
         private IExpression CompileBinaryLevel0Expression()

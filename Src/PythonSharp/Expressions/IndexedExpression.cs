@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class IndexedExpression : IExpression
     {
@@ -29,7 +30,7 @@
             if (target is string)
                 return ((string)target)[(int)index].ToString();
 
-            return ((IList)target)[(int)index];
+            return ObjectUtilities.GetIndexedValue(target, new object[] { index });
         }
     }
 }

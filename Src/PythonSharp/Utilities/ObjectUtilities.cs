@@ -68,6 +68,7 @@
                 obj is byte;
         }
 
+        // TODO implement a method with only one index
         public static object GetIndexedValue(object obj, object[] indexes)
         {
             if (obj is System.Array)
@@ -85,6 +86,7 @@
             return GetValue(obj, string.Empty, indexes); 
         }
 
+        // TODO implement a method with only one index
         public static void SetIndexedValue(object obj, object[] indexes, object value)
         {
             if (obj is System.Array)

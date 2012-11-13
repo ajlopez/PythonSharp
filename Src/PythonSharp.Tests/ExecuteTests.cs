@@ -201,6 +201,14 @@
             Assert.AreEqual(2, this.Evaluate("a[1]"));
         }
 
+        [TestMethod]
+        public void ExecuteSimpleSetDictionaryKey()
+        {
+            this.Execute("a = {}");
+            this.Execute("a['foo'] = 'bar'");
+            Assert.AreEqual("bar", this.Evaluate("a['foo']"));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.machine.Output = new StringWriter();

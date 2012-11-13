@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using PythonSharp.Exceptions;
-    using PythonSharp.Language;
-    using PythonSharp.Compiler;
-    using PythonSharp.Expressions;
     using PythonSharp.Commands;
+    using PythonSharp.Compiler;
+    using PythonSharp.Exceptions;
+    using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class ExecFunction : IFunction
     {

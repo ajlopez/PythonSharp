@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using PythonSharp.Exceptions;
-    using PythonSharp.Language;
     using PythonSharp.Compiler;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
+    using PythonSharp.Language;
 
     public class DirFunction : IFunction
     {
@@ -18,7 +18,7 @@
             if (nargs > 1)
                 throw new TypeError(string.Format("dir expected at most 1 arguments, got {0}", nargs));
 
-            IValues values = nargs == 0 ? context : (IValues) arguments[0];
+            IValues values = nargs == 0 ? context : (IValues)arguments[0];
 
             return values.GetNames().OrderBy(s => s).ToList();
         }
