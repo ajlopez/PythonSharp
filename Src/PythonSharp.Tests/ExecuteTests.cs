@@ -9,6 +9,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
     using PythonSharp.Compiler;
+    using PythonSharp.Expressions;
     using PythonSharp.Language;
 
     [TestClass]
@@ -190,6 +191,16 @@
             Assert.AreEqual("1 1 2 2 3 3 4 ", this.ExecuteAndPrint("for k in [1,2,3]:\r\n  print(k, end=' ')\r\n  print(k, end=' ')\r\nprint(4, end=' ')"));
         }
 
+        [TestMethod]
+        public void ExecuteSimpleSetIndex()
+        {
+            this.Execute("a = [1,2,3]");
+            this.Execute("a[2] = 4");
+            Assert.AreEqual(4, this.Evaluate("a[2]"));
+            Assert.AreEqual(1, this.Evaluate("a[0]"));
+            Assert.AreEqual(2, this.Evaluate("a[1]"));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.machine.Output = new StringWriter();
@@ -216,6 +227,13 @@
             Parser parser = new Parser(new StreamReader(filename));
             ICommand command = parser.CompileCommandList();
             command.Execute(this.machine.Environment);
+        }
+
+        private object Evaluate(string text)
+        {
+            Parser parser = new Parser(text);
+            IExpression expression = parser.CompileExpression();
+            return expression.Evaluate(this.machine.Environment);
         }
     }
 }

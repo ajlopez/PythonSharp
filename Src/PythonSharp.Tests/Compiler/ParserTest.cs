@@ -1648,6 +1648,18 @@
             Assert.AreEqual(BooleanOperator.And, leftexpression.Operation);
         }
 
+        [TestMethod]
+        public void CompileSetIndexCommand()
+        {
+            Parser parser = new Parser("a[1] = 2");
+            var command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SetIndexCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

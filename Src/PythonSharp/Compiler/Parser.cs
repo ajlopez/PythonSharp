@@ -385,6 +385,13 @@
                 return command;
             }
 
+            if (exprcommand.Expression is IndexedExpression)
+            {
+                var indexedexpr = (IndexedExpression)exprcommand.Expression;
+                command = new SetIndexCommand(indexedexpr.TargetExpression, indexedexpr.IndexExpression, valueexpr);
+                return command;
+            }
+
             throw new SyntaxError("invalid assignment");
         }
 
