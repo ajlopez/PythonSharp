@@ -86,7 +86,7 @@ Types
 	- review escape, multiline
 + lists
 + dictionaries
-- tuples
+= tuples
 - files
 - sets
 - None
