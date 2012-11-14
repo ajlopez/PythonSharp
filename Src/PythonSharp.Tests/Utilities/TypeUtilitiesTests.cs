@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Compiler;
@@ -128,6 +129,26 @@
                 Assert.IsInstanceOfType(ex, typeof(ValueError));
                 Assert.AreEqual("'Spam' is not a valid value of 'TokenType'", ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void GetTypeMethod()
+        {
+            Type type = typeof(TokenType);
+            var result = TypeUtilities.GetValue(type, "GetType");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(MethodInfo));
+        }
+
+        [TestMethod]
+        public void GetTypeStaticMethod()
+        {
+            Type type = typeof(System.IO.File);
+            var result = TypeUtilities.GetValue(type, "Exists");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(MethodInfo));
         }
     }
 }

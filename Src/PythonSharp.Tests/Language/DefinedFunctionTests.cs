@@ -5,11 +5,13 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
     using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     [TestClass]
     public class DefinedFunctionTests
@@ -261,6 +263,16 @@
             Assert.IsFalse(func.HasValue("bar"));
             Assert.IsTrue(func.HasValue("__doc__"));
             Assert.AreEqual("foo function", func.GetValue("__doc__"));
+        }
+
+        [TestMethod]
+        public void GetAndUseDelegate()
+        {
+            ICommand body = new PassCommand();
+
+            DefinedFunction func = new DefinedFunction("foo", null, body);
+            var type = typeof(ThreadStart);
+            //Activator.CreateInstance(typeof(ThreadStart), func.DoFunction);
         }
     }
 }

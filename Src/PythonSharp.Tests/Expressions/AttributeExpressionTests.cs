@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
@@ -82,6 +83,17 @@
                 Assert.IsInstanceOfType(ex, typeof(AttributeError));
                 Assert.AreEqual("'module' object has no attribute 'spam'", ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void GetNativeMethod()
+        {
+            AttributeExpression expression = new AttributeExpression(new ConstantExpression(1), "GetType");
+            BindingEnvironment environment = new BindingEnvironment();
+
+            var result = expression.Evaluate(environment);
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(MethodInfo));
         }
     }
 }
