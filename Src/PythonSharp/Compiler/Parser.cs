@@ -735,28 +735,31 @@
             if (term == null)
                 return null;
 
-            while (this.TryCompile(TokenType.Operator, "."))
-                term = new AttributeExpression(term, this.CompileName(true).Value);
-
-            Token token = this.lexer.NextToken();
-
-            if (token == null)
-                return term;
-
-            if (token.TokenType == TokenType.Separator && token.Value == "(")
+            while (true)
             {
-                IList<IExpression> expressions = this.CompileArgumentExpressionList();
-                this.CompileToken(TokenType.Separator, ")");
-
-                return new CallExpression(term, expressions);
+                if (this.TryCompile(TokenType.Operator, "."))
+                    term = new AttributeExpression(term, this.CompileName(true).Value);
+                else if (this.TryCompile(TokenType.Separator, "("))
+                    term = this.CompileCallExpression(term);
+                else if (TryCompile(TokenType.Separator, "["))
+                    term = this.CompileIndexedExpression(term);
+                else
+                    break;
             }
 
-            if (token.TokenType != TokenType.Separator || token.Value != "[") 
-            {
-                this.lexer.PushToken(token);
-                return term;
-            }
+            return term;
+        }
 
+        private IExpression CompileCallExpression(IExpression term)
+        {
+            IList<IExpression> expressions = this.CompileArgumentExpressionList();
+            this.CompileToken(TokenType.Separator, ")");
+
+            return new CallExpression(term, expressions);
+        }
+
+        private IExpression CompileIndexedExpression(IExpression term)
+        {
             IExpression indexpr = null;
             IExpression endexpr = null;
 

@@ -1660,6 +1660,46 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileChainedNamedCalls()
+        {
+            Parser parser = new Parser("f.foo().bar()");
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(CallExpression));
+
+            var call = (CallExpression)expression;
+
+            Assert.IsNotNull(call.TargetExpression);
+            Assert.IsInstanceOfType(call.TargetExpression, typeof(AttributeExpression));
+
+            var attr = (AttributeExpression)call.TargetExpression;
+
+            Assert.IsNotNull(attr.Expression);
+            Assert.IsInstanceOfType(attr.Expression, typeof(CallExpression));
+        }
+
+        [TestMethod]
+        public void CompileChainedCalls()
+        {
+            Parser parser = new Parser("f.foo()()");
+            var expression = parser.CompileExpression();
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(CallExpression));
+
+            var call = (CallExpression)expression;
+
+            Assert.IsNotNull(call.TargetExpression);
+            Assert.IsInstanceOfType(call.TargetExpression, typeof(CallExpression));
+
+            var call2 = (CallExpression)call.TargetExpression;
+
+            Assert.IsNotNull(call2.TargetExpression);
+            Assert.IsInstanceOfType(call2.TargetExpression, typeof(AttributeExpression));
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();
