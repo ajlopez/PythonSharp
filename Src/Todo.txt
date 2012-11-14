@@ -22,8 +22,10 @@ iterator types
 http://docs.python.org/3.3/library/stdtypes.html#iterator-types
 http://docs.python.org/3.3/library/stdtypes.html#sequence-types-list-tuple-range
 
-locals() ver la salida en el interprete
+locals()
 globals()
+exit()
+doc() (review name)
 
 + 4/5 should return 0.8
 
