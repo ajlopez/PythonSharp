@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringsTests.cs" />
     <Compile Include="TypesTests.cs" />
+    <Compile Include="Utilities\ModuleUtilitiesTests.cs" />
     <Compile Include="Utilities\ObjectUtilitiesTests.cs" />
     <Compile Include="Utilities\TypeUtilitiesTests.cs" />
     <Compile Include="Utilities\ValueUtilitiesTests.cs" />
@@ -154,6 +155,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Examples\atoms.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Modules\module1.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Modules\module2\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

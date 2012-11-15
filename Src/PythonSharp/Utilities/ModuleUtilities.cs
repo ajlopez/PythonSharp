@@ -10,9 +10,20 @@
     {
         public static string ModuleFileName(string name)
         {
-            FileInfo fi = new FileInfo(name + ".py");
+            string dirname = name.Replace('.', '/');
+            string filename = dirname + ".py";
+            string initfilename = dirname + "/__init__.py";
 
-            return fi.FullName;
+            string fullfilename = Path.Combine(".", filename);
+            string fullinitfilename = Path.Combine(".", initfilename);
+
+            if (File.Exists(fullfilename))
+                return (new FileInfo(fullfilename)).FullName;
+
+            if (File.Exists(fullinitfilename))
+                return (new FileInfo(fullinitfilename)).FullName;
+
+            return null;
         }
     }
 }
