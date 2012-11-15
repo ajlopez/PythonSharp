@@ -8,6 +8,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
     using PythonSharp.Commands;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
 
@@ -126,6 +127,44 @@
             Assert.IsNotNull(module.GetValue("FileInfo"));
             Assert.IsNotNull(module.GetValue("Directory"));
             Assert.IsNotNull(module.GetValue("DirectoryInfo"));
+        }
+
+        [TestMethod]
+        public void RaiseWhenImportModuleDoesNotExist()
+        {
+            ImportCommand importcmd = new ImportCommand("spam");
+
+            Machine machine = new Machine();
+
+            try
+            {
+                importcmd.Execute(machine.Environment);
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(ImportError));
+                Assert.AreEqual("No module named spam", ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void RaiseWhenImportFromModuleDoesNotExist()
+        {
+            ImportFromCommand importcmd = new ImportFromCommand("spam");
+
+            Machine machine = new Machine();
+
+            try
+            {
+                importcmd.Execute(machine.Environment);
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(ImportError));
+                Assert.AreEqual("No module named spam", ex.Message);
+            }
         }
     }
 }

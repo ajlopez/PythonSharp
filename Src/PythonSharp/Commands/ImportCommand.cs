@@ -8,6 +8,7 @@
     using PythonSharp.Expressions;
     using PythonSharp.Language;
     using PythonSharp.Utilities;
+    using PythonSharp.Exceptions;
 
     public class ImportCommand : ICommand
     {
@@ -38,7 +39,12 @@
             }
             else
             {
-                Parser parser = new Parser(new StreamReader(ModuleUtilities.ModuleFileName(this.modname)));
+                string filename = ModuleUtilities.ModuleFileName(this.modname);
+
+                if (filename == null)
+                    throw new ImportError(string.Format("No module named {0}", this.modname));
+
+                Parser parser = new Parser(new StreamReader(filename));
                 ICommand command = parser.CompileCommandList();
                 doc = CommandUtilities.GetDocString(command);
 

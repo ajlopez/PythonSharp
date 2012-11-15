@@ -72,6 +72,7 @@
     <Compile Include="Compiler\UnexpectedTokenException.cs" />
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Exceptions\AttributeError.cs" />
+    <Compile Include="Exceptions\ImportError.cs" />
     <Compile Include="Exceptions\SyntaxError.cs" />
     <Compile Include="Exceptions\ValueError.cs" />
     <Compile Include="Exceptions\NameError.cs" />
