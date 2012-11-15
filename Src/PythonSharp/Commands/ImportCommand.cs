@@ -25,33 +25,7 @@
 
         public void Execute(IContext context)
         {
-            Module module = null;
-            string doc = null;
-
-            if (TypeUtilities.IsNamespace(this.modname))
-            {
-                var types = TypeUtilities.GetTypesByNamespace(this.modname);
-
-                module = new Module(context.GlobalContext);
-
-                foreach (var type in types)
-                    module.SetValue(type.Name, type);
-            }
-            else
-            {
-                string filename = ModuleUtilities.ModuleFileName(this.modname);
-
-                if (filename == null)
-                    throw new ImportError(string.Format("No module named {0}", this.modname));
-
-                Parser parser = new Parser(new StreamReader(filename));
-                ICommand command = parser.CompileCommandList();
-                doc = CommandUtilities.GetDocString(command);
-
-                module = new Module(context.GlobalContext);
-
-                command.Execute(module);
-            }
+            Module module = ModuleUtilities.LoadModule(this.modname, context);
 
             IValues values = context;
             int nname = 0;
@@ -73,8 +47,6 @@
 
                 nname++;
             }
-
-            module.SetValue("__doc__", doc);
         }
     }
 }

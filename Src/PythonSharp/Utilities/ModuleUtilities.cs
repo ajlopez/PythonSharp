@@ -52,7 +52,7 @@
                 if (filename == null)
                     throw new ImportError(string.Format("No module named {0}", name));
 
-                if (modules.ContainsKey(filename) && modules[filename].GlobalContext == context)
+                if (modules.ContainsKey(filename) && modules[filename].GlobalContext == context.GlobalContext)
                     return modules[filename];
 
                 Parser parser = new Parser(new StreamReader(filename));
