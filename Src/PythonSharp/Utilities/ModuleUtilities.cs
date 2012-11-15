@@ -5,6 +5,10 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Commands;
+    using PythonSharp.Compiler;
+    using PythonSharp.Exceptions;
+    using PythonSharp.Language;
 
     public static class ModuleUtilities
     {
@@ -24,6 +28,39 @@
                 return (new FileInfo(fullinitfilename)).FullName;
 
             return null;
+        }
+
+        public static Module LoadModule(string name, IContext context)
+        {
+            Module module = null;
+
+            if (TypeUtilities.IsNamespace(name))
+            {
+                var types = TypeUtilities.GetTypesByNamespace(name);
+
+                module = new Module(context.GlobalContext);
+
+                foreach (var type in types)
+                    module.SetValue(type.Name, type);
+            }
+            else
+            {
+                string filename = ModuleUtilities.ModuleFileName(name);
+
+                if (filename == null)
+                    throw new ImportError(string.Format("No module named {0}", name));
+
+                Parser parser = new Parser(new StreamReader(filename));
+                ICommand command = parser.CompileCommandList();
+
+                module = new Module(context.GlobalContext);
+                string doc = CommandUtilities.GetDocString(command);
+
+                command.Execute(module);
+                module.SetValue("__doc__", doc);
+            }
+
+            return module;
         }
     }
 }

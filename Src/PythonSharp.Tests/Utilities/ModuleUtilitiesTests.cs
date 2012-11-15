@@ -27,6 +27,19 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\setvar.py")]
+        public void LoadSimpleModule()
+        {
+            var context = new BindingEnvironment();
+            var module = ModuleUtilities.LoadModule("setvar", context);
+
+            Assert.IsNotNull(module);
+            Assert.AreEqual(context, module.GlobalContext);
+            Assert.IsNotNull(module.GetValue("a"));
+            Assert.AreEqual("setvar module", module.GetValue("__doc__"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Modules")]
         public void ModuleFilenameInitInFolder()
         {
