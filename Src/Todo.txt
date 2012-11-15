@@ -3,6 +3,8 @@
 	- Argument as files
 	- print of expressions
 	
+ICollection instead IList in public properties
+	
 + import
 + from ... import
 

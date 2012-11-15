@@ -37,7 +37,17 @@ using PythonSharp.Expressions;
         public void Execute(IContext context)
         {
             BindingEnvironment env = new BindingEnvironment(context);
-            DefinedClass klass = new DefinedClass(this.name, context);
+            IList<IType> bases = null;
+
+            if (this.baseExpressions != null && this.baseExpressions.Count > 0)
+            {
+                bases = new List<IType>();
+
+                foreach (var expr in this.baseExpressions)
+                    bases.Add((IType)expr.Evaluate(context));
+            }
+
+            DefinedClass klass = new DefinedClass(this.name, bases, context);
             this.body.Execute(klass);
             foreach (var name in env.GetNames())
             {

@@ -39,6 +39,8 @@
 
         public IContext GlobalContext { get { return this.global; } }
 
+        public IList<IType> Bases { get { return this.bases; } }
+
         public void SetMethod(string name, IFunction method)
         {
             this.values[name] = method;
