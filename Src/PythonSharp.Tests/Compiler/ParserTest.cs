@@ -1515,6 +1515,45 @@
 
             Assert.AreEqual("Spam", clscommand.Name);
             Assert.IsNotNull(clscommand.Body);
+            Assert.IsNull(clscommand.BaseExpressions);
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileSimpleClassDefinitionWithSimpleInheritance()
+        {
+            Parser parser = new Parser("class Spam(object):\r\n  pass");
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ClassCommand));
+
+            var clscommand = (ClassCommand)command;
+
+            Assert.AreEqual("Spam", clscommand.Name);
+            Assert.IsNotNull(clscommand.Body);
+            Assert.IsNotNull(clscommand.BaseExpressions);
+            Assert.AreEqual(1, clscommand.BaseExpressions.Count);
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileSimpleClassDefinitionWithMultipleInheritance()
+        {
+            Parser parser = new Parser("class Spam(object,mytype):\r\n  pass");
+            ICommand command = parser.CompileCommand();
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ClassCommand));
+
+            var clscommand = (ClassCommand)command;
+
+            Assert.AreEqual("Spam", clscommand.Name);
+            Assert.IsNotNull(clscommand.Body);
+            Assert.IsNotNull(clscommand.BaseExpressions);
+            Assert.AreEqual(2, clscommand.BaseExpressions.Count);
 
             Assert.IsNull(parser.CompileCommand());
         }

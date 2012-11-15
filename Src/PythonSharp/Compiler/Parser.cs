@@ -539,8 +539,17 @@
         private ICommand CompileClassCommand()
         {
             string name = this.CompileName(true).Value;
+            IList<IExpression> bases = null;
+
+            if (this.TryCompile(TokenType.Separator, "("))
+            {
+                bases = this.CompileExpressionList();
+                this.CompileToken(TokenType.Separator, ")");
+            }
+
             ICommand body = this.CompileSuite();
-            return new ClassCommand(name, body);
+
+            return new ClassCommand(name, bases, body);
         }
 
         private void SkipEmptyLines()
