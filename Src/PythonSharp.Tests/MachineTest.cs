@@ -7,6 +7,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp;
     using PythonSharp.Functions;
+    using PythonSharp.Language;
 
     [TestClass]
     public class MachineTest
@@ -42,6 +43,22 @@
             Assert.IsInstanceOfType(machine.Environment.GetValue("exec"), typeof(ExecFunction));
             Assert.IsNotNull(machine.Environment.GetValue("dir"));
             Assert.IsInstanceOfType(machine.Environment.GetValue("dir"), typeof(DirFunction));
+            Assert.IsNotNull(machine.Environment.GetValue("exit"));
+            Assert.IsInstanceOfType(machine.Environment.GetValue("exit"), typeof(ExitFunction));
+
+            var globals = machine.Environment.GetValue("globals");
+            Assert.IsNotNull(globals);
+            Assert.IsInstanceOfType(globals, typeof(ContextFunction));
+            var ctxfunction = (ContextFunction)globals;
+            Assert.IsTrue(ctxfunction.IsGlobal);
+            Assert.AreEqual("globals", ctxfunction.Name);
+
+            var locals = machine.Environment.GetValue("locals");
+            Assert.IsNotNull(globals);
+            Assert.IsInstanceOfType(globals, typeof(ContextFunction));
+            ctxfunction = (ContextFunction)locals;
+            Assert.IsFalse(ctxfunction.IsGlobal);
+            Assert.AreEqual("locals", ctxfunction.Name);
         }
     }
 }

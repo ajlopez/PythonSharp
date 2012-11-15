@@ -70,6 +70,8 @@
     <Compile Include="Expressions\ParameterExpressionTests.cs" />
     <Compile Include="Expressions\SlicedExpressionTests.cs" />
     <Compile Include="Expressions\SliceExpressionTests.cs" />
+    <Compile Include="Functions\ContextFunctionTests.cs" />
+    <Compile Include="Functions\ExitFunctionTests.cs" />
     <Compile Include="Functions\DirFunctionTests.cs" />
     <Compile Include="Functions\ExecFunctionTests.cs" />
     <Compile Include="Functions\EvalFunctionTests.cs" />
