@@ -107,5 +107,11 @@
         {
             return list.Skip(from).ToList();
         }
+
+        public override string ToString()
+        {
+            // TODO add id?
+            return string.Format("<function {0}>", this.name);
+        }
     }
 }

@@ -89,5 +89,11 @@
         {
             return this.values.Keys.ToList();
         }
+
+        public override string ToString()
+        {
+            // TODO add id?
+            return string.Format("<class '{0}'>", this.name);
+        }
     }
 }

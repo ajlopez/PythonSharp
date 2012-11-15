@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Language;
 
     public static class ValueUtilities
     {
@@ -74,7 +75,7 @@
                 return builder.ToString();
             }
 
-            return value.ToString();
+            return AsString(value);
         }
     }
 }

@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Language;
     using PythonSharp.Utilities;
 
     [TestClass]
@@ -92,6 +93,22 @@
             Assert.AreEqual("[1, 2, 3]", ValueUtilities.AsPrintString(new ArrayList() { 1, 2, 3 }));
             Assert.AreEqual("['a', 'b', 'c']", ValueUtilities.AsPrintString(new List<object>() { "a", "b", "c" }));
             Assert.AreEqual("(1, 2, 'c')", ValueUtilities.AsPrintString((new List<object>() { 1, 2, "c" }).AsReadOnly()));
+        }
+
+        [TestMethod]
+        public void ClassAsString()
+        {
+            DefinedClass klass = new DefinedClass("Spam");
+            Assert.AreEqual("<class 'Spam'>", ValueUtilities.AsString(klass));
+            Assert.AreEqual("<class 'Spam'>", ValueUtilities.AsPrintString(klass));
+        }
+
+        [TestMethod]
+        public void FunctionAsString()
+        {
+            DefinedFunction function = new DefinedFunction("foo", null, null);
+            Assert.AreEqual("<function foo>", ValueUtilities.AsString(function));
+            Assert.AreEqual("<function foo>", ValueUtilities.AsPrintString(function));
         }
     }
 }
