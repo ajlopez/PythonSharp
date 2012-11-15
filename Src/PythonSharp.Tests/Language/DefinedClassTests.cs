@@ -115,6 +115,32 @@
         }
 
         [TestMethod]
+        public void GetMethodFromSuperClass()
+        {
+            DefinedClass super = new DefinedClass("object");
+            IFunction method = new NativeMethod(this.DummyMethod);
+            super.SetValue("foo", method);
+            DefinedClass klass = new DefinedClass("Spam", new IType[] { super });
+
+            var result = klass.GetMethod("foo");
+            Assert.IsNotNull(result);
+            Assert.IsTrue(klass.HasMethod("foo"));
+        }
+
+        [TestMethod]
+        public void GetValueFromSuperClass()
+        {
+            DefinedClass super = new DefinedClass("object");
+            super.SetValue("foo", 1);
+            DefinedClass klass = new DefinedClass("Spam", new IType[] { super });
+
+            var result = klass.GetValue("foo");
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(klass.HasValue("foo"));
+        }
+
+        [TestMethod]
         public void CreateInstance()
         {
             DefinedClass klass = new DefinedClass("Spam");

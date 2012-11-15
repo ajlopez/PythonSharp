@@ -32,6 +32,20 @@
         }
 
         [TestMethod]
+        public void HasMethod()
+        {
+            Assert.IsFalse(this.type.HasMethod("undefined"));
+            Assert.IsTrue(this.type.HasMethod("replace"));
+        }
+
+        [TestMethod]
+        public void GetMethods()
+        {
+            Assert.IsNull(this.type.GetMethod("undefined"));
+            Assert.IsNotNull(this.type.GetMethod("replace"));
+        }
+
+        [TestMethod]
         public void InvokeMultipleReplace()
         {
             Assert.AreEqual("sXYZmsXYZm", this.type.GetMethod("replace").Apply(null, new object[] { "spamspam", "pa", "XYZ" }, null));
