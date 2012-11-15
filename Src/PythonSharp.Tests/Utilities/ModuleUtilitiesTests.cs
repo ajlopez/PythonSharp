@@ -40,6 +40,15 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Modules", "Lib")]
+        public void LoadModulesFromLib()
+        {
+            var context = new BindingEnvironment();
+            Assert.IsNotNull(ModuleUtilities.LoadModule("module1", context));
+            Assert.IsNotNull(ModuleUtilities.LoadModule("module2", context));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\setvar.py")]
         public void LoadCachedModule()
         {

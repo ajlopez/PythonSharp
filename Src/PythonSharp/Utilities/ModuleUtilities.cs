@@ -29,6 +29,30 @@
             if (File.Exists(fullinitfilename))
                 return (new FileInfo(fullinitfilename)).FullName;
 
+            string location = (new FileInfo(System.Reflection.Assembly.GetAssembly(typeof(ModuleUtilities)).Location)).DirectoryName;
+            string lib = Path.Combine(location, "Lib");
+
+            fullfilename = Path.Combine(lib, filename);
+            fullinitfilename = Path.Combine(lib, initfilename);
+
+            if (File.Exists(fullfilename))
+                return (new FileInfo(fullfilename)).FullName;
+
+            if (File.Exists(fullinitfilename))
+                return (new FileInfo(fullinitfilename)).FullName;
+
+            location = (new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location)).DirectoryName;
+            lib = Path.Combine(location, "Lib");
+
+            fullfilename = Path.Combine(lib, filename);
+            fullinitfilename = Path.Combine(lib, initfilename);
+
+            if (File.Exists(fullfilename))
+                return (new FileInfo(fullfilename)).FullName;
+
+            if (File.Exists(fullinitfilename))
+                return (new FileInfo(fullinitfilename)).FullName;
+
             return null;
         }
 
