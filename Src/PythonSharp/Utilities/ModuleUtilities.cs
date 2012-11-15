@@ -12,6 +12,8 @@
 
     public static class ModuleUtilities
     {
+        private static IDictionary<string, Module> modules = new Dictionary<string, Module>();
+
         public static string ModuleFileName(string name)
         {
             string dirname = name.Replace('.', '/');
@@ -50,6 +52,9 @@
                 if (filename == null)
                     throw new ImportError(string.Format("No module named {0}", name));
 
+                if (modules.ContainsKey(filename) && modules[filename].GlobalContext == context)
+                    return modules[filename];
+
                 Parser parser = new Parser(new StreamReader(filename));
                 ICommand command = parser.CompileCommandList();
 
@@ -58,6 +63,8 @@
 
                 command.Execute(module);
                 module.SetValue("__doc__", doc);
+
+                modules[filename] = module;
             }
 
             return module;

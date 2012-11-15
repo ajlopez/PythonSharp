@@ -40,6 +40,18 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\setvar.py")]
+        public void LoadCachedModule()
+        {
+            var context = new BindingEnvironment();
+            var module = ModuleUtilities.LoadModule("setvar", context);
+            var module2 = ModuleUtilities.LoadModule("setvar", context);
+
+            Assert.IsNotNull(module);
+            Assert.AreEqual(module, module2);
+        }
+
+        [TestMethod]
         [DeploymentItem("Modules")]
         public void ModuleFilenameInitInFolder()
         {
