@@ -65,7 +65,7 @@
         [DeploymentItem("Examples/printvars.py")]
         public void ExecutePrintVars()
         {
-            Assert.AreEqual("1\r\n2\r\n", this.ExecuteFileAndPrint("printvars.py"));
+            Assert.AreEqual("1\r\n2\r\n3\r\n", this.ExecuteFileAndPrint("printvars.py"));
         }
 
         [TestMethod]
