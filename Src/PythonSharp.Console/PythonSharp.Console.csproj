@@ -65,6 +65,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="examples\form.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="examples\httpserver.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
