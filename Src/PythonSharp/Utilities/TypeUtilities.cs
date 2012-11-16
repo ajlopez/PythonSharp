@@ -81,6 +81,11 @@
             return GetNamespaces().Contains(name);
         }
 
+        public static IList<string> GetNames(Type type)
+        {
+            return type.GetMembers(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance).Select(m => m.Name).ToList();
+        }
+
         public static object GetValue(Type type, string name)
         {
             try

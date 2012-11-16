@@ -57,6 +57,11 @@
             return GetNativeValue(obj, name, arguments);
         }
 
+        public static IList<string> GetNames(object obj)
+        {
+            return TypeUtilities.GetNames(obj.GetType());
+        }
+
         public static object GetNativeValue(object obj, string name, IList<object> arguments)
         {
             Type type = obj.GetType();

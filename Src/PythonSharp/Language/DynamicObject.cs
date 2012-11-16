@@ -8,15 +8,15 @@
 
     public class DynamicObject : IObject
     {
-        private DefinedClass klass;
+        private IType klass;
         private IDictionary<string, object> values = new Dictionary<string, object>();
 
-        public DynamicObject(DefinedClass klass)
+        public DynamicObject(IType klass)
         {
             this.klass = klass;
         }
 
-        public DefinedClass Class { get { return this.klass; } }
+        public IType Class { get { return this.klass; } }
 
         public object GetValue(string name)
         {

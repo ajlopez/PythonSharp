@@ -10,14 +10,18 @@
     public class StringType : IType
     {
         private IDictionary<string, IFunction> methods = new Dictionary<string, IFunction>();
+        private string name;
 
-        public StringType()
+        public StringType(string name)
         {
+            this.name = name;
             this.methods["find"] = new NativeMethod(FindMethod);
             this.methods["replace"] = new NativeMethod(ReplaceMethod);
             this.methods["split"] = new NativeMethod(SplitMethod);
             this.methods["join"] = new NativeMethod(JoinMethod);
         }
+
+        public string Name { get { return this.name; } }
 
         public IFunction GetMethod(string name)
         {
@@ -98,6 +102,26 @@
         private static object JoinMethod(IList<object> arguments)
         {
             return Join((string)arguments[0], (IList)arguments[1]);
+        }
+
+        public object GetValue(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(string name, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasValue(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<string> GetNames()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,6 +8,7 @@
     using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
+    using PythonSharp.Utilities;
 
     public class DirFunction : IFunction
     {
@@ -18,9 +19,12 @@
             if (nargs > 1)
                 throw new TypeError(string.Format("dir expected at most 1 arguments, got {0}", nargs));
 
-            IValues values = nargs == 0 ? context : (IValues)arguments[0];
+            IValues values = nargs == 0 ? context : arguments[0] as IValues;
 
-            return values.GetNames().OrderBy(s => s).ToList();
+            if (nargs == 0 || values != null)
+                return values.GetNames().OrderBy(s => s).ToList();
+
+            return ObjectUtilities.GetNames(arguments[0]);
         }
     }
 }

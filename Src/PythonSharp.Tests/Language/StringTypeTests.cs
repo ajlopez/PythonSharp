@@ -16,7 +16,7 @@
         [TestInitialize]
         public void Setup()
         {
-            this.type = new StringType();
+            this.type = new StringType("str");
         }
 
         [TestMethod]

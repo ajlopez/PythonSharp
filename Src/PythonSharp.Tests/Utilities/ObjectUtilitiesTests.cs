@@ -167,6 +167,23 @@
             ObjectUtilities.AddHandler(form, "MouseClick", new NativeMethod(this.DummyFunction), null);
         }
 
+        [TestMethod]
+        public void GetNamesNativeObject()
+        {
+            var person = new Person();
+            var result = ObjectUtilities.GetNames(person);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList<string>));
+
+            var names = (IList<string>)result;
+
+            Assert.IsTrue(names.Contains("FirstName"));
+            Assert.IsTrue(names.Contains("LastName"));
+            Assert.IsTrue(names.Contains("GetName"));
+            Assert.IsTrue(names.Contains("NameEvent"));
+        }
+
         private object DummyFunction(IList<object> arguments)
         {
             return null;

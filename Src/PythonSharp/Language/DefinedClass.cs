@@ -107,8 +107,8 @@
 
             if (this.bases != null)
                 foreach (var type in this.bases)
-                    if (type is IValues && ((IValues)type).HasValue(name))
-                        return ((IValues)type).GetValue(name);
+                    if (type.HasValue(name))
+                        return type.GetValue(name);
 
             return null;
         }
@@ -125,7 +125,7 @@
 
             if (this.bases != null)
                 foreach (var type in this.bases)
-                    if (type is IValues && ((IValues)type).HasValue(name))
+                    if (type.HasValue(name))
                         return true;
 
             return false;

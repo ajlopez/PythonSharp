@@ -6,7 +6,9 @@
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Exceptions;
+    using PythonSharp.Expressions;
     using PythonSharp.Functions;
+    using PythonSharp.Tests.Classes;
 
     [TestClass]
     public class DirFunctionTests
@@ -89,6 +91,23 @@
                 Assert.IsInstanceOfType(ex, typeof(TypeError));
                 Assert.AreEqual("dir expected at most 1 arguments, got 2", ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void NativeObject()
+        {
+            var person = new Person();
+            var result = this.dir.Apply(null, new object[] { person }, null);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList<string>));
+
+            var names = (IList<string>)result;
+
+            Assert.IsTrue(names.Contains("FirstName"));
+            Assert.IsTrue(names.Contains("LastName"));
+            Assert.IsTrue(names.Contains("GetName"));
+            Assert.IsTrue(names.Contains("NameEvent"));
         }
     }
 }

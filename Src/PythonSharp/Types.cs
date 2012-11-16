@@ -9,7 +9,7 @@
 
     public static class Types
     {
-        private static IType stringType = new StringType();
+        private static IType stringType = new StringType("str");
 
         public static string GetTypeName(object value)
         {
