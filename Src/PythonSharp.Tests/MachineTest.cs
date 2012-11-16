@@ -45,6 +45,8 @@
             Assert.IsInstanceOfType(machine.Environment.GetValue("dir"), typeof(DirFunction));
             Assert.IsNotNull(machine.Environment.GetValue("exit"));
             Assert.IsInstanceOfType(machine.Environment.GetValue("exit"), typeof(ExitFunction));
+            Assert.IsNotNull(machine.Environment.GetValue("id"));
+            Assert.IsInstanceOfType(machine.Environment.GetValue("id"), typeof(IdFunction));
 
             var globals = machine.Environment.GetValue("globals");
             Assert.IsNotNull(globals);

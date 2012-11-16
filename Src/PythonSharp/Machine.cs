@@ -22,6 +22,7 @@
             this.environment.SetValue("exec", new ExecFunction());
             this.environment.SetValue("dir", new DirFunction());
             this.environment.SetValue("exit", new ExitFunction());
+            this.environment.SetValue("id", new IdFunction());
             this.environment.SetValue("locals", new ContextFunction("locals", false));
             this.environment.SetValue("globals", new ContextFunction("globals", true));
             this.environment.SetValue("__machine__", this);

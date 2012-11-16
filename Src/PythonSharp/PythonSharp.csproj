@@ -85,6 +85,7 @@
     <Compile Include="Expressions\NotExpression.cs" />
     <Compile Include="Expressions\ParameterExpression.cs" />
     <Compile Include="Functions\ContextFunction.cs" />
+    <Compile Include="Functions\IdFunction.cs" />
     <Compile Include="Functions\ExitFunction.cs" />
     <Compile Include="Functions\DirFunction.cs" />
     <Compile Include="Functions\ExecFunction.cs" />

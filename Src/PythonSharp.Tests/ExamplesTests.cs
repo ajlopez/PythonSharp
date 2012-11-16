@@ -83,5 +83,23 @@
             Assert.AreEqual(1, machine.Environment.GetValue("one"));
             Assert.AreEqual(2, machine.Environment.GetValue("two"));
         }
+
+        [TestMethod]
+        [DeploymentItem("Examples/defif.py")]
+        public void CompileDefIf()
+        {
+            Parser parser = new Parser(new StreamReader("defif.py"));
+
+            ICommand command = parser.CompileCommandList();
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/httpserver.py")]
+        public void CompileHttpServer()
+        {
+            Parser parser = new Parser(new StreamReader("httpserver.py"));
+
+            ICommand command = parser.CompileCommandList();
+        }
     }
 }

@@ -10,6 +10,9 @@ ICollection instead IList in public properties
 
 super in __init__ http://parand.com/say/index.php/2009/04/20/python-simple-inheritance-example/
 
+builtin functions
+http://docs.python.org/3.3/library/functions.html
+
 while with else
 + for
 for multi set
@@ -26,10 +29,11 @@ iterator types
 http://docs.python.org/3.3/library/stdtypes.html#iterator-types
 http://docs.python.org/3.3/library/stdtypes.html#sequence-types-list-tuple-range
 
-locals()
-globals()
-exit()
++ locals()
++ globals()
++ exit()
 doc() (review name)
+id()
 
 + 4/5 should return 0.8
 
@@ -48,7 +52,7 @@ r'...' string
 b'...' byte array?
 + truth value
 truth value for dynobjs with __bool__() __len__()
-or, not, and
++ or, not, and
 bit operations
 see http://docs.python.org/3.3/library/stdtypes.html
 
@@ -72,12 +76,12 @@ Constanst: __doc__ __init__
 + for loop
 loop variants
 
-single inheritance in class
-multiple inheritance in class
++ single inheritance in class
+= multiple inheritance in class
 
 + named parameters in parser
-raise exception if named parameter precedes positional parameter
-named parameters in invocation
+= raise exception if named parameter precedes positional parameter
+= named parameters in invocation
 + parameters with default values
 = *arg
 
@@ -100,8 +104,8 @@ String Type
 	.split() by spaces != .split(" ")
 	
 Import
-	cached import, import only once
-	from foo import *
+	+ cached import, import only once
+	= from foo import *
 
 - support for \ at end of line
 - support for open ( with multiple lines
@@ -138,11 +142,11 @@ Import
 - Big number
 - Escape characters
 + */ greater precedence +-
-- + to concatenate
++ + to concatenate
 + ** operator
 - // operator
 + Compile list
-- print command
++ print command
 + Dictionary
 - Hexadecimal and octals
 + Simple Assignment command

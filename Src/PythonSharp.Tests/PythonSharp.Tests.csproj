@@ -71,6 +71,7 @@
     <Compile Include="Expressions\SlicedExpressionTests.cs" />
     <Compile Include="Expressions\SliceExpressionTests.cs" />
     <Compile Include="Functions\ContextFunctionTests.cs" />
+    <Compile Include="Functions\IdFunctionTests.cs" />
     <Compile Include="Functions\ExitFunctionTests.cs" />
     <Compile Include="Functions\DirFunctionTests.cs" />
     <Compile Include="Functions\ExecFunctionTests.cs" />
@@ -169,6 +170,14 @@
     <None Include="Modules\module2\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\defif.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Examples\httpserver.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
