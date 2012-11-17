@@ -12,7 +12,7 @@ listener.Prefixes.Add("http://*:8000/")
 
 def process(context):
     filename = context.Request.Url.AbsolutePath
-    if not filename:
+    if not filename or filename == '/':
         filename = "index.html"
     if filename[0] == '/':
         filename = filename[1:]
