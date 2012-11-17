@@ -41,14 +41,5 @@
                 if (this.elsecmd != null)
                     this.elsecmd.Execute(context);
         }
-
-        #region ICommand Members
-
-        void ICommand.Execute(IContext context)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
 }
