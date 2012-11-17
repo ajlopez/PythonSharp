@@ -136,6 +136,11 @@
     <Compile Include="Utilities\ValueUtilities.cs" />
     <Compile Include="Utilities\ModuleUtilities.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Commands.cd" />
+    <None Include="Expressions.cd" />
+    <None Include="Language.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

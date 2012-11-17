@@ -8,6 +8,9 @@ ICollection instead IList in public properties
 + import
 + from ... import
 
+implement channels/threads
+http://www.stackless.com/wiki/Channels
+
 super in __init__ http://parand.com/say/index.php/2009/04/20/python-simple-inheritance-example/
 
 builtin functions
