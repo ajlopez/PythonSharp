@@ -21,7 +21,7 @@
         {
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, false) };
             ICommand body = new SetCommand("c", new NameExpression("a"));
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             Assert.AreEqual(parameters, func.Parameters);
             Assert.AreEqual(body, func.Body);
@@ -39,7 +39,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, machine.Environment);
 
             func.Apply(machine.Environment, new object[] { 1, 2 }, null);
             Assert.AreEqual("1\r\n2\r\n", writer.ToString());
@@ -56,7 +56,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             var result = func.Apply(machine.Environment, new object[] { 1, 2 }, null);
 
@@ -74,7 +74,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             try
             {
@@ -98,7 +98,7 @@
             StringWriter writer = new StringWriter();
             machine.Output = writer;
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             try
             {
@@ -120,7 +120,7 @@
 
             Machine machine = new Machine();
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             try
             {
@@ -140,7 +140,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
             ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             Assert.AreEqual(3, func.Apply(new BindingEnvironment(), null, null));
         }
@@ -151,7 +151,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, true) };
             ICommand body = new ReturnCommand(new NameExpression("b"));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             var result = func.Apply(new BindingEnvironment(), new object[] { 1, 2, 3 }, null);
 
@@ -171,7 +171,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", null, true) };
             ICommand body = new ReturnCommand(new NameExpression("b"));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             var result = func.Apply(new BindingEnvironment(), new object[] { 1 }, null);
 
@@ -189,7 +189,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", null, false), new Parameter("b", new object[] { 1, 2 }, true) };
             ICommand body = new ReturnCommand(new NameExpression("b"));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             var result = func.Apply(new BindingEnvironment(), new object[] { 1 }, null);
 
@@ -209,7 +209,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
             ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             var result = func.Apply(new BindingEnvironment(), null, new Dictionary<string, object> { { "a", 2 } });
 
@@ -223,7 +223,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
             ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             var result = func.Apply(new BindingEnvironment(), null, new Dictionary<string, object> { { "a", 2 }, { "b", 3 } });
 
@@ -237,7 +237,7 @@
             IList<Parameter> parameters = new Parameter[] { new Parameter("a", 1, false), new Parameter("b", 2, false) };
             ICommand body = new ReturnCommand(new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
 
-            DefinedFunction func = new DefinedFunction("foo", parameters, body);
+            DefinedFunction func = new DefinedFunction("foo", parameters, body, null);
 
             try
             {
@@ -256,7 +256,7 @@
         {
             ICommand body = new PassCommand();
 
-            DefinedFunction func = new DefinedFunction("foo", null, body);
+            DefinedFunction func = new DefinedFunction("foo", null, body, null);
 
             func.SetValue("__doc__", "foo function");
 
@@ -270,7 +270,7 @@
         {
             ICommand body = new PassCommand();
 
-            DefinedFunction func = new DefinedFunction("foo", null, body);
+            DefinedFunction func = new DefinedFunction("foo", null, body, null);
             var type = typeof(ThreadStart);
             //Activator.CreateInstance(typeof(ThreadStart), func.DoFunction);
         }

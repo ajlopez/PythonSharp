@@ -26,19 +26,24 @@
         public object Evaluate(IContext context)
         {
             var result = this.expression.Evaluate(context);
-            IValues values = result as IValues;
+            return this.GetValue(result);
+        }
+
+        public object GetValue(object obj)
+        {
+            IValues values = obj as IValues;
 
             if (values == null)
             {
-                IType type = Types.GetType(result);
+                IType type = Types.GetType(obj);
 
                 if (type != null)
                     return type.GetMethod(this.name);
 
-                if (result is Type)
-                    return TypeUtilities.GetValue((Type)result, this.name);
+                if (obj is Type)
+                    return TypeUtilities.GetValue((Type)obj, this.name);
 
-                return ObjectUtilities.GetValue(result, this.name);
+                return ObjectUtilities.GetValue(obj, this.name);
             }
 
             object value = values.GetValue(this.name);

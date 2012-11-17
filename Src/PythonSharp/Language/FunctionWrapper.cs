@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading;
 
-    public abstract class FunctionWrapper
+    public class FunctionWrapper
     {
         private IFunction function;
         private IContext context;
@@ -19,6 +20,31 @@
         protected IFunction Function { get { return this.function; } }
 
         protected IContext Context { get { return this.context; } }
+
+        public virtual ThreadStart CreateThreadStart()
+        {
+            return new ThreadStart(this.DoAction);
+        }
+
+        public virtual Delegate CreateActionDelegate()
+        {
+            return Delegate.CreateDelegate(typeof(Action), this, "DoAction");
+        }
+
+        public virtual Delegate CreateFunctionDelegate()
+        {
+            return Delegate.CreateDelegate(typeof(Func<object>), this, "DoFunction");
+        }
+
+        private object DoFunction()
+        {
+            return this.function.Apply(this.context, null, null);
+        }
+
+        private void DoAction()
+        {
+            this.function.Apply(this.context, null, null);
+        }
     }
 
     public class FunctionWrapper<TR, TD> : FunctionWrapper
@@ -28,12 +54,12 @@
         {
         }
 
-        public Delegate CreateFunctionDelegate()
+        public override Delegate CreateFunctionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoFunction");
         }
 
-        public Delegate CreateActionDelegate()
+        public override Delegate CreateActionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoAction");
         }
@@ -56,12 +82,12 @@
         {
         }
 
-        public Delegate CreateFunctionDelegate()
+        public override Delegate CreateFunctionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoFunction");
         }
 
-        public Delegate CreateActionDelegate()
+        public override Delegate CreateActionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoAction");
         }
@@ -84,12 +110,12 @@
         {
         }
 
-        public Delegate CreateFunctionDelegate()
+        public override Delegate CreateFunctionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoFunction");
         }
 
-        public Delegate CreateActionDelegate()
+        public override Delegate CreateActionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoAction");
         }
@@ -112,12 +138,12 @@
         {
         }
 
-        public Delegate CreateFunctionDelegate()
+        public override Delegate CreateFunctionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoFunction");
         }
 
-        public Delegate CreateActionDelegate()
+        public override Delegate CreateActionDelegate()
         {
             return Delegate.CreateDelegate(typeof(TD), this, "DoAction");
         }

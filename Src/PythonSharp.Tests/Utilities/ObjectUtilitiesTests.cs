@@ -90,7 +90,7 @@
         {
             DynamicObject obj = new DynamicObject(null);
             obj.SetValue("name", "Adam");
-            obj.SetValue("get_age", new DefinedFunction("get_age", null, null));
+            obj.SetValue("get_age", new DefinedFunction("get_age", null, null, null));
 
             Assert.AreEqual("Adam", ObjectUtilities.GetIndexedValue(obj, new object[] { "name" }));
             

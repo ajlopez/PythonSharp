@@ -34,5 +34,18 @@
             Assert.IsNotNull(module.GlobalContext);
             Assert.AreEqual(global, module.GlobalContext);
         }
+
+        [TestMethod]
+        public void GetValueFromGlobalContext()
+        {
+            BindingEnvironment global = new BindingEnvironment();
+            global.SetValue("one", 1);
+            Module module = new Module(global);
+
+            var result = module.GetValue("one");
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result);
+            Assert.IsTrue(module.HasValue("one"));
+        }
     }
 }

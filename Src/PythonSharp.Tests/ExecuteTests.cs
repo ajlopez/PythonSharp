@@ -209,6 +209,43 @@
             Assert.AreEqual("bar", this.Evaluate("a['foo']"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples/defif.py")]
+        public void ImportDefIfAndEvaluatePositive()
+        {
+            this.Execute("import defif");
+            Assert.AreEqual(true, this.Evaluate("defif.positive(1)"));
+            Assert.AreEqual(false, this.Evaluate("defif.positive(-12)"));
+        }
+
+        [TestMethod]
+        public void ImportFunctionWrapperFromPythonSharp()
+        {
+            this.Execute("from PythonSharp.Language import FunctionWrapper");
+            Assert.IsNotNull(this.Evaluate("FunctionWrapper"));
+        }
+
+        [TestMethod]
+        public void ImportFunctionWrapper()
+        {
+            this.Execute("import PythonSharp.Language");
+            Assert.IsNotNull(this.Evaluate("PythonSharp.Language.FunctionWrapper"));
+        }
+
+        [TestMethod]
+        public void CreateFunctionWrapper()
+        {
+            this.Execute("import PythonSharp.Language");
+            Assert.IsNotNull(this.Evaluate("PythonSharp.Language.FunctionWrapper(None, None)"));
+        }
+
+        [TestMethod]
+        public void CreateFileInfoAndEvaluateExists()
+        {
+            this.Execute("import System.IO");
+            Assert.AreEqual(false, this.Evaluate("System.IO.FileInfo('unknown.py').Exists()"));
+        }
+
         private string ExecuteAndPrint(string text)
         {
             this.machine.Output = new StringWriter();

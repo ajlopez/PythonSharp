@@ -80,7 +80,7 @@
         public void EvaluateMethodCall()
         {
             DefinedClass klass = new DefinedClass("Spam");
-            DefinedFunction function = new DefinedFunction("get", new Parameter[] { new Parameter("self", null, false), new Parameter("a", null, false) }, new ReturnCommand(new NameExpression("a")));
+            DefinedFunction function = new DefinedFunction("get", new Parameter[] { new Parameter("self", null, false), new Parameter("a", null, false) }, new ReturnCommand(new NameExpression("a")), null);
             klass.SetMethod(function.Name, function);
             DynamicObject foo = (DynamicObject)klass.Apply(this.machine.Environment, null, null);
             this.machine.Environment.SetValue("foo", foo);

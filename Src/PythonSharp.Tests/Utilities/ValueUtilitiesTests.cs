@@ -106,7 +106,7 @@
         [TestMethod]
         public void FunctionAsString()
         {
-            DefinedFunction function = new DefinedFunction("foo", null, null);
+            DefinedFunction function = new DefinedFunction("foo", null, null, null);
             Assert.AreEqual("<function foo>", ValueUtilities.AsString(function));
             Assert.AreEqual("<function foo>", ValueUtilities.AsPrintString(function));
         }

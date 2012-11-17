@@ -6,9 +6,12 @@
     using System.Reflection;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PythonSharp.Commands;
+    using PythonSharp.Expressions;
     using PythonSharp.Language;
     using PythonSharp.Tests.Classes;
     using PythonSharp.Utilities;
+    using System.Threading;
 
     [TestClass]
     public class FunctionWrapperTests
@@ -84,6 +87,29 @@
 
             Assert.AreEqual(4, listener.Length);
             Assert.AreEqual("Adam", listener.Name);
+        }
+
+        [TestMethod]
+        public void CreateThreadStart()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            Runner function = new Runner();
+            FunctionWrapper wrapper = new FunctionWrapper(function, environment);
+            Thread th = new Thread(wrapper.CreateThreadStart());
+            th.Start();
+            th.Join();
+            Assert.IsTrue(function.WasInvoked);
+        }
+
+        internal class Runner : IFunction
+        {
+            public bool WasInvoked { get; set; }
+
+            public object Apply(IContext context, IList<object> arguments, IDictionary<string, object> namedArguments)
+            {
+                this.WasInvoked = true;
+                return null;
+            }
         }
 
         internal class Adder : IFunction

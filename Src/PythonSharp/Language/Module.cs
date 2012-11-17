@@ -22,6 +22,9 @@
             if (this.values.ContainsKey(name))
                 return this.values[name];
 
+            if (this.global != null)
+                return this.global.GetValue(name);
+
             return null;
         }
 
@@ -34,6 +37,9 @@
         {
             if (this.values.ContainsKey(name))
                 return true;
+
+            if (this.global != null)
+                return this.global.HasValue(name);
 
             return false;
         }

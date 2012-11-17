@@ -81,18 +81,37 @@
                     return dynobj.Invoke(attrexpr.Name, context, arguments, namedArguments);
                 }
 
-                if (obj is IType)
-                    function = ((IType)obj).GetMethod(attrexpr.Name);
-                else
+                function = this.GetFunction(obj, attrexpr.Name);
+
+                if (function == null)
                 {
                     IType type = Types.GetType(obj);
 
                     if (type == null)
                     {
-                        if (obj is Type)
-                            return TypeUtilities.InvokeTypeMember((Type)obj, attrexpr.Name, arguments);
+                        IValues values = obj as IValues;
 
-                        return ObjectUtilities.GetValue(obj, attrexpr.Name, arguments);
+                        if (values != null && values.HasValue(attrexpr.Name))
+                        {
+                            object value = values.GetValue(attrexpr.Name);
+                            function = value as IFunction;
+
+                            if (function == null)
+                            {
+                                if (value is Type)
+                                {
+                                    return Activator.CreateInstance((Type)value, arguments == null ? null : arguments.ToArray());
+                                }
+                            }
+                        }
+
+                        if (function == null)
+                        {
+                            if (obj is Type)
+                                return TypeUtilities.InvokeTypeMember((Type)obj, attrexpr.Name, arguments);
+
+                            return ObjectUtilities.GetValue(obj, attrexpr.Name, arguments);
+                        }
                     }
 
                     function = type.GetMethod(attrexpr.Name);
@@ -112,6 +131,27 @@
             }
 
             return function.Apply(context, arguments, namedArguments);
+        }
+
+        private IFunction GetFunction(object obj, string name)
+        {
+            IFunction function = null;
+
+            if (obj is IType) 
+            {
+                function = ((IType)obj).GetMethod(name);
+                if (function != null)
+                    return function;
+            }
+
+            if (obj is IValues)
+            {
+                function = ((IValues)obj).GetValue(name) as IFunction;
+                if (function != null)
+                    return function;
+            }
+
+            return null;
         }
     }
 }

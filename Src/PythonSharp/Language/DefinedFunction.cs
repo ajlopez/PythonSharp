@@ -17,13 +17,15 @@
         private bool hasdefault;
         private bool haslist;
         private ICommand body;
+        private IContext context;
 
-        public DefinedFunction(string name, IList<Parameter> parameters, ICommand body)
+        public DefinedFunction(string name, IList<Parameter> parameters, ICommand body, IContext context)
             : base(null)
         {
             this.name = name;
             this.parameters = parameters;
             this.body = body;
+            this.context = context;
 
             if (parameters != null)
             {
@@ -54,7 +56,7 @@
 
         public object Apply(IContext ctx, IList<object> arguments, IDictionary<string, object> namedArguments)
         {
-            BindingEnvironment context = new BindingEnvironment(ctx);
+            BindingEnvironment newcontext = new BindingEnvironment(this.context);
 
             int nargs = 0;
 
@@ -66,7 +68,7 @@
 
             if (namedArguments != null)
                 foreach (var namarg in namedArguments)
-                    context.SetValue(namarg.Key, namarg.Value);
+                    newcontext.SetValue(namarg.Key, namarg.Value);
 
             if (this.parameters != null)
             {
@@ -78,27 +80,27 @@
                         if (namedArguments != null && namedArguments.ContainsKey(this.parameters[k].Name))
                             throw new TypeError(string.Format("{0}() got multiple values for keyword argument '{1}'", this.name, this.parameters[k].Name));
                         if (this.parameters[k].IsList)
-                            context.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
+                            newcontext.SetValue(this.parameters[k].Name, GetSublist(arguments, k));
                         else
-                            context.SetValue(this.parameters[k].Name, arguments[k]);
+                            newcontext.SetValue(this.parameters[k].Name, arguments[k]);
                     }
                     else if (this.parameters[k].IsList)
                     {
                         if (this.parameters[k].DefaultValue == null)
-                            context.SetValue(this.parameters[k].Name, new List<object>());
+                            newcontext.SetValue(this.parameters[k].Name, new List<object>());
                         else
-                            context.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
+                            newcontext.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
 
                         break;
                     }
                     else if (namedArguments == null || !namedArguments.ContainsKey(this.parameters[k].Name))
-                        context.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
+                        newcontext.SetValue(this.parameters[k].Name, this.parameters[k].DefaultValue);
             }
 
-            this.body.Execute(context);
+            this.body.Execute(newcontext);
 
-            if (context.HasReturnValue())
-                return context.GetReturnValue();
+            if (newcontext.HasReturnValue())
+                return newcontext.GetReturnValue();
 
             return null;
         }

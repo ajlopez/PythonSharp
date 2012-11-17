@@ -52,7 +52,7 @@
                     parameters.Add((Parameter)parexpr.Evaluate(context));
             }
 
-            DefinedFunction function = new DefinedFunction(this.name, parameters, this.body);
+            DefinedFunction function = new DefinedFunction(this.name, parameters, this.body, context);
 
             function.SetValue("__doc__", this.doc);
 

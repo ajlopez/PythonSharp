@@ -184,7 +184,7 @@
         {
             DefinedClass klass = new DefinedClass("Spam");
             ICommand body = new SetAttributeCommand(new NameExpression("self"), "name", new NameExpression("name"));
-            DefinedFunction constructor = new DefinedFunction("__init__", new Parameter[] { new Parameter("self", null, false), new Parameter("name", null, false) }, body);
+            DefinedFunction constructor = new DefinedFunction("__init__", new Parameter[] { new Parameter("self", null, false), new Parameter("name", null, false) }, body, null);
             klass.SetMethod(constructor.Name, constructor);
             var result = klass.Apply(null, new object[] { "Adam" }, null);
 
