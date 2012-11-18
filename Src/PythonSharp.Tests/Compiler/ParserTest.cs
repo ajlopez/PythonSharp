@@ -1739,6 +1739,32 @@
             Assert.IsInstanceOfType(call2.TargetExpression, typeof(AttributeExpression));
         }
 
+        [TestMethod]
+        public void CompileBreakCommand()
+        {
+            Parser parser = new Parser("break");
+
+            var result = parser.CompileCommand();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(BreakCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
+        [TestMethod]
+        public void CompileContinueCommand()
+        {
+            Parser parser = new Parser("continue");
+
+            var result = parser.CompileCommand();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ContinueCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

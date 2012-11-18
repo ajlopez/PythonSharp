@@ -347,6 +347,12 @@
             if (token.Value == "while")
                 return this.CompileWhileCommand();
 
+            if (token.Value == "break")
+                return new BreakCommand();
+
+            if (token.Value == "continue")
+                return new ContinueCommand();
+
             if (token.Value == "def")
                 return this.CompileDefCommand();
 
