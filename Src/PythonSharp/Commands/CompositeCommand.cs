@@ -35,7 +35,7 @@
             foreach (ICommand command in this.commands)
             {
                 command.Execute(context);
-                if (environment != null && environment.HasReturnValue())
+                if (environment != null && (environment.HasReturnValue() || environment.WasContinue || environment.WasBreak))
                     break;
             }
         }

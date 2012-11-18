@@ -38,9 +38,20 @@
             {
                 context.SetValue(this.name, item);
                 this.command.Execute(context);
-                if (environment != null && environment.HasReturnValue())
-                    return;
+                if (environment != null)
+                {
+                    if (environment.HasReturnValue())
+                        return;
+                }
+                if (environment.WasBreak)
+                {
+                    environment.WasBreak = false;
+                    break;
+                }
+                if (environment.WasContinue)
+                    environment.WasContinue = false;
             }
         }
     }
 }
+

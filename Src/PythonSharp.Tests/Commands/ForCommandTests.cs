@@ -80,5 +80,39 @@
                 Assert.AreEqual("'int' object is not iterable", ex.Message);
             }
         }
+
+        [TestMethod]
+        public void ExecuteSimpleForWithContinue()
+        {
+            ICommand ifcmd = new IfCommand(new CompareExpression(ComparisonOperator.Equal, new NameExpression("a"), new ConstantExpression(2)), new ContinueCommand());
+            ICommand setcmd = new SetCommand("b", new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
+            ICommand body = new CompositeCommand(new ICommand[] { ifcmd, setcmd });
+
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("b", 0);
+
+            ForCommand command = new ForCommand("a", new ConstantExpression(new object[] { 1, 2, 3 }), body);
+
+            command.Execute(environment);
+
+            Assert.AreEqual(4, environment.GetValue("b"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleForWithBreak()
+        {
+            ICommand ifcmd = new IfCommand(new CompareExpression(ComparisonOperator.Equal, new NameExpression("a"), new ConstantExpression(2)), new BreakCommand());
+            ICommand setcmd = new SetCommand("b", new BinaryOperatorExpression(new NameExpression("a"), new NameExpression("b"), BinaryOperator.Add));
+            ICommand body = new CompositeCommand(new ICommand[] { ifcmd, setcmd });
+
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("b", 0);
+
+            ForCommand command = new ForCommand("a", new ConstantExpression(new object[] { 1, 2, 3 }), body);
+
+            command.Execute(environment);
+
+            Assert.AreEqual(1, environment.GetValue("b"));
+        }
     }
 }

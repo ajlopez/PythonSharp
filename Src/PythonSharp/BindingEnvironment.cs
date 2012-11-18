@@ -35,6 +35,10 @@
             }
         }
 
+        public bool WasContinue { get; set; }
+
+        public bool WasBreak { get; set; }
+
         public bool HasReturnValue()
         {
             return this.hasReturnValue;
