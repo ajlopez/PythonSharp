@@ -42,14 +42,16 @@
                 {
                     if (environment.HasReturnValue())
                         return;
+
+                    if (environment.WasBreak)
+                    {
+                        environment.WasBreak = false;
+                        break;
+                    }
+
+                    if (environment.WasContinue)
+                        environment.WasContinue = false;
                 }
-                if (environment.WasBreak)
-                {
-                    environment.WasBreak = false;
-                    break;
-                }
-                if (environment.WasContinue)
-                    environment.WasContinue = false;
             }
         }
     }
