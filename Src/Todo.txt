@@ -36,7 +36,7 @@ http://docs.python.org/3.3/library/stdtypes.html#sequence-types-list-tuple-range
 + globals()
 + exit()
 doc() (review name)
-id()
++ id()
 
 + 4/5 should return 0.8
 
@@ -130,7 +130,9 @@ Import
 	
 - elif
 - else
-- pass, break
++ pass
++ break
++ continue
 - try/except/finally
 - raise
 
