@@ -1765,6 +1765,33 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileIfCommandWithElifCommand()
+        {
+            Parser parser = new Parser("if a:\r\n  print(a)\r\nelif b:\r\n  print(a)\r\n  print(b)");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(IfCommand));
+
+            IfCommand ifcmd = (IfCommand)cmd;
+
+            Assert.IsNotNull(ifcmd.Condition);
+            Assert.IsInstanceOfType(ifcmd.Condition, typeof(NameExpression));
+            Assert.IsNotNull(ifcmd.ThenCommand);
+            Assert.IsNotNull(ifcmd.ElseCommand);
+            Assert.IsInstanceOfType(ifcmd.ElseCommand, typeof(IfCommand));
+
+            IfCommand elifcmd = (IfCommand)ifcmd.ElseCommand;
+
+            Assert.IsNotNull(elifcmd.ThenCommand);
+            Assert.IsInstanceOfType(elifcmd.ThenCommand, typeof(CompositeCommand));
+            Assert.IsNull(elifcmd.ElseCommand);
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

@@ -507,14 +507,24 @@
 
             int indent = this.lexer.NextIndent();
 
-            if (indent == this.indent && this.TryCompile(TokenType.Name, "else"))
+            if (indent == this.indent)
             {
-                ICommand elsecommand = this.CompileSuite();
+                if (this.TryCompile(TokenType.Name, "else"))
+                {
+                    ICommand elsecommand = this.CompileSuite();
 
-                return new IfCommand(condition, thencommand, elsecommand);
+                    return new IfCommand(condition, thencommand, elsecommand);
+                }
+                
+                if (this.TryCompile(TokenType.Name, "elif"))
+                {
+                    ICommand elsecommand = this.CompileIfCommand();
+
+                    return new IfCommand(condition, thencommand, elsecommand);
+                }
             }
-            else
-                this.lexer.PushIndent(indent);
+
+            this.lexer.PushIndent(indent);
 
             return new IfCommand(condition, thencommand);
         }
