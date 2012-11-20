@@ -509,14 +509,20 @@
 
             int indent = this.lexer.NextIndent();
 
-            if (indent == this.indent)
+            while (indent == this.indent)
             {
                 if (this.TryCompile(TokenType.Name, "finally"))
                 {
+                    if (trycommand.Finally != null)
+                        throw new SyntaxError("invalid syntax");
+
                     ICommand finallycommand = this.CompileSuite();
                     trycommand.SetFinally(finallycommand);
-                    return trycommand;
                 }
+                else
+                    break;
+
+                indent = this.lexer.NextIndent();
             }
 
             this.lexer.PushIndent(indent);

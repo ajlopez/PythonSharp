@@ -135,6 +135,8 @@ Import
 + break
 + continue
 - try/except/finally
+   see http://stackoverflow.com/questions/730764/try-catch-in-python
+   difference btw exceptions.Exception exceptions.BaseException
 - raise
 
 + Real number

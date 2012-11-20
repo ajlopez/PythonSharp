@@ -45,6 +45,7 @@
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Commands\ClassCommandTests.cs" />
     <Compile Include="Commands\CompositeCommandTests.cs" />
+    <Compile Include="Commands\ExceptCommandTests.cs" />
     <Compile Include="Commands\ForCommandTests.cs" />
     <Compile Include="Commands\ImportCommandTest.cs" />
     <Compile Include="Commands\DefCommandTests.cs" />

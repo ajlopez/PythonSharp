@@ -1831,6 +1831,23 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void RaiseWhenTwoFinallyCommands()
+        {
+            Parser parser = new Parser("try:\r\n  pass\r\nfinally:\r\n  pass\r\nfinally:\r\n  pass");
+
+            try
+            {
+                parser.CompileCommand();
+                Assert.Fail("Exception expected");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("invalid syntax", ex.Message);
+            }
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();
