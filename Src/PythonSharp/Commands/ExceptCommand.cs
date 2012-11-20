@@ -25,6 +25,9 @@
 
         public bool CatchException(IContext context, Exception exception)
         {
+            if (this.expression == null)
+                return true;
+
             var value = this.expression.Evaluate(context);
 
             if (!(value is Type) || !((Type)value == typeof(Exception) || ((Type)value).IsSubclassOf(typeof(Exception))))

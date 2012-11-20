@@ -35,6 +35,18 @@
         }
 
         [TestMethod]
+        public void CatchAllExceptions()
+        {
+            ExceptCommand command = new ExceptCommand(null, null);
+
+            Assert.IsNull(command.Expression);
+            Assert.IsNull(command.Command);
+            Assert.IsTrue(command.CatchException(null, new ValueError(null)));
+            Assert.IsTrue(command.CatchException(null, new SyntaxError(null)));
+            Assert.IsTrue(command.CatchException(null, new Exception()));
+        }
+
+        [TestMethod]
         public void RaiseIfExpressionIsNotAnException()
         {
             ExceptCommand command = new ExceptCommand(new ConstantExpression(1), null);
