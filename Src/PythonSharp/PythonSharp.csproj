@@ -50,6 +50,7 @@
     <Compile Include="Commands\CompositeCommand.cs" />
     <Compile Include="Commands\ContinueCommand.cs" />
     <Compile Include="Commands\BreakCommand.cs" />
+    <Compile Include="Commands\TryCommand.cs" />
     <Compile Include="Commands\SetIndexCommand.cs" />
     <Compile Include="Commands\ForCommand.cs" />
     <Compile Include="Commands\SetAttributeCommand.cs" />

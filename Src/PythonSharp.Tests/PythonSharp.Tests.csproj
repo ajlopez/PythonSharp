@@ -53,6 +53,7 @@
     <Compile Include="Commands\SetAttributeCommandTests.cs" />
     <Compile Include="Commands\SetCommandTests.cs" />
     <Compile Include="Commands\SetIndexCommandTests.cs" />
+    <Compile Include="Commands\TryCommandTests.cs" />
     <Compile Include="Commands\WhileCommandTests.cs" />
     <Compile Include="EvaluateTests.cs" />
     <Compile Include="ExamplesTests.cs" />

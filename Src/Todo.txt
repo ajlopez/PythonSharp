@@ -86,7 +86,8 @@ loop variants
 = raise exception if named parameter precedes positional parameter
 = named parameters in invocation
 + parameters with default values
-= *arg
++ *arg
+*arg at invocation
 
 global, nonlocal (sect 9.2.1 Doc 3.3)
 
@@ -118,18 +119,18 @@ Import
 - Escaped charactes in strings "\n\r"
 - multiple args in print: print 'The Killer', joke
 = if "python" in text:
-	print text
-- for x in mylist:
-	print x	
-- while X > Y:
-	print 'hello'
-- while True:
+	print(text)
++ for x in mylist:
+	print(x)
++ while X > Y:
+	print('hello')
++ while True:
 	pass
-- while True:
++ while True:
 	if not line: break	
 	
-- elif
-- else
++ elif
++ else
 + pass
 + break
 + continue
