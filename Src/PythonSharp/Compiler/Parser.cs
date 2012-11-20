@@ -356,6 +356,9 @@
             if (token.Value == "def")
                 return this.CompileDefCommand();
 
+            if (token.Value == "try")
+                return this.CompileTryCommand();
+
             if (token.Value == "pass")
             {
                 this.CompileEndOfCommand();
@@ -496,6 +499,29 @@
             ICommand command = this.CompileSuite();
 
             return new ForCommand(name, expression, command);
+        }
+
+        private ICommand CompileTryCommand()
+        {
+            ICommand command = this.CompileSuite();
+
+            var trycommand = new TryCommand(command);
+
+            int indent = this.lexer.NextIndent();
+
+            if (indent == this.indent)
+            {
+                if (this.TryCompile(TokenType.Name, "finally"))
+                {
+                    ICommand finallycommand = this.CompileSuite();
+                    trycommand.SetFinally(finallycommand);
+                    return trycommand;
+                }
+            }
+
+            this.lexer.PushIndent(indent);
+
+            return trycommand;
         }
 
         private ICommand CompileIfCommand()

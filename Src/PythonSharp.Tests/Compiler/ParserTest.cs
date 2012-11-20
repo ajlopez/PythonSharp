@@ -1792,6 +1792,45 @@
             Assert.IsNull(parser.CompileCommand());
         }
 
+        [TestMethod]
+        public void CompileSimpleTry()
+        {
+            Parser parser = new Parser("try:\r\n  pass");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(TryCommand));
+
+            TryCommand trycmd = (TryCommand)cmd;
+
+            Assert.IsNotNull(trycmd.Command);
+            Assert.IsInstanceOfType(trycmd.Command, typeof(PassCommand));
+
+            Assert.IsNull(trycmd.Finally);
+        }
+
+        [TestMethod]
+        public void CompileSimpleTryWithFinally()
+        {
+            Parser parser = new Parser("try:\r\n  pass\r\nfinally:\r\n  pass");
+
+            ICommand cmd = parser.CompileCommand();
+
+            Assert.IsNotNull(cmd);
+            Assert.IsInstanceOfType(cmd, typeof(TryCommand));
+
+            TryCommand trycmd = (TryCommand)cmd;
+
+            Assert.IsNotNull(trycmd.Command);
+            Assert.IsInstanceOfType(trycmd.Command, typeof(PassCommand));
+
+            Assert.IsNotNull(trycmd.Finally);
+            Assert.IsInstanceOfType(trycmd.Command, typeof(PassCommand));
+
+            Assert.IsNull(parser.CompileCommand());
+        }
+
         private static object CompileAndEvaluateExpression(string text)
         {
             Machine machine = new Machine();

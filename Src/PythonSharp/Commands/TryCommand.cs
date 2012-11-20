@@ -19,6 +19,8 @@
 
         public ICommand Command { get { return this.command; } }
 
+        public ICommand Finally { get { return this.finallyCommand; } }
+
         public void SetFinally(ICommand finallyCommand)
         {
             this.finallyCommand = finallyCommand;
