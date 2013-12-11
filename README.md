@@ -17,3 +17,4 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [The Python yield keyword explained](http://freepythontips.wordpress.com/2013/09/29/the-python-yield-keyword-explained/)
 - [Painless Decorators](http://hackflow.com/blog/2013/11/03/painless-decorators/)
 - [Built-in Functions](http://docs.python.org/3/library/functions.html)
+- [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)
