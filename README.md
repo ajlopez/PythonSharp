@@ -16,3 +16,6 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [Why Are There So Many Pythons?](http://www.toptal.com/python/why-are-there-so-many-pythons)
 - [The Python yield keyword explained](http://freepythontips.wordpress.com/2013/09/29/the-python-yield-keyword-explained/)
 - [5 Reasons why Python is Powerful Enough for Google](https://www.codefellows.org/blogs/5-reasons-why-python-is-powerful-enough-for-google)
+- [Painless Decorators](http://hackflow.com/blog/2013/11/03/painless-decorators/)
+- [Built-in Functions](http://docs.python.org/3/library/functions.html)
+- [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)
