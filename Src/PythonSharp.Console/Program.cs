@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using PythonSharp;
@@ -10,7 +11,6 @@
     using PythonSharp.Compiler;
     using PythonSharp.Expressions;
     using PythonSharp.Utilities;
-    using System.IO;
 
     public class Program
     {

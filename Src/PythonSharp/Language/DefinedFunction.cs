@@ -105,15 +105,15 @@
             return null;
         }
 
-        private static IList<object> GetSublist(IList<object> list, int from)
-        {
-            return list.Skip(from).ToList();
-        }
-
         public override string ToString()
         {
             // TODO add id?
             return string.Format("<function {0}>", this.name);
+        }
+
+        private static IList<object> GetSublist(IList<object> list, int from)
+        {
+            return list.Skip(from).ToList();
         }
     }
 }

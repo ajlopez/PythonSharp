@@ -272,7 +272,8 @@
 
             DefinedFunction func = new DefinedFunction("foo", null, body, null);
             var type = typeof(ThreadStart);
-            //Activator.CreateInstance(typeof(ThreadStart), func.DoFunction);
+
+            // Activator.CreateInstance(typeof(ThreadStart), func.DoFunction);
         }
     }
 }

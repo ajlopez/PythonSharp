@@ -5,10 +5,10 @@
     using System.Linq;
     using System.Text;
     using PythonSharp.Compiler;
+    using PythonSharp.Exceptions;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
     using PythonSharp.Utilities;
-    using PythonSharp.Exceptions;
 
     public class ImportCommand : ICommand
     {

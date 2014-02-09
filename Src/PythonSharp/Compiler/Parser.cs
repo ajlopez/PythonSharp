@@ -796,7 +796,7 @@
                     term = new AttributeExpression(term, this.CompileName(true).Value);
                 else if (this.TryCompile(TokenType.Separator, "("))
                     term = this.CompileCallExpression(term);
-                else if (TryCompile(TokenType.Separator, "["))
+                else if (this.TryCompile(TokenType.Separator, "["))
                     term = this.CompileIndexedExpression(term);
                 else
                     break;

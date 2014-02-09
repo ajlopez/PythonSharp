@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using PythonSharp.Expressions;
     using PythonSharp.Language;
     using PythonSharp.Utilities;
-using PythonSharp.Expressions;
 
     public class ClassCommand : ICommand
     {

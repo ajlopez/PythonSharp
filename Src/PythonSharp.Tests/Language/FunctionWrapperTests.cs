@@ -5,13 +5,13 @@
     using System.Linq;
     using System.Reflection;
     using System.Text;
+    using System.Threading;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PythonSharp.Commands;
     using PythonSharp.Expressions;
     using PythonSharp.Language;
     using PythonSharp.Tests.Classes;
     using PythonSharp.Utilities;
-    using System.Threading;
 
     [TestClass]
     public class FunctionWrapperTests

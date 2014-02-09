@@ -36,6 +36,26 @@
             return this.methods.ContainsKey(name);
         }
 
+        public void SetValue(string name, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasValue(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<string> GetNames()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object GetValue(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         private static int Find(string text, string argument)
         {
             return text.IndexOf(argument);
@@ -102,26 +122,6 @@
         private static object JoinMethod(IList<object> arguments)
         {
             return Join((string)arguments[0], (IList)arguments[1]);
-        }
-
-        public object GetValue(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetValue(string name, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasValue(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICollection<string> GetNames()
-        {
-            throw new NotImplementedException();
         }
     }
 }
