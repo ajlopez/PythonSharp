@@ -19,3 +19,6 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [Painless Decorators](http://hackflow.com/blog/2013/11/03/painless-decorators/)
 - [Built-in Functions](http://docs.python.org/3/library/functions.html)
 - [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)
+- [Is Python pass-by-reference or pass-by-value?](http://robertheaton.com/2014/02/09/pythons-pass-by-object-reference-as-explained-by-philip-k-dick/)
+
+
