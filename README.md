@@ -20,5 +20,8 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [Built-in Functions](http://docs.python.org/3/library/functions.html)
 - [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)
 - [Is Python pass-by-reference or pass-by-value?](http://robertheaton.com/2014/02/09/pythons-pass-by-object-reference-as-explained-by-philip-k-dick/)
+- [Facts and myths about Python names and values](http://nedbatchelder.com/text/names.html)
+
+
 
 
