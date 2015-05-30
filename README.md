@@ -20,5 +20,8 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [Built-in Functions](http://docs.python.org/3/library/functions.html)
 - [A Guide to Python's Magic Methods](http://www.rafekettler.com/magicmethods.html)
 - [Is Python pass-by-reference or pass-by-value?](http://robertheaton.com/2014/02/09/pythons-pass-by-object-reference-as-explained-by-philip-k-dick/)
-
-
+- [Descriptor HowTo Guide](https://docs.python.org/2/howto/descriptor.html)
+- [Classes and Objects II: Descriptors](http://intermediatepythonista.com/classes-and-objects-ii-descriptors)
+- [Explaining descriptors](http://nedbatchelder.com/blog/201306/explaining_descriptors.html)
+- [Introduction to Context Managers in Python](http://eigenhombre.com/2013/04/20/introduction-to-context-managers/)
+- [Understanding Python Decorators in 12 Easy Steps!](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/)
