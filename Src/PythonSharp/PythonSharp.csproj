@@ -89,7 +89,6 @@
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\ParserException.cs" />
     <Compile Include="Compiler\UnexpectedEndOfInputException.cs" />
-    <Compile Include="Compiler\EndOfInputException.cs" />
     <Compile Include="Compiler\ExpectedTokenException.cs" />
     <Compile Include="Compiler\NameExpectedException.cs" />
     <Compile Include="Compiler\Lexer.cs" />

@@ -19,7 +19,7 @@
         private static string[] otherOperators = new string[] { "**", "<=", ">=", "==", "<>", "!=" };
 
         private TextReader reader;
-        private char lastChar;
+        private Stack<int> lastChars = new Stack<int>();
         private bool hasChar;
         private int lastIndent = -1;
         private Stack<Token> tokenStack = new Stack<Token>();
@@ -56,18 +56,12 @@
                 return indent;
             }
 
-            try
-            {
-                char ch;
+            int ich;
 
-                for (ch = this.NextChar(); IsSpace(ch); ch = this.NextChar())
-                    indent++;
+            for (ich = this.NextChar(); ich >= 0 && IsSpace((char)ich); ich = this.NextChar())
+                indent++;
 
-                this.PushChar(ch);
-            }
-            catch
-            {
-            }
+            this.PushChar(ich);
 
             return indent;
         }
@@ -79,39 +73,38 @@
                 return this.tokenStack.Pop();
             }
 
+            int ich;
             char ch;
 
-            try
-            {
-                ch = this.NextCharSkipBlanks();
+            ich = this.NextCharSkipBlanks();
 
-                if (ch == '\n' || ch == '\r')
-                    return this.NextEndOfLine(ch);
-
-                if (char.IsDigit(ch))
-                    return this.NextInteger(ch);
-
-                if (char.IsLetter(ch) || ch == '_')
-                    return this.NextName(ch);
-
-                if (ch == StringChar)
-                    return this.NextString(StringChar);
-
-                if (ch == QuotedStringChar)
-                    return this.NextString(QuotedStringChar);
-
-                if (Separators.Contains(ch))
-                    return this.NextSeparator(ch);
-
-                if (Operators.Contains(ch) || OperatorStarts.Contains(ch))
-                    return this.NextOperator(ch);
-
-                throw new InvalidDataException("Unknown input");
-            }
-            catch (EndOfInputException)
-            {
+            if (ich < 0)
                 return null;
-            }
+
+            ch = (char)ich;
+
+            if (ch == '\n' || ch == '\r')
+                return this.NextEndOfLine(ch);
+
+            if (char.IsDigit(ch))
+                return this.NextInteger(ch);
+
+            if (char.IsLetter(ch) || ch == '_')
+                return this.NextName(ch);
+
+            if (ch == StringChar)
+                return this.NextString(StringChar);
+
+            if (ch == QuotedStringChar)
+                return this.NextString(QuotedStringChar);
+
+            if (Separators.Contains(ch))
+                return this.NextSeparator(ch);
+
+            if (Operators.Contains(ch) || OperatorStarts.Contains(ch))
+                return this.NextOperator(ch);
+
+            throw new InvalidDataException("Unknown input");
         }
 
         public void Dispose()
@@ -142,18 +135,12 @@
 
             if (ch == '\r')
             {
-                try
-                {
-                    char ch2 = this.NextChar();
+                int ich2 = this.NextChar();
 
-                    if (ch2 != '\n')
-                        this.PushChar(ch2);
-                    else
-                        value += ch2;
-                }
-                catch
-                {
-                }
+                if (ich2 < 0 || (char)ich2 != '\n')
+                    this.PushChar(ich2);
+                else
+                    value += (char)ich2;
             }
 
             return new Token() { TokenType = TokenType.EndOfLine, Value = value };
@@ -161,11 +148,13 @@
 
         private Token NextOperator(char ch)
         {
-            char ch2;
+            int ich2 = this.NextChar();
 
-            try
+            if (ich2 >= 0)
             {
-                ch2 = this.NextChar();
+                char ch2;
+
+                ch2 = (char)ich2;
 
                 string op = ch.ToString() + ch2.ToString();
 
@@ -178,13 +167,12 @@
                     };
                 }
                 else
-                    this.PushChar(ch2);
+                    this.PushChar(ich2);
             }
-            catch (EndOfInputException)
-            {
-            }
+            else
+                this.PushChar(ich2);
 
-            if (Operators.Contains(ch)) 
+            if (Operators.Contains(ch))
             {
                 return new Token()
                 {
@@ -208,32 +196,33 @@
         private Token NextString(char endchar)
         {
             StringBuilder sb = new StringBuilder();
-            char ch;
 
-            try
+            int ich = this.NextChar();
+
+            if (ich >= 0)
             {
-                ch = this.NextChar();
+                char ch = (char)ich;
 
                 if (ch == endchar)
                 {
-                    char ch2 = this.NextChar();
-                    if (ch2 == endchar)
+                    int ich2 = this.NextChar();
+                    if (ich2 >= 0 && (char)ich2 == endchar)
                         return this.NextMultilineString(endchar);
                     else
-                        this.PushChar(ch2);
+                        this.PushChar(ich2);
                 }
 
-                while (ch != endchar)
+                while (ich >= 0 && ch != endchar)
                 {
                     if (ch == EscapeChar)
-                        ch = this.NextChar();
+                        ch = (char)this.NextChar();
 
                     sb.Append(ch);
-                    ch = this.NextChar();
+                    ich = this.NextChar();
+
+                    if (ich >= 0)
+                        ch = (char)ich;
                 }
-            }
-            catch (EndOfInputException)
-            {
             }
 
             Token token = new Token();
@@ -246,37 +235,40 @@
         private Token NextMultilineString(char endchar)
         {
             StringBuilder sb = new StringBuilder();
-            char ch;
 
-            try
+            while (true)
             {
-                while (true)
+                int ich = this.NextChar();
+
+                if (ich < 0)
                 {
-                    ch = this.NextChar();
+                    this.PushChar(ich);
+                    break;
+                }
 
-                    if (ch == endchar)
+                char ch = (char)ich;
+
+                if (ch == endchar)
+                {
+                    int ich2 = this.NextChar();
+
+                    if (ich2 >= 0 && (char)ich2 == endchar)
                     {
-                        char ch2 = this.NextChar();
-                        if (ch2 == endchar)
-                        {
-                            char ch3 = this.NextChar();
+                        int ich3 = this.NextChar();
 
-                            if (ch3 == endchar)
-                                break;
+                        if (ich3 >= 0 && (char)ich3 == endchar)
+                            break;
 
-                            this.PushChar(ch3);
-                            this.PushChar(ch2);
-                        }
+                        this.PushChar(ich3);
                     }
 
-                    if (ch == EscapeChar)
-                        ch = this.NextChar();
-
-                    sb.Append(ch);
+                    this.PushChar(ich2);
                 }
-            }
-            catch (EndOfInputException)
-            {
+
+                if (ch == EscapeChar)
+                    ch = (char)this.NextChar();
+
+                sb.Append(ch);
             }
 
             Token token = new Token();
@@ -290,24 +282,18 @@
         {
             string integer = ch.ToString();
 
-            try
+            int ich = this.NextChar();
+
+            while (ich >= 0 && char.IsDigit((char)ich))
             {
-                ch = this.NextChar();
-
-                while (char.IsDigit(ch))
-                {
-                    integer += ch;
-                    ch = this.NextChar();
-                }
-
-                if (ch == '.') 
-                    return this.NextReal(integer);
-
-                this.PushChar(ch);
+                integer += (char)ich;
+                ich = this.NextChar();
             }
-            catch (EndOfInputException)
-            {
-            }
+
+            if (ich >=0 && (char)ich == '.') 
+                return this.NextReal(integer);
+
+            this.PushChar(ich);
 
             Token token = new Token();
             token.Value = integer;
@@ -319,23 +305,17 @@
         private Token NextReal(string integerPart)
         {
             string real = integerPart + ".";
-            char ch;
+            int ich;
 
-            try
+            ich = this.NextChar();
+
+            while (ich >= 0 && char.IsDigit((char)ich))
             {
-                ch = this.NextChar();
-
-                while (char.IsDigit(ch))
-                {
-                    real += ch;
-                    ch = this.NextChar();
-                }
-
-                this.PushChar(ch);
+                real += (char)ich;
+                ich = this.NextChar();
             }
-            catch (EndOfInputException)
-            {
-            }
+
+            this.PushChar(ich);
 
             Token token = new Token();
             token.Value = real;
@@ -348,21 +328,15 @@
         {
             string name = ch.ToString();
 
-            try
-            {
-                ch = this.NextChar();
+            int ich = this.NextChar();
 
-                while (char.IsLetterOrDigit(ch) || ch == '_')
-                {
-                    name += ch;
-                    ch = this.NextChar();
-                }
-
-                this.PushChar(ch);
-            }
-            catch (EndOfInputException)
+            while (ich >= 0 && char.IsLetterOrDigit((char)ich) || (char)ich == '_')
             {
+                name += (char)ich;
+                ich = this.NextChar();
             }
+
+            this.PushChar(ich);
 
             Token token = new Token();
             token.Value = name;
@@ -374,46 +348,47 @@
             return token;
         }
 
-        private char NextCharSkipBlanks()
+        private int NextCharSkipBlanks()
         {
-            char ch;
+            int ich;
 
-            ch = this.NextChar();
+            ich = this.NextChar();
 
-            while (char.IsWhiteSpace(ch) && ch != '\n' && ch != '\r')
-                ch = this.NextChar();
-
-            return ch;
-        }
-
-        private void PushChar(char ch)
-        {
-            this.lastChar = ch;
-            this.hasChar = true;
-        }
-
-        private char NextChar()
-        {
-            char ch = this.NextSimpleChar();
-
-            if (ch == CommentChar)
+            while (ich >= 0)
             {
-                while (ch != '\r' && ch != '\n')
-                    ch = this.NextSimpleChar();
+                char ch = (char)ich;
+
+                if (!char.IsWhiteSpace(ch) || ch == '\n' || ch == '\r')
+                    break;
+
+                ich = this.NextChar();
             }
 
-            return ch;
+            return ich;
         }
 
-        private char NextSimpleChar()
+        private void PushChar(int ch)
         {
-            if (this.hasChar)
+            this.lastChars.Push(ch);
+        }
+
+        private int NextChar()
+        {
+            int ich = this.NextSimpleChar();
+
+            if (ich >= 0 && (char)ich == CommentChar)
             {
-                this.hasChar = false;
-                return this.lastChar;
+                while (ich >= 0 && (char)ich != '\r' && (char)ich != '\n')
+                    ich = this.NextSimpleChar();
             }
 
-            int ch;
+            return ich;
+        }
+
+        private int NextSimpleChar()
+        {
+            if (this.lastChars.Count > 0)
+                return this.lastChars.Pop();
 
             if (this.reader.Equals(System.Console.In) && this.reader.Peek() < 0)
             {
@@ -421,12 +396,7 @@
                 Console.Out.Flush();
             }
 
-            ch = this.reader.Read();
-
-            if (ch < 0)
-                throw new EndOfInputException();
-
-            return Convert.ToChar(ch);
+            return this.reader.Read();
         }
     }
 }

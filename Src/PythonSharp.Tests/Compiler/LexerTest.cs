@@ -395,13 +395,13 @@
         [TestMethod]
         public void ParseMultilineSingleQuotedString()
         {
-            Lexer lexer = new Lexer("'''This is a\r\nmultiline\r\nstring'''");
+            Lexer lexer = new Lexer("'''This is a\r\nmulti''line\r\nstring'''");
             
             var result = lexer.NextToken();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(TokenType.String, result.TokenType);
-            Assert.AreEqual("This is a\r\nmultiline\r\nstring", result.Value);
+            Assert.AreEqual("This is a\r\nmulti''line\r\nstring", result.Value);
             Assert.IsNull(lexer.NextToken());
         }
 
