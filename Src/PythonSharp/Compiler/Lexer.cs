@@ -290,7 +290,7 @@
                 ich = this.NextChar();
             }
 
-            if (ich >=0 && (char)ich == '.') 
+            if (ich >= 0 && (char)ich == '.') 
                 return this.NextReal(integer);
 
             this.PushChar(ich);
@@ -330,7 +330,7 @@
 
             int ich = this.NextChar();
 
-            while (ich >= 0 && char.IsLetterOrDigit((char)ich) || (char)ich == '_')
+            while (ich >= 0 && (char.IsLetterOrDigit((char)ich) || (char)ich == '_'))
             {
                 name += (char)ich;
                 ich = this.NextChar();
