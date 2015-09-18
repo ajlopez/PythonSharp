@@ -26,3 +26,4 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [Introduction to Context Managers in Python](http://eigenhombre.com/2013/04/20/introduction-to-context-managers/)
 - [Understanding Python Decorators in 12 Easy Steps!](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/)
 - [Facts and myths about Python names and values](http://nedbatchelder.com/text/names.html)
+- [Apply a method to an object of another class](http://stackoverflow.com/questions/9663849/apply-a-method-to-an-object-of-another-class)
