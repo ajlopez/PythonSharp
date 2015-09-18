@@ -27,3 +27,4 @@ Migrated from my SVN project https://ajcodekatas.googlecode.com/svn/trunk/AjPyth
 - [Understanding Python Decorators in 12 Easy Steps!](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/)
 - [Facts and myths about Python names and values](http://nedbatchelder.com/text/names.html)
 - [Apply a method to an object of another class](http://stackoverflow.com/questions/9663849/apply-a-method-to-an-object-of-another-class)
+- [Abstract Base Classes](https://docs.python.org/2/library/abc.html)
